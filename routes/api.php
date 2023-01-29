@@ -18,7 +18,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// запросы для интерфейса прилажения
+Route::group(['namespace'=>'App\Http\Controllers\WebInterface\Complex', 'prefix'=>'interface'], function (){
+    Route::get('/complex', 'IndexController');
+});
 
+Route::group(['namespace'=>'App\Http\Controllers\WebInterface\Plant', 'prefix'=>'interface'], function (){
+    Route::get('/plant', 'IndexController');
+    Route::get('/plant/{complex_id}', 'PlantController');
+});
+
+// роуты для содержимого прилажения
 Route::group(['namespace'=>'App\Http\Controllers\DkA', 'prefix'=>'dk_a_data'], function (){
     Route::get('/', 'DkAController');
 
