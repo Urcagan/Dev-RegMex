@@ -12,7 +12,7 @@ class PlantController extends Controller
     {
         // $plant = Plant::all();
         // $plant = $plant->find($id);
-        $plant = Plant::where('complex_id', $id) -> get();
+        $plant = Plant::where('id', $id) -> get();
         return $plant;     
     }
 }

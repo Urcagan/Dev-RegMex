@@ -57,23 +57,24 @@ export default {
 
   data(){
     return {
-        plants: []
+        plants: [],
     }
   },
 
     mounted() {
         this.GetPlants();
+        console.log(this.plants);
     },
 
   methods: {
         GetPlants() {
-            axios.get('/api/interface/plant/1')
+            axios.get('/api/interface/plant')
                 .then(res => {
                     this.plants = res.data
                     console.log(res.data);
                 })
                 .catch(err => {
-                     console.log(err);
+                    //  console.log(err);
                 })
         }
   }
