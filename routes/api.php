@@ -28,6 +28,11 @@ Route::group(['namespace'=>'App\Http\Controllers\WebInterface\Plant', 'prefix'=>
     Route::get('/plant/{complex_id}', 'PlantController');
 });
 
+Route::group(['namespace'=>'App\Http\Controllers\WebInterface\Unit', 'prefix'=>'interface'], function (){
+    Route::get('/unit', 'IndexController');
+    Route::get('/unit/{plant_id}', 'UnitController');
+});
+
 // роуты для содержимого прилажения
 Route::group(['namespace'=>'App\Http\Controllers\DkA', 'prefix'=>'dk_a_data'], function (){
     Route::get('/', 'DkAController');

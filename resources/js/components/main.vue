@@ -31,7 +31,7 @@
 
 <div class="container" >
     <div class="desktop" >
-            <div v-for="plant in plants" class="col-md-4" >
+            <div v-for="plant in plants" :key="plant.id" class="cards" >
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">{{plant.NamePlant}}</h5>
@@ -88,5 +88,10 @@ export default {
     justify-content: space-between;
     /* padding-top: 50px; */
     margin-top: 50px;
+}
+
+.cards {
+    width: 30%;
+    
 }
 </style>
