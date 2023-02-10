@@ -1,4 +1,5 @@
 <template>
+   <menu-bar></menu-bar>
 
     <div class="container" >
     <div class="desktop">
@@ -28,29 +29,55 @@
     </div>   
 </div> 
 
+<div class="container" >
+    <div class="desktop" >
+            <div v-for="plant in plants" :key="plant.id" class="cards" >
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">{{plant.NamePlant}}</h5>
+                        <p>{{plant.Description}}</p>
+                        <router-link class="btn btn-primary" :to="{name: 'MGKmenu'}">Детально</router-link>
+                    </div>
+                </div>
+            </div>
+    </div>   
+</div> 
+
 </template>
 
 <script>
 
-
+import MenuBar from "/resources/js/components/MGK/menuBar.vue"
 import MGKmenu from "../components/MGK/index.vue"
+import axios from 'axios'
 
 export default {
     name: "Main",
-    components: { MGKmenu },
+    components: { MenuBar, MGKmenu },
 
   data(){
     return {
-        
+        plants: [],
     }
   },
 
     mounted() {
-        
+        this.GetPlants();
+        console.log(this.plants);
+        // console.log($route.params);
     },
 
   methods: {
-        
+        GetPlants() {
+            axios.get('/api/interface/plant')
+                .then(res => {
+                    this.plants = res.data
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    //  console.log(err);
+                })
+        }
   }
 }
 

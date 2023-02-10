@@ -2,7 +2,7 @@
   
    <div class="main-header">   
         <div class="col-md-2" align="center"> 
-            <router-link class="btn btn-success m-2"  :to="{name: 'MainPage'}">Главная</router-link>
+            <router-link class="btn btn-success m-2"  :to="{name: 'MGKmenu'}">Главная</router-link>
         </div>
         <div class="col-md-10" > 
             <h2 align="center" class="mt-2">Режимный лист сырьевого насоса МГК 111-Н1А</h2>

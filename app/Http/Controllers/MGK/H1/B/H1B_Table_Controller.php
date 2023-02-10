@@ -17,10 +17,12 @@ class H1B_Table_Controller extends Controller
         $maxId = DB::table('MGK_H1B')->max('id');
 
         // Поиск последних 12и записей
-        $data = DB::table('MGK_H1B')
+        $data = DB::table('MGK_H1B') 
             ->whereBetween('id', [$maxId-11, $maxId])
             ->get();
         return H1BResourse::collection($data);
+        //   return ($data);
+
 //        $dkA = DK_A::all();
 //        $dkA = DB::select('select top 50 * from dk_a_points ');
 //        $dkA = DB::select('select * from dk_a_points where id = :id', ['id' => 2]);

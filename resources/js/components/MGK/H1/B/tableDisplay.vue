@@ -1,5 +1,7 @@
 <template>
     <MenuBar></MenuBar>
+    <!-- <MenuBar/> -->
+
     <div>
         <h2 align="center">Режимный лист сырьевого насоса МГК 111-Н1В</h2>
 
@@ -15,7 +17,39 @@
                     <th colspan="8">Вибрация, мкм</th>
                 </tr>
                 <tr>
+                    <th colspan="2">Уплотнит. жидкости</th>
+                    <th>Рабочего масла</th>
+                    <th colspan="2">Турбина</th>
+                    <th colspan="2">Насос</th>
+                    <th colspan="4">Турбина</th>
+                    <th colspan="4">Насос</th>
+                </tr>
+                <tr >
+                    <th v-for="item in TagPoint">{{ item }}</th>
+                </tr>
+                </thead>
+                <tbody align="center">
+                    <tr v-for="item in dataPoints">
+                        <!-- <td v-for="(value,key) in item">{{value}}</td> -->
+                        <!-- <td v-for="(value,key) in item">{{Math.round(value*100)/100}}</td> -->
+                        <td v-for="(value,key) in item">{{ key != 'LocalTime' ? Math.floor(value*100)/100 : value.substr(0,16) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
+        <div class="container-fluid">
+            <table id="tableDisplay" class="table table-primary table-striped table-hover  table-bordered table-sm" cellspacing="0" width="100%">
+                <thead class="table-dark align-middle" align="center">
+                <tr>
+                    <th rowspan="3">Часы</th>
+                    <th colspan="3">Давление МПа</th>
+                    <th rowspan="2">Перепад давл</th>
+                    <th colspan="4">Осевые смещения</th>
+                    <th rowspan="2">Частота врвщения</th>
+                    <th colspan="8">Вибрация, мкм</th>
+                </tr>
+                <tr>
                     <th colspan="2">Уплотнит. жидкости</th>
                     <th>Рабочего масла</th>
                     <th colspan="2">Турбина</th>
@@ -45,7 +79,7 @@
                 </thead>
                 <tbody align="center">
                <tr v-for="item in dataPoints">
-                   <td>{{item.LocalTime}}</td>
+                   <td>{{(item.LocalTime).substr(0,16)}}</td>
                    <td>{{Math.floor(item.PI7026B*100)/100}}</td>
                    <td>{{Math.floor(item.PI7028B*100)/100}}</td>
                    <td>{{Math.floor(item.PI7024B*100)/100}}</td>
@@ -122,6 +156,7 @@
 
 <script>
 import MenuBar from "/resources/js/components/MGK/menuBar.vue"
+// import MenuBar from "./components/MGK/menuBar.vue"
 import axios from "axios";
 
 export default {
@@ -132,6 +167,9 @@ export default {
     data: function () {
         return {
             dataPoints: [],
+            TagPoint: [],
+            xPoint: [],
+            // Tag: "LocalTime",
         }
     },
 
@@ -145,7 +183,12 @@ export default {
             axios.get('/api/H1b/table')
                 .then(res => {
                         this.dataPoints = res.data.data;
-                    const KeyData = Object.keys(this.dataPoints[0])
+                    // const KeyData = Object.keys(this.dataPoints[0])
+                    const KeyTag = Object.keys(this.dataPoints[0]);
+                    KeyTag.splice(0,1);
+                    this.TagPoint = KeyTag;
+
+                        
                     }
                 )
                 .catch(function (error) {
