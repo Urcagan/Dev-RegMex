@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
+    Route::get('/table', 'Table_Controller')->name('home');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

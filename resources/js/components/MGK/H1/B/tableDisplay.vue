@@ -183,18 +183,32 @@ export default {
             axios.get('/api/H1b/table')
                 .then(res => {
                         this.dataPoints = res.data.data;
+                        // this.dataPoints = res.data;
+
                     // const KeyData = Object.keys(this.dataPoints[0])
                     const KeyTag = Object.keys(this.dataPoints[0]);
-                    KeyTag.splice(0,1);
-                    this.TagPoint = KeyTag;
+                    // KeyTag.splice(0,1);
+                    this.TagPoint = KeyTag.splice(1,17);
 
-                        
+                        this.MapData(this.dataPoints);
+                        console.log(this.dataPoints);
                     }
                 )
                 .catch(function (error) {
                         console.log(error);
                     }
                 )
+        },
+
+        MapData: function (x) {
+            const Y_var = x.map((item, index ) => { 
+                    //   item.map(enum) => {console.log(enum)});
+                
+                    // console.log(item);
+                return item ;
+                });
+            console.log(Y_var[0]);
+            // console.log(this.TagPoint.slice(0,2))
         },
     },
 }
