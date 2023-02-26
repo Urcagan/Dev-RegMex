@@ -65,3 +65,7 @@ Route::group(['namespace'=>'App\Http\Controllers\MGK\H1\A', 'prefix'=>'H1a'], fu
 Route::group(['namespace'=>'App\Http\Controllers\MGK\H1\B', 'prefix'=>'H1b'], function (){
     Route::get('/table', 'H1B_Table_Controller');
 });
+
+Route::group(['namespace'=>'App\Http\Controllers\MGK\H1\B', 'prefix'=>'H1b'], function (){
+    Route::get('/tableOne', 'Table_Controller');
+});
