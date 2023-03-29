@@ -11,12 +11,13 @@ const routes = [
     {
         path: "/",
         name: 'MainPage',
-        component: () => import ('../components/main.vue'),
+        component: () => import ('../components/main.vue')
     },
     {
         path: "/mgk",
         name: 'MGKmenu',
-        component: () => import ('../components/MGK/index.vue')
+        component: () => import ('../components/MGK/index.vue'),
+        props: true
     },
     {
         path: "/mgk/n1",

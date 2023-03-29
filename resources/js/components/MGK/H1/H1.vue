@@ -6,8 +6,8 @@
         </div>
         <div class="col-md-10" > 
             <h2 align="center" class="mt-2">Режимный лист сырьевого насоса МГК 111-Н1А</h2>
+            <h3>Id: {{$route.params.id }}</h3>
         </div>    
-            
    </div>
   
 <div class="card text-center">
@@ -63,6 +63,10 @@ import DK_A_ZVI from  '/resources/js/components/MGK/H1/A/chartZVI.vue'
 export default {
     name: "H1",
     components: {DK_A_table, DK_A_Pressure, DK_A_TI, DK_A_XVI, DK_A_ZVI},
+
+    props:[
+            'id'
+    ],
 
   data(){
     return {
