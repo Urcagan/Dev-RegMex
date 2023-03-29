@@ -51,14 +51,12 @@
                 </tr>
                 <tr>
                     <th v-for="item in TagTableTwo">{{item}}</th>
-                    
                 </tr>
                 </thead>
                 <tbody align="center">
-               <tr v-for="item in dataTableTwo">
-                   <!-- <td>{{(item.LocalTime).substr(0,16)}}</td> -->
-                   <td v-for="value in item">{{ value }}</td>
-               </tr>
+                    <tr v-for="item in dataTableTwo">
+                        <td v-for="value in item">{{ value }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -77,76 +75,22 @@ export default {
 
     data: function () {
         return {
-            dataPoints: [], //* Переменныя данных из БД
-            TagPoint: [], //* Переменная хранения заголовкков для таблицы
-            xPoint: [],
-            // Tag: "LocalTime",
-            dataLoad:[],
+            dataLoad:[],        //* Переменныя данных из БД
             dataTableOne:[],     //* Данные для таблицы 1
             dataTableTwo: [],    //* Данные для таблицы 2
-            TagTableOne: [],     //* 
-            TagTableTwo: [],
+            TagTableOne: [],     //* Переменная хранения заголовкков для таблицы 1
+            TagTableTwo: [],    //* Переменная хранения заголовкков для таблицы 2
         }
     },
 
     mounted() {
-        this.loadData();
-        this.loadDataTableOne();
+        this.loadDataTable();
     },
 
     methods: {
-        // получение данных
-        loadData: function () {
-            axios.get('/api/H1b/table')
-                .then(res => {
-                        this.dataPoints = res.data.data;
-                        // this.dataPoints = res.data;
-                                                        // console.log(this.dataPoints);
-                    // const KeyData = Object.keys(this.dataPoints[0])
-                        //* Формирование массива заголовков позиций для таблицы
-                    const KeyTag = Object.keys(this.dataPoints[0]);
-                    // KeyTag.splice(0,1);
-                    this.TagPoint = KeyTag.splice(1,17);
-                        this.MapData(this.dataPoints);
-                        // console.log(Array.from(this.dataPoints));
-                    }
-                )
-                .catch(function (error) {
-                        console.log(error);
-                    }
-                )
-        },
-
-        MapData: function (x) {
-
-            let map_count =0;
-            const Y_var =[];
-            let temp =[];
-                x.map((item, index ) => {
-                    
-                    // console.log((item));
-                    
-                    for(let key in item){
-                        // console.log( key + ': ' + item[key] );
-                        // console.log( item );
-                        
-                    };
-                    // const temp_element = item.map((element, key) => {
-                        // item.forEach((value, key) => {
-                        //     console.log( key+': '+value);
-                        // });
-                        // return key;
-                    // } );
-                    // console.log(temp);
-                // return temp ;
-                });
-            // console.log(Y_var);
-            // console.log(this.TagPoint.slice(0,2))
-        },
-
          //* получение данных для первой таблицы
-        loadDataTableOne: function () {
-            axios.get('/api/H1b/tableOne')
+        loadDataTable: function () {
+            axios.get('/api/H1b/table')
                 .then(res => {
                         this.dataLoad = res.data.data;
                         //* Полученный массив содерит значения для двух таблиц

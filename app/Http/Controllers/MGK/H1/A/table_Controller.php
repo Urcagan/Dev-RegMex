@@ -14,19 +14,15 @@ class table_Controller extends Controller
 
     public function __invoke()
     {
+        $DB_Name = 'MGK_H1A';
        // поиск максимального id  для выявления последней записи
-        $maxId = DB::table('MGK_H1A')->max('id');
+        $maxId = DB::table($DB_Name)->max('id');
 
         // Поиск последних 12и записей
-        $data = DB::table('MGK_H1A')
+        $data = DB::table($DB_Name)
             ->whereBetween('id', [$maxId-11, $maxId])
             ->get();
         return H1AResourse::collection($data);
-//        $dkA = DK_A::all();
-//        $dkA = DB::select('select top 50 * from dk_a_points ');
-//        $dkA = DB::select('select * from dk_a_points where id = :id', ['id' => 2]);
-//        return DkAResource::collection($dkA);
-//        return $dkA;
     }
 }
 

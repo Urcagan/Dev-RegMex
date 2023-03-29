@@ -14,45 +14,46 @@ class H1AResourse extends JsonResource
      */
     public function toArray($request)
     {
+        $LocalTime = date_create($this->LocalTime);
         return [
-//            'id' => $this->id,
-            'LocalTime' => $this->LocalTime,
-            'PI7026A' => $this->PI7026A,
-            'PI7028A' => $this->PI7028A,
-            'PI7024A' => $this->PI7024A,
-
-            'PDI7013A' => $this->PDI7013A,
-
-            'ZVI7000A' => $this->ZVI7000A,
-            'ZVI7001A' => $this->ZVI7001A,
-            'ZVI7002A' => $this->ZVI7002A,
-            'ZVI7003A' => $this->ZVI7003A,
-
-            'KVI7000A' => $this->KVI7000A,
-
-            'XVI7000A' => $this->XVI7000A,
-            'XVI7001A' => $this->XVI7001A,
-            'XVI7002A' => $this->XVI7002A,
-            'XVI7003A' => $this->XVI7003A,
-
-            'XVI7004A' => $this->XVI7004A,
-            'XVI7005A' => $this->XVI7005A,
-            'XVI7006A' => $this->XVI7006A,
-            'XVI7007A' => $this->XVI7007A,
-
-            'TI7006A' => $this->TI7006A,
-            'TI7007A' => $this->TI7007A,
-            'TI7008A' => $this->TI7008A,
-            'TI7009A' => $this->TI7009A,
-            'TI7010A' => $this->TI7010A,
-            'TI7011A' => $this->TI7011A,
-            'TI7012A' => $this->TI7012A,
-            'TI7013A' => $this->TI7013A,
-            'TI7014A' => $this->TI7014A,
-            'TI7015A' => $this->TI7015A,
-            'TI7043A' => $this->TI7043A,
-            'LI7008A' => $this->LI7008A,
-
+            [
+            //            'id' => $this->id,
+  
+            'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
+            'PI7026A' => round($this->PI7026A,2),
+            'PI7028A' => round($this->PI7028A,2),
+            'PI7024A' => round($this->PI7024A,2),
+            'PDI7013A' => round($this->PDI7013A,2),
+            'ZVI7000A' => round($this->ZVI7000A,2),
+            'ZVI7001A' => round($this->ZVI7001A,2),
+            'ZVI7002A' => round($this->ZVI7002A,2),
+            'ZVI7003A' => round($this->ZVI7003A,2),
+            'KVI7000A' => round($this->KVI7000A,2),
+            'XVI7000A' => round($this->XVI7000A,2),
+            'XVI7001A' => round($this->XVI7001A,2),
+            'XVI7002A' => round($this->XVI7002A,2),
+            'XVI7003A' => round($this->XVI7003A,2),
+            'XVI7004A' => round($this->XVI7004A,2),
+            'XVI7005A' => round($this->XVI7005A,2),
+            'XVI7006A' => round($this->XVI7006A,2),
+            'XVI7007A' => round($this->XVI7007A,2),
+            ],
+            [
+            //            'id' => $this->id,
+            'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
+            'TI7006A' => round($this->TI7006A,2),
+            'TI7007A' => round($this->TI7007A,2),
+            'TI7008A' => round($this->TI7008A,2),
+            'TI7009A' => round($this->TI7009A,2),
+            'TI7010A' => round($this->TI7010A,2),
+            'TI7011A' => round($this->TI7011A,2),
+            'TI7012A' => round($this->TI7012A,2),
+            'TI7013A' => round($this->TI7013A,2),
+            'TI7014A' => round($this->TI7014A,2),
+            'TI7015A' => round($this->TI7015A,2),
+            'TI7043A' => round($this->TI7043A,2),
+            'LI7008A' => round($this->LI7008A,2),
+            ]
         ];
     }
 }
