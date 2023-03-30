@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <h5 class="card-title">111-H1-A/B</h5>
                         <p>Сырьевые насосы</p>
-                        <router-link class="btn btn-primary" :to="{name: this.namePage, params:{id: '/api/H1b/pressure'}}">H1-A</router-link>
+                        <router-link class="btn btn-primary" :to="{name: this.namePage, params:{prefPath: '/api/H1a/table'}}">H1-A</router-link>
                         <router-link class="btn btn-primary m-2" :to="{name: 'MGK.H1B'}">H1-B</router-link>
                     </div>
                 </div>

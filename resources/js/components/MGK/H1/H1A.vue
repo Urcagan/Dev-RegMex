@@ -6,6 +6,7 @@
         </div>    
         <div class="col-md-10" > 
             <h2 align="center" class="mt-2">Режимный лист сырьевого насоса МГК 111-Н1А</h2>
+            <h2>{{prefPath}}</h2>
         </div>    
    </div>
   
@@ -31,7 +32,8 @@
         </ul>
         <div class="tab-content"> 
             <div class="tab-pane fade" :class="{'active show': isActive('table')}" id="table">
-                <DK_A_table/> 
+                <!-- <DK_A_table :apiPath="'/api/H1a/table'"/>  -->
+                <DK_A_table :apiPath="prefPath"/> 
             </div>
             <div class="tab-pane fade" :class="{'active show': isActive('trend_pi')}" id="trend_pi">
                 <DK_A_Pressure/>
@@ -62,11 +64,15 @@ import DK_A_ZVI from  '/resources/js/components/MGK/H1/A/chartZVI.vue'
 export default {
     name: "H1",
     components: {DK_A_table, DK_A_Pressure, DK_A_TI, DK_A_XVI, DK_A_ZVI},
+props:true,
+    props: [
+        'prefPath'
+        ],
 
   data(){
     return {
         activeItem: 'table', // Переменная вкладка по умолчанию
-       
+        apiPath: '/api/H1a/pressure',
     }
   },
 

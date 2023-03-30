@@ -2,7 +2,7 @@
     <!-- <MenuBar></MenuBar> -->
     <div>
         <!-- <h2 align="center">Режимный лист сырьевого насоса МГК 111-Н1А</h2> -->
-
+    <h2>{{apiPath}}</h2>
         <div class="container-fluid">
             <table id="tableDisplay" class="table table-primary table-striped table-hover  table-bordered table-sm" cellspacing="0" width="100%">
                 <thead class="table-dark align-middle" align="center">
@@ -71,6 +71,10 @@ export default {
 
     components: { MenuBar },
 
+    props:[
+        'apiPath' //*Преременная хранения API маршрута для выводимых данных
+    ],
+
     data: function () {
         return {
             dataLoad:[],        //* Переменныя данных из БД
@@ -78,17 +82,20 @@ export default {
             dataTableTwo: [],    //* Данные для таблицы 2
             TagTableOne: [],     //* Переменная хранения заголовкков для таблицы 1
             TagTableTwo: [],    //* Переменная хранения заголовкков для таблицы 2
+            // apiPath: '/api/H1a/table', //*Преременная хранения API маршрута для выводимых данных
         }
     },
 
     mounted() {
-        this.loadDataTable();
+        this.loadDataTable(this.apiPath);
     },
 
     methods: {
          //* получение данных для первой таблицы
-        loadDataTable: function () {
-            axios.get('/api/H1a/table')
+        loadDataTable: function (Path) {
+            // axios.get('/api/H1a/table')
+            axios.get(Path)
+            // axios.get(this.apiPath)
                 .then(res => {
                         this.dataLoad = res.data.data;
                         //* Полученный массив содерит значения для двух таблиц
