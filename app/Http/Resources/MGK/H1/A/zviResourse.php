@@ -14,9 +14,11 @@ class zviResourse extends JsonResource
      */
     public function toArray($request)
     {
+        $LocalTime = date_create($this->LocalTime);
         return [
 //            'id' => $this->id,
-            'LocalTime' => $this->LocalTime,
+            // 'LocalTime' => $this->LocalTime,
+            'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
 
             'ZVI7000A' => $this->ZVI7000A,
             'ZVI7001A' => $this->ZVI7001A,

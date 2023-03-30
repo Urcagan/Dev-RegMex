@@ -14,9 +14,11 @@ class pressureResourse extends JsonResource
      */
     public function toArray($request)
     {
+        $LocalTime = date_create($this->LocalTime);
         return [
 //            'id' => $this->id,
-            'LocalTime' => $this->LocalTime,
+            // 'LocalTime' => $this->LocalTime,
+            'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
             'PI7026A' => $this->PI7026A,
             'PI7028A' => $this->PI7028A,
             'PI7024A' => $this->PI7024A,

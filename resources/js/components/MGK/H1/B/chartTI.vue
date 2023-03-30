@@ -3,7 +3,7 @@
         <!-- <MenuBar></MenuBar> -->
     </div>
     <div>
-        <!-- <h2> Показатели давления </h2> -->
+        <!-- <h2> Показатели температуры </h2> -->
     </div>
 
     <div class="container">
@@ -33,7 +33,7 @@ ChartJS.defaults.elements.point.radius = 0  // Задает глобальное
 ChartJS.defaults.elements.line.fill = false;
 
 export default {
-    name: "chartPressure",
+    name: "chartTI",
     components: {Line, MenuBar},
 
     props: {
@@ -82,20 +82,19 @@ export default {
           ],
           dataPoint: [],
           localTime: [],
-          BigData: [],        
+          BigData: [],
       }
     },
 
     async mounted(){
         this.loadPointData();
-        
     },
 
     methods:{
         // Методы для вывода графика
         loadPointData: function () {
-            axios.get('/api/H1a/pressure')
 
+            axios.get('/api/H1b/ti')
                 .then((response) => {
                     this.pointData = response.data.data;
                     // Получаем ссылку на нулевой элемент массива. Будем его использовать для получения ключей масива
@@ -141,7 +140,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Давление 111-Н1А',
+                        text: 'Температура 111-Н1B',
                         font: {
                             size: 24,
                         },

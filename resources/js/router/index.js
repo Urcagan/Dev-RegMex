@@ -20,9 +20,14 @@ const routes = [
         props: true
     },
     {
-        path: "/mgk/n1",
-        name: 'MGK.H1',
-        component: () => import ('../components/MGK/H1/H1.vue')
+        path: "/mgk/n1a",
+        name: 'MGK.H1A',
+        component: () => import ('../components/MGK/H1/H1A.vue')
+    },
+    {
+        path: "/mgk/n1b",
+        name: 'MGK.H1B',
+        component: () => import ('../components/MGK/H1/H1B.vue')
     },
     {
         path: "/upv",

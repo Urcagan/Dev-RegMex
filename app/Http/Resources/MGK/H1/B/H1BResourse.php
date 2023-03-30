@@ -20,7 +20,6 @@ class H1BResourse extends JsonResource
         return [
             [
             //            'id' => $this->id,
-  
             'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
             'PI7026B' => round($this->PI7026B,2),
             'PI7028B' => round($this->PI7028B,2),

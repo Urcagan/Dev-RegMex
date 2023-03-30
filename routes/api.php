@@ -44,7 +44,6 @@ Route::group(['namespace'=>'App\Http\Controllers\DkA', 'prefix'=>'dk_a_data'], f
 //    Route::delete('/{person}', 'DeleteController');
 });
 
-
 Route::group(['namespace'=>'App\Http\Controllers\DkA', 'prefix'=>'dk_a_top'], function (){
     Route::get('/', 'DkAController_Top');
 });
@@ -60,5 +59,9 @@ Route::group(['namespace'=>'App\Http\Controllers\MGK\H1\A', 'prefix'=>'H1a'], fu
 
 Route::group(['namespace'=>'App\Http\Controllers\MGK\H1\B', 'prefix'=>'H1b'], function (){
     Route::get('/table', 'Table_Controller');
+    Route::get('/pressure', 'PressureController');
+    Route::get('/zvi', 'zviController');
+    Route::get('/xvi', 'xviController');
+    Route::get('/ti', 'tiController');
 });
 

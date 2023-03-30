@@ -1,5 +1,5 @@
 <template>
-    <MenuBar></MenuBar>
+    <!-- <MenuBar></MenuBar> -->
     <!-- <MenuBar/> -->
 
     <div>

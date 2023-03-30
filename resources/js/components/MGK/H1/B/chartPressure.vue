@@ -94,7 +94,7 @@ export default {
     methods:{
         // Методы для вывода графика
         loadPointData: function () {
-            axios.get('/api/H1a/pressure')
+            axios.get('/api/H1b/pressure')
 
                 .then((response) => {
                     this.pointData = response.data.data;
@@ -141,7 +141,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Давление 111-Н1А',
+                        text: 'Давление 111-Н1B',
                         font: {
                             size: 24,
                         },

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\MGK\H1\A;
+namespace App\Http\Resources\MGK\H1\B;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,17 +19,15 @@ class xviResourse extends JsonResource
 //            'id' => $this->id,
             // 'LocalTime' => $this->LocalTime,
             'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
-            'KVI7000A' => $this->KVI7000A,
-
-            'XVI7000A' => $this->XVI7000A,
-            'XVI7001A' => $this->XVI7001A,
-            'XVI7002A' => $this->XVI7002A,
-            'XVI7003A' => $this->XVI7003A,
-
-            'XVI7004A' => $this->XVI7004A,
-            'XVI7005A' => $this->XVI7005A,
-            'XVI7006A' => $this->XVI7006A,
-            'XVI7007A' => $this->XVI7007A,
+            'KVI7000B' => $this->KVI7000B,
+            'XVI7000B' => $this->XVI7000B,
+            'XVI7001B' => $this->XVI7001B,
+            'XVI7002B' => $this->XVI7002B,
+            'XVI7003B' => $this->XVI7003B,
+            'XVI7004B' => $this->XVI7004B,
+            'XVI7005B' => $this->XVI7005B,
+            'XVI7006B' => $this->XVI7006B,
+            'XVI7007B' => $this->XVI7007B,
         ];
     }
 }

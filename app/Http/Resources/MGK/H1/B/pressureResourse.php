@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\MGK\H1\A;
+namespace App\Http\Resources\MGK\H1\B;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class xviResourse extends JsonResource
+class pressureResourse extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,17 +19,9 @@ class xviResourse extends JsonResource
 //            'id' => $this->id,
             // 'LocalTime' => $this->LocalTime,
             'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
-            'KVI7000A' => $this->KVI7000A,
-
-            'XVI7000A' => $this->XVI7000A,
-            'XVI7001A' => $this->XVI7001A,
-            'XVI7002A' => $this->XVI7002A,
-            'XVI7003A' => $this->XVI7003A,
-
-            'XVI7004A' => $this->XVI7004A,
-            'XVI7005A' => $this->XVI7005A,
-            'XVI7006A' => $this->XVI7006A,
-            'XVI7007A' => $this->XVI7007A,
+            'PI7026B' => $this->PI7026B,
+            'PI7028B' => $this->PI7028B,
+            'PI7024B' => $this->PI7024B,
         ];
     }
 }

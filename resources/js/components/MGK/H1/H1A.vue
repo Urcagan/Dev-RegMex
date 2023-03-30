@@ -3,10 +3,9 @@
    <div class="main-header">   
         <div class="col-md-2" align="center"> 
             <router-link class="btn btn-success m-2"  :to="{name: 'MGKmenu'}">Главная</router-link>
-        </div>
+        </div>    
         <div class="col-md-10" > 
             <h2 align="center" class="mt-2">Режимный лист сырьевого насоса МГК 111-Н1А</h2>
-            <h3>Id: {{$route.params.id }}</h3>
         </div>    
    </div>
   
@@ -64,13 +63,10 @@ export default {
     name: "H1",
     components: {DK_A_table, DK_A_Pressure, DK_A_TI, DK_A_XVI, DK_A_ZVI},
 
-    props:[
-            'id'
-    ],
-
   data(){
     return {
-        activeItem: 'table' // Переменная вкладка по умолчанию
+        activeItem: 'table', // Переменная вкладка по умолчанию
+       
     }
   },
 
@@ -80,7 +76,7 @@ export default {
     },
     setActive(menuItem) { // Устанавливает новую активную вкладку
         this.activeItem = menuItem
-    }
+    },
   }
 }
 
