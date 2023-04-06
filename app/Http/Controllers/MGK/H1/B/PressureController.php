@@ -14,6 +14,8 @@ class PressureController extends Controller
     {
         $data = H1B::all();
         return pressureResourse::collection($data);
+        // return pressureResourse::collection(H1B::all());
+        // // return $data;
     }
 }
 

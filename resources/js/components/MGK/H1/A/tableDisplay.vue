@@ -97,7 +97,7 @@ export default {
             axios.get(Path)
             // axios.get(this.apiPath)
                 .then(res => {
-                        this.dataLoad = res.data.data;
+                        this.dataLoad = res.data;
                         //* Полученный массив содерит значения для двух таблиц
                         //* Разбиваем его на два разных массива
                         this.dataLoad.forEach((item, index) => {

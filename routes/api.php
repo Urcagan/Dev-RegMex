@@ -63,5 +63,6 @@ Route::group(['namespace'=>'App\Http\Controllers\MGK\H1\B', 'prefix'=>'H1b'], fu
     Route::get('/zvi', 'zviController');
     Route::get('/xvi', 'xviController');
     Route::get('/ti', 'tiController');
+    Route::get('/data', 'DataLoadController');
 });
 

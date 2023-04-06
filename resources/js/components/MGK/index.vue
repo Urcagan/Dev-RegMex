@@ -47,13 +47,15 @@
         </div>
     </div>   
 </div> 
+<div>
+    <tr v-for="item in GETdataPump">{{ item.PI7026B }}</tr>
+</div>
 
 </template>
 
 <script>
 import { computed } from 'vue';
-import { mapGetters } from "vuex";
-import {mapActions} from "vuex";
+import { mapActions, mapGetters } from "vuex"; // импорт экшенов и гетеров из vuex 
 
 export default {
     name: "Index",
@@ -81,16 +83,23 @@ export default {
 
         
     },
-    computed: mapGetters(["allData"]),
+    computed: mapGetters([
+       'allData',
+       'GETdataPump',
+    //    'GETdataPoint'
+        ]),
 
     methods:{
+        // Регистрация методов 
         ...mapActions([
-            'loadPointData'
+            'loadPointData',
+            'loadData'
         ]),
     },
 
     mounted(){
-        this.loadPointData()
+        this.loadPointData();
+        this.loadData();
     }
 }
 </script>

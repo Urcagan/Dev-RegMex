@@ -8,8 +8,8 @@ export default {
     actions: {
        async loadPointData({ commit }) {
             try{
-                const data = await axios.get('/api/H1b/pressure');
-                commit("SET_DATA", data.data);
+                const data = await axios.get('/api/H1b/data');
+                commit("SET_DATA", data);
             } 
             catch (error) {
                 alert(error);
@@ -18,7 +18,7 @@ export default {
         },
 
         async loadData ({commit}) {
-            axios.get('/api/H1b/pressure')
+            await axios.get('/api/H1b/data')
 
                 .then((response) => {
                     commit('SET_POINT', response);
@@ -33,7 +33,8 @@ export default {
 
     mutations: {
         SET_DATA: (state, data) => {
-            state.dataPump = data;
+            state.dataPump = data.data;
+            state.dataTable = data;
         },
 
         SET_POINT: (state, data) => {
@@ -45,6 +46,12 @@ export default {
         count: 101,
         dataPump: [],
         dataPoint: [],
+
+        dataTable: [], // данные для отображения в таблице
+        dataPI: [], // данные давления для отображения на тренде 
+        dataTI: [], // данные температуры для отображения на тренде
+        dataXVI: [],    // данные осевого смещения для отображения на тренде
+        dataZVI: [],    // данные вибрации для отображения на тренде
     },
 
     

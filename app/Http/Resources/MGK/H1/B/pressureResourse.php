@@ -19,9 +19,10 @@ class pressureResourse extends JsonResource
 //            'id' => $this->id,
             // 'LocalTime' => $this->LocalTime,
             'LocalTime' => date_format($LocalTime, 'd.m.y H:i'),
-            'PI7026B' => $this->PI7026B,
-            'PI7028B' => $this->PI7028B,
-            'PI7024B' => $this->PI7024B,
+            'PI7026B' => round($this->PI7026B,3),
+            'PI7028B' => round($this->PI7028B,3),
+            'PI7024B' => round($this->PI7024B,3),
+            
         ];
     }
 }

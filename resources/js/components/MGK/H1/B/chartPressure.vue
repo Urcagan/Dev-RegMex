@@ -82,7 +82,9 @@ export default {
           ],
           dataPoint: [],
           localTime: [],
-          BigData: [],        
+          BigData: [],
+
+          PressureData: [],
       }
     },
 
@@ -97,19 +99,19 @@ export default {
             axios.get('/api/H1b/pressure')
 
                 .then((response) => {
-                    this.pointData = response.data.data;
+                    this.pointData = response.data;
                     // Получаем ссылку на нулевой элемент массива. Будем его использовать для получения ключей масива
                     // Получаем массив имен параметров с индексацией, который можно перебрать циклом
                     const KeyData = Object.keys(this.pointData[0])
                     KeyData.shift() //Удаляет первый элемент массива
 
-                    this.localTime = response.data.data.map(item => { return item.LocalTime.toString() });
+                    this.localTime = response.data.map(item => { return item.LocalTime.toString() });
                     for (let i = 0; i <= KeyData.length - 1; i++ ){
                         this.BigData.push({
                             label: KeyData[i],
                             backgroundColor: this.Color[i],
                             borderColor:this.Color[i],
-                            data: response.data.data.map(item => { return item[KeyData[i]] }),
+                            data: response.data.map(item => { return item[KeyData[i]] }),
                         });
                     };
                     // console.log(this.BigData)
@@ -121,6 +123,10 @@ export default {
                     console.log(error);
                 })
                 .finally(() => (this.loaded = true))
+        },
+
+        LoadPressure: function(){
+            this.PressureData =  
         },
     },
 
