@@ -32,6 +32,8 @@ ChartJS.defaults.elements.line.borderWidth = 1 // Задает глобальн�
 ChartJS.defaults.elements.point.radius = 0  // Задает глобальное значение радиуса точки
 ChartJS.defaults.elements.line.fill = false;
 
+import { mapActions, mapGetters } from "vuex"; // импорт экшенов и гетеров из vuex 
+
 export default {
     name: "chartPressure",
     components: {Line, MenuBar},
@@ -80,7 +82,7 @@ export default {
               '#00743F', '#F3E96B', '#F05837', '#6A8A82',
               '#563838', '#DE8CF0', '#BED905', '#16235A',
           ],
-          dataPoint: [],
+          pointData: [],
           localTime: [],
           BigData: [],
 
@@ -126,11 +128,23 @@ export default {
         },
 
         LoadPressure: function(){
-            this.PressureData =  
+            // this.PressureData =  
         },
+
+        FilterPoints: function(){
+            // this.PressureData = this.$status.
+        },
+
+        //  ...mapActions([
+        //     'loadPointData',
+        // ]),
     },
 
     computed:{
+        ...mapGetters([
+            'GETdataPump'
+        ]),
+        
         chartData() {
             return {
                 labels: this.localTime,

@@ -33,7 +33,7 @@ ChartJS.defaults.elements.point.radius = 0  // Задает глобальное
 ChartJS.defaults.elements.line.fill = false;
 
 export default {
-    name: "chartTI",
+    name: "chartZVI",
     components: {Line, MenuBar},
 
     props: {
@@ -80,7 +80,7 @@ export default {
               '#00743F', '#F3E96B', '#F05837', '#6A8A82',
               '#563838', '#DE8CF0', '#BED905', '#16235A',
           ],
-          dataPoint: [],
+          pointData: [],
           localTime: [],
           BigData: [],
       }

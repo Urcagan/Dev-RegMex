@@ -80,7 +80,7 @@ export default {
               '#00743F', '#F3E96B', '#F05837', '#6A8A82',
               '#563838', '#DE8CF0', '#BED905', '#16235A',
           ],
-          dataPoint: [],
+          pointData: [],
           localTime: [],
           BigData: [],        
       }

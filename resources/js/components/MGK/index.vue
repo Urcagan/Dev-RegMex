@@ -48,7 +48,7 @@
     </div>   
 </div> 
 <div>
-    <tr v-for="item in GETdataPump">{{ item.PI7026B }}</tr>
+    <!-- <tr v-for="item in GETdataPump">{{ item.PI7026B }}</tr> -->
 </div>
 
 </template>
@@ -83,11 +83,13 @@ export default {
 
         
     },
-    computed: mapGetters([
+    computed: {
+        ...mapGetters([
        'allData',
        'GETdataPump',
     //    'GETdataPoint'
         ]),
+    },
 
     methods:{
         // Регистрация методов 
