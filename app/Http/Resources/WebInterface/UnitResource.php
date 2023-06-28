@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\WibInterface;
+namespace App\Http\Resources\WebInterface;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,6 +18,9 @@ class UnitResource extends JsonResource
             'id' => $this -> id,
             'NameUnit' => $this -> NameUnit,
             'Description' => $this -> Description,
+            'plant_id' => $this -> plant_id,
+            'routWEB' => $this -> routWEB,
+            'routAPI' => $this -> routAPI,
         ];
     }
 }

@@ -32,8 +32,6 @@ ChartJS.defaults.elements.line.borderWidth = 1 // Задает глобальн�
 ChartJS.defaults.elements.point.radius = 0  // Задает глобальное значение радиуса точки
 ChartJS.defaults.elements.line.fill = false;
 
-import { mapActions, mapGetters } from "vuex"; // импорт экшенов и гетеров из vuex 
-
 export default {
     name: "chartPressure",
     components: {Line, MenuBar},
@@ -66,8 +64,14 @@ export default {
         plugins: {
             type: Object,
             default: () => {}
+        },
+        apiPath: {
+            type:String
         }
     },
+    // props:[
+    //     'apiPath' //*Преременная хранения API маршрута для выводимых данных
+    // ],
 
     data(){
       return{
@@ -84,21 +88,27 @@ export default {
           ],
           pointData: [],
           localTime: [],
-          BigData: [],
-
-          PressureData: [],
+          BigData: [],      
+          
+          FullPath: "",
       }
     },
 
     async mounted(){
-        this.loadPointData();
+        
+        this.FullPath ="/api/" + this.apiPath + "/pressure";
+        // console.log(this.FullPath);
+
+        this.loadPointData(this.FullPath);
         
     },
 
     methods:{
         // Методы для вывода графика
-        loadPointData: function () {
-            axios.get('/api/H1b/pressure')
+        loadPointData: function (Path) {
+            axios.get(Path)
+            // axios.get('/api/H1a/pressure')
+
 
                 .then((response) => {
                     this.pointData = response.data;
@@ -126,25 +136,9 @@ export default {
                 })
                 .finally(() => (this.loaded = true))
         },
-
-        LoadPressure: function(){
-            // this.PressureData =  
-        },
-
-        FilterPoints: function(){
-            // this.PressureData = this.$status.
-        },
-
-        //  ...mapActions([
-        //     'loadPointData',
-        // ]),
     },
 
     computed:{
-        ...mapGetters([
-            'GETdataPump'
-        ]),
-        
         chartData() {
             return {
                 labels: this.localTime,
@@ -161,7 +155,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Давление 111-Н1B',
+                        text: 'Давление',
                         font: {
                             size: 24,
                         },

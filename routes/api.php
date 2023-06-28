@@ -30,6 +30,7 @@ Route::group(['namespace'=>'App\Http\Controllers\WebInterface\Plant', 'prefix'=>
 
 Route::group(['namespace'=>'App\Http\Controllers\WebInterface\Unit', 'prefix'=>'interface'], function (){
     Route::get('/unit', 'IndexController');
+    Route::get('/unitGroup/{group_id}', 'UnitsGroupController');
     Route::get('/unit/{plant_id}', 'UnitController');
 });
 
@@ -66,3 +67,15 @@ Route::group(['namespace'=>'App\Http\Controllers\MGK\H1\B', 'prefix'=>'H1b'], fu
     Route::get('/data', 'DataLoadController');
 });
 
+// Варианты одиаковыхе для маршрутов
+Route::group(['namespace'=>'App\Http\Controllers\MGK\H1', 'prefix'=>'H1'], function (){
+    Route::get('/all', 'H1A_Controller@all');
+    Route::get('/show/{id}', 'H1A_Controller@show');
+});
+
+
+Route::group(['namespace'=>'App\Http\Controllers'], function (){
+    Route::get('/param', 'Test_Controller@filter_id');
+    Route::get('/testR', 'Test_Controller@testRequest');
+
+});

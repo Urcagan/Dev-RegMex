@@ -12,29 +12,37 @@ const routes = [
         path: "/",
         name: 'MainPage',
         component: () => import ('../components/main.vue')
-    },
+    }, 
     {
-        path: "/mgk",
-        name: 'MGKmenu',
-        component: () => import ('../components/MGK/index.vue'),
+        path: "/plant",
+        name: 'plant',
+        component: () => import ('../components/Main_Interface/plant.vue'),
         props: true
     },
+    // {
+    //     // Надо удалить маршрут
+    //     path: "/mgk",
+    //     name: 'MGKmenu',
+    //     component: () => import ('../components/MGK/index.vue'),
+    //     props: true
+    // },
     {
         path: "/mgk/n1a",
         name: 'MGK.H1A',
-        component: () => import ('../components/MGK/H1/H1A.vue'),
+        component: () => import ('../components/MGK/111H1/H1.vue'),
         props: true
     },
-    {
-        path: "/mgk/n1b",
-        name: 'MGK.H1B',
-        component: () => import ('../components/MGK/H1/H1B.vue')
-    },
-    {
-        path: "/upv",
-        name: 'UPVmenu',
-        component: () => import ('../components/UPV/index.vue')
-    },
+    // {
+    //     path: "/mgk/n1b",
+    //     name: 'MGK.H1B',
+    //     component: () => import ('../components/MGK/H1/H1B.vue')
+    // },
+    // {
+    //     // Надо удалить маршрут
+    //     path: "/upv",
+    //     name: 'UPVmenu',
+    //     component: () => import ('../components/UPV/index.vue')
+    // },
     {
         path: "/test",
         name: 'Test',
@@ -89,10 +97,23 @@ const routes = [
     //     component: ()=> import('../components/MGK/H1/A/chartZVI.vue')
     // },
 
+    // {
+    //     path: '/DK_B/table',
+    //     name: 'DK_B_table',
+    //     component: ()=> import('../components/MGK/H1/B/tableDisplay.vue')
+    // },
+    
+    // Маршрут для тестирования фильтра
     {
-        path: '/DK_B/table',
-        name: 'DK_B_table',
-        component: ()=> import('../components/MGK/H1/B/tableDisplay.vue')
+        path: '/param',
+        // name: 'DK_B_table',
+        component: ()=> import('../components/Test.vue')
+    },
+
+    {
+        path: '/select',
+        // name: 'DK_B_table',
+        component: ()=> import('../components/MainSelect.vue')
     },
 
     // Маршрут для несуществующего пути

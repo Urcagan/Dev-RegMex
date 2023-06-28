@@ -3,7 +3,7 @@
         <!-- <MenuBar></MenuBar> -->
     </div>
     <div>
-        <!-- <h2> Показатели давления </h2> -->
+        <!-- <h2> Показатели вибрации </h2> -->
     </div>
 
     <div class="container">
@@ -33,7 +33,7 @@ ChartJS.defaults.elements.point.radius = 0  // Задает глобальное
 ChartJS.defaults.elements.line.fill = false;
 
 export default {
-    name: "chartPressure",
+    name: "chartZVI",
     components: {Line, MenuBar},
 
     props: {
@@ -64,6 +64,10 @@ export default {
         plugins: {
             type: Object,
             default: () => {}
+        },
+
+        apiPath: {
+            type:String
         }
     },
 
@@ -82,19 +86,26 @@ export default {
           ],
           pointData: [],
           localTime: [],
-          BigData: [],        
+          BigData: [],
+
+          FullPath: "",
       }
     },
 
     async mounted(){
-        this.loadPointData();
-        
+
+        this.FullPath ="/api/" + this.apiPath + "/zvi";
+        console.log(this.FullPath);
+
+        this.loadPointData(this.FullPath);
     },
 
     methods:{
         // Методы для вывода графика
-        loadPointData: function () {
-            axios.get('/api/H1a/pressure')
+        loadPointData: function (Path) {
+
+            axios.get(Path)
+            // axios.get('/api/H1a/zvi')
 
                 .then((response) => {
                     this.pointData = response.data;
@@ -141,7 +152,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Давление 111-Н1А',
+                        text: 'Вибрация',
                         font: {
                             size: 24,
                         },

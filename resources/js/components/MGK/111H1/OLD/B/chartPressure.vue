@@ -3,7 +3,7 @@
         <!-- <MenuBar></MenuBar> -->
     </div>
     <div>
-        <!-- <h2> Показатели осевого смещения </h2> -->
+        <!-- <h2> Показатели давления </h2> -->
     </div>
 
     <div class="container">
@@ -18,6 +18,9 @@
               :height="height"
         />
     </div>
+    <div>
+    <tr v-for="item in GETdataPump">{{ item.PI7026B }}</tr>
+</div>
 </template>
 
 <script>
@@ -32,8 +35,10 @@ ChartJS.defaults.elements.line.borderWidth = 1 // Задает глобальн�
 ChartJS.defaults.elements.point.radius = 0  // Задает глобальное значение радиуса точки
 ChartJS.defaults.elements.line.fill = false;
 
+import { mapActions, mapGetters } from "vuex"; // импорт экшенов и гетеров из vuex 
+
 export default {
-    name: "chartXVI",
+    name: "chartPressure",
     components: {Line, MenuBar},
 
     props: {
@@ -83,18 +88,21 @@ export default {
           pointData: [],
           localTime: [],
           BigData: [],
+
+          PressureData: [],
       }
     },
 
     async mounted(){
         this.loadPointData();
+        
     },
 
     methods:{
         // Методы для вывода графика
         loadPointData: function () {
+            axios.get('/api/H1b/pressure')
 
-            axios.get('/api/H1a/xvi')
                 .then((response) => {
                     this.pointData = response.data;
                     // Получаем ссылку на нулевой элемент массива. Будем его использовать для получения ключей масива
@@ -121,9 +129,25 @@ export default {
                 })
                 .finally(() => (this.loaded = true))
         },
+
+        LoadPressure: function(){
+            // this.PressureData =  
+        },
+
+        FilterPoints: function(){
+            // this.PressureData = this.$status.
+        },
+
+        //  ...mapActions([
+        //     'loadPointData',
+        // ]),
     },
 
     computed:{
+        ...mapGetters([
+            'GETdataPump'
+        ]),
+        
         chartData() {
             return {
                 labels: this.localTime,
@@ -140,7 +164,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Осевое смещение 111-Н1А',
+                        text: 'Давление 111-Н1B',
                         font: {
                             size: 24,
                         },

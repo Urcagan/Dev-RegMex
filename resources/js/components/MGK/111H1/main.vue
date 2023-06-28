@@ -1,14 +1,6 @@
 <template>
-  
-   <div class="main-header">   
-        <div class="col-md-2" align="center"> 
-            <router-link class="btn btn-success m-2"  :to="{name: 'MGKmenu'}">Главная</router-link>
-        </div>    
-        <div class="col-md-10" > 
-            <h2 align="center" class="mt-2">Режимный лист сырьевого насоса МГК 111-Н1B</h2>
-        </div>    
-   </div>
-  
+   <menu-bar></menu-bar>
+    <IndexMGK/>
 <div class="card text-center">
     <div class="card-header">
         <!-- <ul class="nav nav-tabs card-header-tabs"> -->
@@ -52,20 +44,21 @@
 </template>
 
 <script>
-
-import DK_table from '/resources/js/components/MGK/H1/B/tableDisplay.vue'
-import DK_Pressure from '/resources/js/components/MGK/H1/B/chartPressure.vue'
-import DK_TI from '/resources/js/components/MGK/H1/B/chartTI.vue'
-import DK_XVI from '/resources/js/components/MGK/H1/B/chartXVI.vue' 
-import DK_ZVI from  '/resources/js/components/MGK/H1/B/chartZVI.vue'
+import IndexMGK from "../components/MGK/index.vue"
+import MenuBar from "/resources/js/components/MGK/menuBar.vue"
+import DK_table from "../components/MGK/111H1/tableDisplay.vue"
+import DK_Pressure from '../components/MGK/111H1/chartPressure.vue'
+import DK_TI from '../components/MGK/111H1/chartTI.vue'
+import DK_XVI from '../components/MGK/111H1/chartXVI.vue' 
+import DK_ZVI from  '../components/MGK/111H1/chartZVI.vue'
 
 export default {
-    name: "H1B",
-    components: {DK_table, DK_Pressure, DK_TI, DK_XVI, DK_ZVI},
+    name: "Main",
+    components: {IndexMGK, MenuBar, DK_table, DK_Pressure, DK_TI, DK_XVI, DK_ZVI},
 
   data(){
     return {
-        activeItem: 'table', // Переменная вкладка по умолчанию
+        activeItem: 'table' // Переменная вкладка по умолчанию
     }
   },
 
@@ -75,19 +68,12 @@ export default {
     },
     setActive(menuItem) { // Устанавливает новую активную вкладку
         this.activeItem = menuItem
-    },
+    }
   }
 }
 
 </script>
 
 <style scoped>
-    .main-header {
-        display: flex;
-        /* flex-direction: row; */
-        /* flex-wrap: wrap; */
-        align-items: center;
-        /* justify-content: center; */
-        /* justify-content: space-around; */
-    }
+
 </style>

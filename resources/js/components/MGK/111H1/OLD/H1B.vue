@@ -5,8 +5,7 @@
             <router-link class="btn btn-success m-2"  :to="{name: 'MGKmenu'}">Главная</router-link>
         </div>    
         <div class="col-md-10" > 
-            <h2 align="center" class="mt-2">Режимный лист сырьевого насоса МГК 111-Н1А</h2>
-            <h2>{{prefPath}}</h2>
+            <h2 align="center" class="mt-2">Режимный лист сырьевого насоса МГК 111-Н1B</h2>
         </div>    
    </div>
   
@@ -32,20 +31,19 @@
         </ul>
         <div class="tab-content"> 
             <div class="tab-pane fade" :class="{'active show': isActive('table')}" id="table">
-                <!-- <DK_A_table :apiPath="'/api/H1a/table'"/>  -->
-                <DK_A_table :apiPath="prefPath"/> 
+                <DK_table/> 
             </div>
             <div class="tab-pane fade" :class="{'active show': isActive('trend_pi')}" id="trend_pi">
-                <DK_A_Pressure/>
+                <DK_Pressure/>
             </div> 
             <div class="tab-pane fade" :class="{'active show': isActive('trend_ti')}" id="trend_ti">
-                <DK_A_TI/>
+                <DK_TI/>
             </div>
             <div class="tab-pane fade" :class="{'active show': isActive('trend_xvi')}" id="trend_xvi">
-                <DK_A_XVI/>
+                <DK_XVI/>
             </div>
             <div class="tab-pane fade" :class="{'active show': isActive('trend_zvi')}" id="trend_zvi">
-                <DK_A_ZVI/>
+                <DK_ZVI/>
             </div>    
         </div>
     </div>
@@ -55,24 +53,21 @@
 
 <script>
 
-import DK_A_table from "/resources/js/components/MGK/H1/A/tableDisplay.vue"
-import DK_A_Pressure from '/resources/js/components/MGK/H1/A/chartPressure.vue'
-import DK_A_TI from '/resources/js/components/MGK/H1/A/chartTI.vue'
-import DK_A_XVI from '/resources/js/components/MGK/H1/A/chartXVI.vue' 
-import DK_A_ZVI from  '/resources/js/components/MGK/H1/A/chartZVI.vue'
+import DK_table from '/resources/js/components/MGK/H1/B/tableDisplay.vue'
+import DK_Pressure from '/resources/js/components/MGK/H1/B/chartPressure.vue'
+import DK_TI from '/resources/js/components/MGK/H1/B/chartTI.vue'
+import DK_XVI from '/resources/js/components/MGK/H1/B/chartXVI.vue' 
+import DK_ZVI from  '/resources/js/components/MGK/H1/B/chartZVI.vue'
+
+import { mapActions, mapGetters } from "vuex"; // импорт экшенов и гетеров из vuex 
 
 export default {
-    name: "H1",
-    components: {DK_A_table, DK_A_Pressure, DK_A_TI, DK_A_XVI, DK_A_ZVI},
-props:true,
-    props: [
-        'prefPath'
-        ],
+    name: "H1B",
+    components: {DK_table, DK_Pressure, DK_TI, DK_XVI, DK_ZVI},
 
   data(){
     return {
         activeItem: 'table', // Переменная вкладка по умолчанию
-        apiPath: '/api/H1a/pressure',
     }
   },
 
@@ -83,7 +78,21 @@ props:true,
     setActive(menuItem) { // Устанавливает новую активную вкладку
         this.activeItem = menuItem
     },
-  }
+
+     ...mapActions([
+            'loadPointData',
+        ]),
+  },
+
+  computed: {
+    ...mapGetters([
+       'GETdataPump',
+        ]),
+  },
+
+  mounted(){
+        this.loadPointData();
+    }
 }
 
 </script>

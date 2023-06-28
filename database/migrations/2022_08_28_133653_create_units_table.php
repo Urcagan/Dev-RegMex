@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string( 'Description', 120)->nullable();
 
             $table->foreignId('plant_id')->constrained();
+            $table->string('routWEB')->nullable();
+            $table->string('routAPI')->nullable();
 
             $table->softDeletes();
         });

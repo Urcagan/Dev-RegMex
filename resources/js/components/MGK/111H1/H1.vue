@@ -1,6 +1,16 @@
 <template>
-   <menu-bar></menu-bar>
-    <IndexMGK/>
+    <h1>component\MGK\111H1\H1.vue</h1>
+  
+   <div class="main-header">   
+        <div class="col-md-2" align="center"> 
+            <router-link class="btn btn-success m-2"  :to="{name: 'MainPage'}">Главная</router-link>
+        </div>    
+        <div class="col-md-10" > 
+            <h2 align="center" class="mt-2"> Режимный лист {{ prefName }}</h2>
+            <!-- <h2>{{prefPath}}</h2> -->
+        </div>    
+   </div>
+  
 <div class="card text-center">
     <div class="card-header">
         <!-- <ul class="nav nav-tabs card-header-tabs"> -->
@@ -23,19 +33,20 @@
         </ul>
         <div class="tab-content"> 
             <div class="tab-pane fade" :class="{'active show': isActive('table')}" id="table">
-                <DK_A_table/> 
+                <!-- <DK_A_table :apiPath="'/api/H1a/table'"/>  -->
+                <DK_table :apiPath="prefPath"/> 
             </div>
             <div class="tab-pane fade" :class="{'active show': isActive('trend_pi')}" id="trend_pi">
-                <DK_A_Pressure/>
+                <DK_Pressure :apiPath="prefPath"/>
             </div> 
             <div class="tab-pane fade" :class="{'active show': isActive('trend_ti')}" id="trend_ti">
-                <DK_A_TI/>
+                <DK_TI :apiPath="prefPath"/>
             </div>
             <div class="tab-pane fade" :class="{'active show': isActive('trend_xvi')}" id="trend_xvi">
-                <DK_A_XVI/>
+                <DK_XVI :apiPath="prefPath" />
             </div>
             <div class="tab-pane fade" :class="{'active show': isActive('trend_zvi')}" id="trend_zvi">
-                <DK_A_ZVI/>
+                <DK_ZVI :apiPath="prefPath" />
             </div>    
         </div>
     </div>
@@ -44,21 +55,32 @@
 </template>
 
 <script>
-import IndexMGK from "../components/MGK/index.vue"
-import MenuBar from "/resources/js/components/MGK/menuBar.vue"
-import DK_A_table from "../components/MGK/H1/A/tableDisplay.vue"
-import DK_A_Pressure from '../components/MGK/H1/A/chartPressure.vue'
-import DK_A_TI from '../components/MGK/H1/A/chartTI.vue'
-import DK_A_XVI from '../components/MGK/H1/A/chartXVI.vue' 
-import DK_A_ZVI from  '../components/MGK/H1/A/chartZVI.vue'
+
+// import DK_A_table from "/resources/js/components/MGK/H1/A/tableDisplay.vue"
+// import DK_A_Pressure from '/resources/js/components/MGK/H1/A/chartPressure.vue'
+// import DK_A_TI from '/resources/js/components/MGK/H1/A/chartTI.vue'
+// import DK_A_XVI from '/resources/js/components/MGK/H1/A/chartXVI.vue' 
+// import DK_A_ZVI from  '/resources/js/components/MGK/H1/A/chartZVI.vue'
+
+import DK_table from "/resources/js/components/MGK/111H1/tableDisplay.vue"
+import DK_Pressure from '/resources/js/components/MGK/111H1/chartPressure.vue'
+import DK_TI from '/resources/js/components/MGK/111H1/chartTI.vue'
+import DK_XVI from '/resources/js/components/MGK/111H1/chartXVI.vue' 
+import DK_ZVI from  '/resources/js/components/MGK/111H1/chartZVI.vue'
 
 export default {
-    name: "Main",
-    components: {IndexMGK, MenuBar, DK_A_table, DK_A_Pressure, DK_A_TI, DK_A_XVI, DK_A_ZVI},
+    name: "H1",
+    components: {DK_table, DK_Pressure, DK_TI, DK_XVI, DK_ZVI},
+props:true,
+    props: [
+        'prefPath',
+        'prefName'
+        ],
 
   data(){
     return {
-        activeItem: 'table' // Переменная вкладка по умолчанию
+        activeItem: 'table', // Переменная вкладка по умолчанию
+        apiPath: '',
     }
   },
 
@@ -68,12 +90,19 @@ export default {
     },
     setActive(menuItem) { // Устанавливает новую активную вкладку
         this.activeItem = menuItem
-    }
+    },
   }
 }
 
 </script>
 
 <style scoped>
-
+    .main-header {
+        display: flex;
+        /* flex-direction: row; */
+        /* flex-wrap: wrap; */
+        align-items: center;
+        /* justify-content: center; */
+        /* justify-content: space-around; */
+    }
 </style>

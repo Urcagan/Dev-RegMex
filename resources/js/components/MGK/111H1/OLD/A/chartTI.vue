@@ -36,7 +36,8 @@ export default {
     name: "chartTI",
     components: {Line, MenuBar},
 
-    props: {
+    props:
+        {
         chartId: {
             type: String,
             default: 'line-chart'
@@ -64,8 +65,19 @@ export default {
         plugins: {
             type: Object,
             default: () => {}
+        },
+
+        apiPath: {
+            type:String
         }
+        
     },
+    
+    
+
+    // props:[
+    //     'apiPath' //*Преременная хранения API маршрута для выводимых данных
+    // ],
 
     data(){
       return{
@@ -83,18 +95,26 @@ export default {
           pointData: [],
           localTime: [],
           BigData: [],
+
+          FullPath: "",
       }
     },
 
     async mounted(){
-        this.loadPointData();
+        
+        this.FullPath ="/api/" + this.apiPath + "/ti";
+        console.log(this.FullPath);
+
+        this.loadPointData(this.FullPath);
     },
 
     methods:{
         // Методы для вывода графика
-        loadPointData: function () {
+        loadPointData: function (Path) {
 
-            axios.get('/api/H1a/ti')
+            axios.get(Path)
+            // axios.get('/api/H1a/ti')
+
                 .then((response) => {
                     this.pointData = response.data;
                     // Получаем ссылку на нулевой элемент массива. Будем его использовать для получения ключей масива
@@ -140,7 +160,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Температура 111-Н1А',
+                        text: 'Температура',
                         font: {
                             size: 24,
                         },

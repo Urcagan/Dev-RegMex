@@ -2,7 +2,7 @@
     <!-- <MenuBar></MenuBar> -->
     <div>
         <!-- <h2 align="center">Режимный лист сырьевого насоса МГК 111-Н1А</h2> -->
-    <h2>{{apiPath}}</h2>
+    <h2>{{apiPath}} Таблица параметров</h2>
         <div class="container-fluid">
             <table id="tableDisplay" class="table table-primary table-striped table-hover  table-bordered table-sm" cellspacing="0" width="100%">
                 <thead class="table-dark align-middle" align="center">
@@ -71,9 +71,12 @@ export default {
 
     components: { MenuBar },
 
-    props:[
-        'apiPath' //*Преременная хранения API маршрута для выводимых данных
-    ],
+    props:{
+        apiPath: {  //*Преременная хранения API маршрута для выводимых данных
+            type:String
+        },
+    },
+   
 
     data: function () {
         return {
@@ -83,11 +86,17 @@ export default {
             TagTableOne: [],     //* Переменная хранения заголовкков для таблицы 1
             TagTableTwo: [],    //* Переменная хранения заголовкков для таблицы 2
             // apiPath: '/api/H1a/table', //*Преременная хранения API маршрута для выводимых данных
+            FullPath: "",
         }
     },
 
     mounted() {
-        this.loadDataTable(this.apiPath);
+        this.FullPath ="/api/" + this.apiPath + "/table";
+        console.log(this.FullPath);
+        
+        this.loadDataTable(this.FullPath);
+        // this.loadDataTable(this.apiPath);
+
     },
 
     methods: {

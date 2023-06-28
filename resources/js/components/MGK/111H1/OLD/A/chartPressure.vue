@@ -3,7 +3,7 @@
         <!-- <MenuBar></MenuBar> -->
     </div>
     <div>
-        <!-- <h2> Показатели вибрации </h2> -->
+        <!-- <h2> Показатели давления </h2> -->
     </div>
 
     <div class="container">
@@ -33,7 +33,7 @@ ChartJS.defaults.elements.point.radius = 0  // Задает глобальное
 ChartJS.defaults.elements.line.fill = false;
 
 export default {
-    name: "chartZVI",
+    name: "chartPressure",
     components: {Line, MenuBar},
 
     props: {
@@ -64,8 +64,14 @@ export default {
         plugins: {
             type: Object,
             default: () => {}
+        },
+        apiPath: {
+            type:String
         }
     },
+    // props:[
+    //     'apiPath' //*Преременная хранения API маршрута для выводимых данных
+    // ],
 
     data(){
       return{
@@ -82,19 +88,28 @@ export default {
           ],
           pointData: [],
           localTime: [],
-          BigData: [],
+          BigData: [],      
+          
+          FullPath: "",
       }
     },
 
     async mounted(){
-        this.loadPointData();
+        
+        this.FullPath ="/api/" + this.apiPath + "/pressure";
+        console.log(this.FullPath);
+
+        this.loadPointData(this.FullPath);
+        
     },
 
     methods:{
         // Методы для вывода графика
-        loadPointData: function () {
+        loadPointData: function (Path) {
+            axios.get(Path)
+            // axios.get('/api/H1a/pressure')
 
-            axios.get('/api/H1a/zvi')
+
                 .then((response) => {
                     this.pointData = response.data;
                     // Получаем ссылку на нулевой элемент массива. Будем его использовать для получения ключей масива
@@ -140,7 +155,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Вибрация 111-Н1А',
+                        text: 'Давление',
                         font: {
                             size: 24,
                         },
