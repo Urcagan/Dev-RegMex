@@ -16,9 +16,25 @@
 
 
     </head>
-    <body style="background-color: #bebed5">
+    <!-- <body style="background-color: #bebed5"> -->
+    <body>
     
         <div id="app"></div>
     
     </body>
+
+    <style> 
+
+        body { 
+            /* Градиент */ 
+            /* background: linear-gradient(#000, #fff) fixed; */
+            /* background: -webkit-linear-gradient(180deg, rgb(94, 165, 221), rgb(118, 108, 208)); */
+            /* background: -moz-linear-gradient(180deg, rgb(94, 165, 221), rgb(118, 108, 208)); */
+            /* background: linear-gradient(180deg, rgb(94, 165, 221), rgb(118, 108, 208)); */
+            background: linear-gradient(#b9deed, #efefef) fixed;
+}
+        
+        
+    </style>
 </html>
+

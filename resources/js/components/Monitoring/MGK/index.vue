@@ -1,5 +1,5 @@
 <template>
-    <h3>Путь к файлу: component\Menu\plant.vue</h3>
+    <h1>component\Monitiring\MGK\index.vue</h1>
 
 <div class="main-header">   
         <div class="col-md-2" align="center"> 
@@ -8,7 +8,8 @@
         </div>    
 </div>
 
-<h3 class="title">{{ this.refDesc }}</h3>
+<h3 class="title">Установка гидрокрекенга</h3>
+<h3>props: {{ refIdPlant }}</h3>
 <!--
 <div class="container" >
     <div class="desktop ">
@@ -95,17 +96,13 @@ import { computed } from 'vue';
 import { mapActions, mapGetters } from "vuex"; // импорт экшенов и гетеров из vuex 
 
 export default {
-    name: "Plant",
+    name: "Index",
 
     // props:true,
     props: {
         refIdPlant:{
          type: String,
          default: 0,
-        },
-        refDesc:{
-            type: String,
-            default: 'Description',
         }
     },
 
@@ -141,7 +138,7 @@ export default {
 
             .then( (response) => {
                 this.MenuCount = response.data;
-                // console.log(this.MenuCount);
+                console.log(this.MenuCount);
             })
 
             .catch(function(error){

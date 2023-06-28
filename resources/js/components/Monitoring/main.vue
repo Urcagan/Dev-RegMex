@@ -24,7 +24,14 @@
 </div> -->
 
 <!-- Меню загружаемое из БД -->
-<h1>component\main.vue</h1>
+<h1>component\monitoring\main.vue</h1>
+
+<div class="main-header">   
+        <div class="col-md-2" align="center"> 
+            <router-link class="btn btn-success m-2"  :to="{name: 'index'}">Домашняя страница</router-link>
+            
+        </div>    
+</div>
 
     <h3 class="headline">Мониторинг динамического оборудования КТУ ГПВГ </h3>
 
@@ -55,7 +62,7 @@
 </template>
 
 <script >
-import MGKmenu from "../components/MGK/index.vue"
+import MGKmenu from "../Monitoring/MGK/index.vue"
 
 export default {
     name: "Main",

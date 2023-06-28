@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import MenuBar from "/resources/js/components/MGK/menuBar.vue"
+import MenuBar from "/resources/js/components/Monitoring/MGK/menuBar.vue"
 import axios from "axios";
 
 export default {

@@ -3,7 +3,7 @@
         <!-- <MenuBar></MenuBar> -->
     </div>
     <div>
-        <!-- <h2> Показатели температуры </h2> -->
+        <!-- <h2> Показатели вибрации </h2> -->
     </div>
 
     <div class="container">
@@ -22,7 +22,7 @@
 
 <script>
 
-import MenuBar from "/resources/js/components/MGK/menuBar.vue"
+import MenuBar from "/resources/js/components/Monitoring/MGK/menuBar.vue"
 import {Line} from 'vue-chartjs'
 
 import {Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale} from 'chart.js'
@@ -33,11 +33,10 @@ ChartJS.defaults.elements.point.radius = 0  // Задает глобальное
 ChartJS.defaults.elements.line.fill = false;
 
 export default {
-    name: "chartTI",
+    name: "chartZVI",
     components: {Line, MenuBar},
 
-    props:
-        {
+    props: {
         chartId: {
             type: String,
             default: 'line-chart'
@@ -70,14 +69,7 @@ export default {
         apiPath: {
             type:String
         }
-        
     },
-    
-    
-
-    // props:[
-    //     'apiPath' //*Преременная хранения API маршрута для выводимых данных
-    // ],
 
     data(){
       return{
@@ -101,8 +93,8 @@ export default {
     },
 
     async mounted(){
-        
-        this.FullPath ="/api/" + this.apiPath + "/ti";
+
+        this.FullPath ="/api/" + this.apiPath + "/zvi";
         // console.log(this.FullPath);
 
         this.loadPointData(this.FullPath);
@@ -113,7 +105,7 @@ export default {
         loadPointData: function (Path) {
 
             axios.get(Path)
-            // axios.get('/api/H1a/ti')
+            // axios.get('/api/H1a/zvi')
 
                 .then((response) => {
                     this.pointData = response.data;
@@ -160,7 +152,7 @@ export default {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Температура',
+                        text: 'Вибрация',
                         font: {
                             size: 24,
                         },

@@ -1,7 +1,7 @@
 <template>
 
     <div class="container">
-        <!-- <Menu></Menu> -->
+
     </div>
 
     <div class="container">
@@ -46,7 +46,6 @@
 
 <script>
 
-import Menu from "/resources/js/components/MGK/menuBar.vue"
 // import 'chart.js/auto'; // используется при леннивом спосоде
 import {Line} from 'vue-chartjs'
 
@@ -64,7 +63,7 @@ ChartJS.defaults.elements.line.fill = false;
 
 export default {
     name: 'LineChart',
-    components: {Line, Menu},
+    components: {Line,},
     props: {
         chartId: {
             type: String,

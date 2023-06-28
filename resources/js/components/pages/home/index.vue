@@ -20,7 +20,7 @@ import {Bar} from 'vue-chartjs'
 import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 
 import DK_A from "../home/DK_A.vue";
-import MenuBar from "/resources/js/components/MGK/menuBar.vue"
+import MenuBar from "/resources/js/components/Monitoring/MGK/menuBar.vue"
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 

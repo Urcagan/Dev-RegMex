@@ -22,7 +22,7 @@
 
 <script>
 
-import MenuBar from "/resources/js/components/MGK/menuBar.vue"
+import MenuBar from "/resources/js/components/Monitoring/MGK/menuBar.vue"
 import {Line} from 'vue-chartjs'
 
 import {Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale} from 'chart.js'

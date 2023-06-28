@@ -7,16 +7,24 @@ import notFound from '../components/notFound.vue';
 
 
 const routes = [
-    // Pages
+    
+    // Стартовая страница
     {
         path: "/",
+        name: 'index',
+        component: () => import ('../components/index.vue')
+    }, 
+
+    // Pages
+    {
+        path: "/monitoring",
         name: 'MainPage',
-        component: () => import ('../components/main.vue')
+        component: () => import ('../components/Monitoring/main.vue')
     }, 
     {
         path: "/plant",
         name: 'plant',
-        component: () => import ('../components/Main_Interface/plant.vue'),
+        component: () => import ('../components/Monitoring/Main_Interface/plant.vue'),
         props: true
     },
     // {
@@ -29,7 +37,7 @@ const routes = [
     {
         path: "/mgk/n1a",
         name: 'MGK.H1A',
-        component: () => import ('../components/MGK/111H1/H1.vue'),
+        component: () => import ('../components/Monitoring/MGK/111H1/H1.vue'),
         props: true
     },
     // {
@@ -105,9 +113,9 @@ const routes = [
     
     // Маршрут для тестирования фильтра
     {
-        path: '/param',
-        // name: 'DK_B_table',
-        component: ()=> import('../components/Test.vue')
+        path: '/time',
+        name: 'time',
+        component: ()=> import('../components/TimeSelect.vue')
     },
 
     {
