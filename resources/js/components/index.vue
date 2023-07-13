@@ -3,6 +3,7 @@
 
 <div class="menu">
     <router-link class="text" :to="{name: 'time'}">Тестовая страница с выбором времени</router-link>
+    <router-link class="text" :to="{name: 'Chart'}"> Line Chart D3 </router-link>
 </div>
 
 <h2 class="headline">Стартовая страница</h2>

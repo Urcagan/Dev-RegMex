@@ -57,6 +57,12 @@ const routes = [
         component: homePageIndex,
     },
 
+    {
+        path: "/chartD3",
+        name: 'Chart',
+        component: ()=>import('../components/Test/D3.vue'),
+    },
+
     // 111ДК 1 А
     {
         // path: "/DK_A",
