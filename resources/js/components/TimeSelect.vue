@@ -1,4 +1,12 @@
 <template>
+  <div id="select"> 
+    <v-select
+      :options="options"
+      @select="optionSelest"
+      :selected="selected"
+    />
+    <p>Selected options: {{selected}} </p>
+  </div>
 
 <div class="container" >
     <div>
@@ -12,14 +20,18 @@
                 </div>
             </div> -->
             <h3>Тестирование передачи параметров axios</h3>
-
-            <input type="date" v-model="start" placeholder="отредактируй меня">
-
+            <div>
+              C: <input type="date" v-model="start" placeholder="отредактируй меня">
+                по <input type="date" v-model="dataTemp" >  
+            </div>
+            
             <ul>
                 <li  v-for = "parametr in parametrs" :key="parametr.id">
                    <p> Data: {{parametr.LocalTime}}</p>
                 </li>
-            </ul>            
+            </ul>   
+
+                   
     </div>   
 
      <div class="container my-5">
@@ -54,15 +66,16 @@
 <script>
 
 import axios from 'axios'
-
+import vSelect from './v-select.vue'
 
 
 export default {
     name: "Main",
-    components: {  },
+    components: { vSelect, },
 
   data(){
     return {
+      dataTemp: new Date().toISOString().substr(0, 10),
         filter_id: 2,
         reqParam:{
             id: 2
@@ -84,23 +97,35 @@ export default {
               endDate: '2023-01-26',
           },
         
-        start: '2023-01-23',
+        start: '2023-07-13',
+
+        //-------------------------------------
+        //Опции для компонента select
+        options: [
+          {name: 'After', value: 1},
+          {name: 'Before', value: 2},
+          {name: 'Between', value: 3},
+        ],
+        selected: 'Select',
+        //-------------------------------------
     }
   },
 
     mounted() {
       this.getParam = {
         startDate: this.start,
-        endDate: '2023-01-26',
+        endDate: this.dataTemp, //'2023-01-26',
         }
-        console.log(this.getParam);
+        console.log( this.getParam);
         
         
         // this.filter(this.filter_id);
         this.m_find(this.regim);
 
         this.getParam = {}
-         console.log(this.getParam);
+        //  console.log(this.getParam);
+
+
     },
 
   methods: {
@@ -109,19 +134,19 @@ export default {
 
             switch(x) {
             case 'before':  
-              console.log('before');
+              console.log('Regim: before');
             break;
 
             case 'after':  
-              console.log('after');
+              console.log('Regim: after');
             break;
 
             case 'between':  
-              console.log('between');
+              console.log('Regim: between');
             break;
 
             default:
-              console.log('default');
+              console.log('Regim: default');
             break;
             }
 
@@ -164,7 +189,14 @@ export default {
                     //  console.log(err);
                 })
                 // console.log('выполнился filter')
+        },
+
+    // ----------------------------------------------
+    // Функция для select
+        optionSelest(option) {
+          this.selected = option.name
         }
+    // ----------------------------------------------
   },
 
 
@@ -172,9 +204,16 @@ export default {
       start: function(){
         this.getParam = {
         startDate: this.start,
-        endDate: '2023-01-26',
+        endDate: this.dataTemp, //'2023-01-26',
         }
+        this.m_find('before')
+      },
 
+      dataTemp: function(){
+        this.getParam = {
+        startDate: this.start,
+        endDate: this.dataTemp, //'2023-01-26',
+        }
         this.m_find('before')
       }
   }
@@ -194,4 +233,16 @@ export default {
     width: 30%;
     
 }
+
+/* ------------------------------------- */
+/* Стиль для компонента Select */
+#select {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+/* ------------------------------------- */
 </style>
