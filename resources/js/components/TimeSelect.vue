@@ -5,7 +5,7 @@
       @select="optionSelest"
       :selected="selected"
     />
-    <p>Selected options: {{selected}} </p>
+    <p>Selected options: {{selected}} Value: {{val}}</p>
   </div>
 
 <div class="container" >
@@ -107,6 +107,7 @@ export default {
           {name: 'Between', value: 3},
         ],
         selected: 'Select',
+        val: 0,
         //-------------------------------------
     }
   },
@@ -116,7 +117,7 @@ export default {
         startDate: this.start,
         endDate: this.dataTemp, //'2023-01-26',
         }
-        console.log( this.getParam);
+        console.log( "Object getParam: " + this.getParam);
         
         
         // this.filter(this.filter_id);
@@ -133,15 +134,15 @@ export default {
           async m_find(x) {
 
             switch(x) {
-            case 'before':  
+            case 'Before':  
               console.log('Regim: before');
             break;
 
-            case 'after':  
+            case 'After':  
               console.log('Regim: after');
             break;
 
-            case 'between':  
+            case 'Between':  
               console.log('Regim: between');
             break;
 
@@ -151,7 +152,7 @@ export default {
             }
 
             const path = this.pathURL + this.bef
-           console.log(path),
+           console.log("To function m_find:  " + path),
           //  axios.get('/api/param?',{params:{beforeDate:'2023-01-2'}})
             // axios.get(this.pathURL,{params:{beforeDate:'2023-01-2'}})
            await axios.get('/api/param?',{
@@ -164,7 +165,7 @@ export default {
             // axios.get('/api/param?', this.reqParam)
                 .then(res => {
                     this.parametrs = res.data
-                    console.log(res.data);
+                    // console.log(res.data);
                 })
                 .catch(err => {
                     //  console.log(err);
@@ -174,7 +175,7 @@ export default {
         filter(id) {
 
             const path = this.pathURL + this.bef
-           console.log(path),
+           console.log("To function filter: " + path),
            // axios.get('/api/param?',{params:{beforeDate:'2023-01-2'}})
             // axios.get(this.pathURL,{params:{beforeDate:'2023-01-2'}})
             axios.get(path)
@@ -195,6 +196,7 @@ export default {
     // Функция для select
         optionSelest(option) {
           this.selected = option.name
+          this.val = option.value
         }
     // ----------------------------------------------
   },
@@ -215,7 +217,13 @@ export default {
         endDate: this.dataTemp, //'2023-01-26',
         }
         this.m_find('before')
-      }
+      },
+
+// Отслеживание изменения переменной selected
+      selected: function(){
+        this.m_find(this.selected);
+        //console.log(this.selected);
+      },
   }
 }
 

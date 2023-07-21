@@ -5,7 +5,7 @@
   <div id="main"> 
     <v-select
       :options="options"
-      @select="optionSelest"
+      @select="optionSelect"
       :selected="selected"
     />
     <p>Selected options: {{selected}}</p>
@@ -38,7 +38,7 @@ export default {
   },
 
 methods: {
-  optionSelest(option) {
+  optionSelect(option) {
     this.selected = option.name
   }
   },

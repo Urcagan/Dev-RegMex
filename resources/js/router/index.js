@@ -62,6 +62,11 @@ const routes = [
         name: 'Chart',
         component: ()=>import('../components/Test/D3.vue'),
     },
+    {
+        path: "/D3Line",
+        name: 'D3Line',
+        component: ()=>import('../components/Test/D3Line.vue'),
+    },
 
     // 111ДК 1 А
     {

@@ -8,8 +8,9 @@
     >{{selected}}</p>
       <div 
         class="options"
-        v-if="areOptionsVisible"
-      >
+        v-if="areOptionsVisible"   
+      > 
+       <!-- Если значение переменной "areOptionsVisible" будет true, то показать опции -->
         <p
           v-for="option in options"
           :key="option.value"
