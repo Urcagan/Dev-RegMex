@@ -5,6 +5,7 @@
     <router-link class="text" :to="{name: 'time'}">Тестовая страница с выбором времени</router-link>
     <router-link class="text" :to="{name: 'Chart'}"> Line Chart D3.vue </router-link>
     <router-link class="text" :to="{name: 'D3Line'}"> D3Line.vue Альтернатива </router-link>
+    <router-link class="text" :to="{name: 'D3MultiLine'}"> D3 Multi Line.vue Альтернатива </router-link>
 </div>
 
 <h2 class="headline">Стартовая страница</h2>

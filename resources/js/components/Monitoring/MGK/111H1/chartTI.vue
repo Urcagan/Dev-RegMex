@@ -94,7 +94,6 @@ export default {
           ],
           pointData: [],
           localTime: [],
-          BigData: [],
 
           FullPath: "",
       }
@@ -124,17 +123,13 @@ export default {
 
                     this.localTime = response.data.map(item => { return item.LocalTime.toString() });
                     for (let i = 0; i <= KeyData.length - 1; i++ ){
-                        this.BigData.push({
+                        this.chartData.datasets.push({
                             label: KeyData[i],
                             backgroundColor: this.Color[i],
                             borderColor:this.Color[i],
                             data: response.data.map(item => { return item[KeyData[i]] }),
                         });
                     };
-                    // console.log(this.BigData)
-                    for (let i = 0 ; i <= KeyData.length - 1 ; i++) {
-                        this.chartData.datasets.push(this.BigData[i])
-                    }
                 })
                 .catch(function (error) {
                     console.log(error);
