@@ -77,5 +77,7 @@ Route::group(['namespace'=>'App\Http\Controllers\MGK\H1', 'prefix'=>'H1'], funct
 Route::group(['namespace'=>'App\Http\Controllers'], function (){
     Route::get('/param', 'Test_Controller@filter_id');
     Route::get('/testR', 'Test_Controller@testRequest');
+    Route::get('/load', 'LoadData_Controller@loadRequest');
+    Route::get('/loadOne', 'LoadData_Controller@OneRequest');
 
 });

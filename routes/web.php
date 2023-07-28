@@ -17,6 +17,8 @@ Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
     Route::get('/table', 'Table_Controller')->name('home');
 });
 
+    Route::get('/load', [App\Http\Controllers\LoadData_Controller::class, 'loadRequest']);
+
     Route::get('/test', [App\Http\Controllers\Test_Controller::class, 'testRequest']);
 
 Route::get('/', function () {

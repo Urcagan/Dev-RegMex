@@ -58,6 +58,12 @@ const routes = [
     },
 
     {
+        path: "/testdata",
+        name: 'TestData',
+        component: ()=>import('../components/Test/TestData.vue'),
+    },
+
+    {
         path: "/chartD3",
         name: 'Chart',
         component: ()=>import('../components/Test/D3.vue'),
