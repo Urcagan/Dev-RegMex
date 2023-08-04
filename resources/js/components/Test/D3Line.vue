@@ -36,7 +36,6 @@ export default {
     function(d){
       return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
     }).then(
-
     // Now I can use this dataset:
     function(data) {
 

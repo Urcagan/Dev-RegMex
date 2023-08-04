@@ -63,7 +63,11 @@ export default {
         { "year": "1883", "sex": "F", "name": "Linda", "n": 49, "prop": 0.000408132668104848 },
         { "year": "1883", "sex": "F", "name": "Deborah", "n": 16, "prop": 0.00013326780999342 },
         { "year": "1883", "sex": "F", "name": "Jessica", "n": 6, "prop": 4.99754287475325E-05 },
-      ]
+      ],
+
+      TestDate: "2022-11-29 17:59:59.610",
+
+
     }
   },
 
@@ -88,7 +92,11 @@ export default {
           // console.log(sumstat);
 
 
-    this.PlotChart_2()
+    // this.PlotChart_2()
+
+    this.loadPointData()
+
+    // this.convertData()
   },
 
 
@@ -112,10 +120,12 @@ export default {
         //Read the data
       // d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv")
         // .then( function(OneCat) {
-          console.log(this.OneCat);
+          // console.log(this.OneCat);
           // group the data: I want to draw one line per group
+          
+          
           const sumstat = d3.group(this.OneCat, d => d.name); // nest function allows to group the calculation per level of a factor
-     
+    // console.log(sumstat)
             // Add X axis --> it is a date format
           const x = d3.scaleLinear()
             .domain(d3.extent(this.OneCat, function(d) { return d.year; }))
@@ -152,6 +162,121 @@ export default {
         // })
     },
 
+    convertData: function () {
+
+       axios.get('/api/load')
+
+                .then((response) => {
+                  const data = response.data;
+                 
+                  const Result = [];
+
+                  data.forEach(element => {
+                    element.forEach(item => {
+                      Result.push(item);
+                    })
+                  });
+                 
+                  const parsDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); 
+                  
+                  Result.forEach(element => {
+                    element.LocalTime = parsDate(element.LocalTime)
+                    // console.log(element.LocalTime)
+                  })
+
+                  console.log(Result)
+
+                  const sumstat = d3.group(Result, d => d.name);
+                  // console.log(sumstat);  
+                  
+                  const DateMark = d3.extent(Result, function(d) { return d.LocalTime; });
+                  console.log(DateMark);
+                })
+
+    },
+
+    loadPointData: function () {
+
+
+      const width = 1680 - this.margin.left - this.margin.right,
+            height = 400 - this.margin.top - this.margin.bottom;
+
+      // append the svg object to the body of the page
+      const svg = d3.select("#my_dataviz")
+        .append("svg")
+          .attr("width", width + this.margin.left + this.margin.right)
+          .attr("height", height + this.margin.top + this.margin.bottom)
+        .append("g")
+          .attr("transform", `translate(${this.margin.left},${this.margin.top})`);
+
+             axios.get('/api/load')
+
+                .then((response) => {
+                  const data = response.data;
+console.log(data)
+                  const Result = [];
+
+                  data.forEach(element => {
+                    element.forEach(item => {
+                      Result.push(item);
+                    })
+                  });
+                  
+
+                  const parsDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); 
+                  
+                  Result.forEach(element => {
+                    element.LocalTime = parsDate(element.LocalTime)
+                    // console.log(element.LocalTime)
+                  })
+                 console.log(Result)
+                  // function(Result){
+                  //   return { name: Result.name , LocalTime: d3.timeParse("%Y-%m-%d")(Result.LocalTime:), value : Result.value }
+                  // }
+
+                  const sumstat = d3.group(Result, d => d.name);
+                  console.log(sumstat);
+
+                  const x = d3.scaleTime()
+                    .domain(d3.extent(Result, function(d) { return d.LocalTime; }))
+                    .range([ 0, width ]);
+                  svg.append("g")
+                    .attr("transform", `translate(0, ${height})`)
+                    .call(d3.axisBottom(x).ticks());
+
+                    // Add Y axis
+                  const y = d3.scaleLinear()
+                    .domain([0, d3.max(Result, function(d) { return +d.value; })])
+                    .range([ height, 0 ]);
+                  svg.append("g")
+                    .call(d3.axisLeft(y));
+
+                    // color palette
+                  const color = d3.scaleOrdinal()
+                    .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+
+                  // Draw the line
+                  svg.selectAll(".line")
+                      .data(sumstat)
+                      .join("path")
+                        .attr("fill", "none")
+                        .attr("stroke", function(d){ return color(d[0]) })
+                        .attr("stroke-width", 1.5)
+                        .attr("d", function(d){
+                          return d3.line()
+                            .x(function(d) { return x(d.LocalTime); })
+                            .y(function(d) { return y(+d.value); })
+                            (d[1])
+                        })
+                  
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(() => (this.loaded = true))
+        },
+
+
   },
 
 };
@@ -160,9 +285,9 @@ export default {
 
 <style>
 
-svg {
+/* svg {
   border: 1px solid red;
-}
+} */
     .head {
          text-align: center;
         margin: 20px;

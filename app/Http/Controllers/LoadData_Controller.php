@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Test_Resourse;
 use App\Models\H1A;
+use ArrayObject;
 use Illuminate\Http\Request;
-
+use PhpParser\Node\Expr\Cast\Array_;
 
 class LoadData_Controller extends Controller
 {
@@ -26,16 +27,18 @@ class LoadData_Controller extends Controller
     public function OneRequest()
     {
         
-        $query = H1A::limit(1);
+        $query = H1A::limit(3);
         // $query = H1A::take(10);
         // dd($data);
 
         $resp = $query->get();
         // dd($resp);
         // return ($resp);
+        
+        $V_collect = Test_Resourse::collection($resp);
 
+        return $V_collect;
 
-        return Test_Resourse::collection($resp);
     }
     
     

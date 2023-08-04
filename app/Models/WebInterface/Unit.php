@@ -26,5 +26,9 @@ class Unit extends Model
         return $this->belongsTo(Plant::class, 'plant_id', 'id');
     }
 
+    public function point()
+    {
+        return $this->hasMany(Piont::class, 'point_id', 'id');
+    }
 
 }
