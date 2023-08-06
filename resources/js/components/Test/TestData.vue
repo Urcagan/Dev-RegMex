@@ -213,7 +213,7 @@ export default {
 
                 .then((response) => {
                   const data = response.data;
-console.log(data)
+// console.log(data)
                   const Result = [];
 
                   data.forEach(element => {
@@ -229,34 +229,58 @@ console.log(data)
                     element.LocalTime = parsDate(element.LocalTime)
                     // console.log(element.LocalTime)
                   })
-                 console.log(Result)
+                //   console.log('Result')
+                //  console.log(Result)
                   // function(Result){
                   //   return { name: Result.name , LocalTime: d3.timeParse("%Y-%m-%d")(Result.LocalTime:), value : Result.value }
                   // }
 
                   const sumstat = d3.group(Result, d => d.name);
-                  console.log(sumstat);
+                  // console.log(sumstat);
 
                   const x = d3.scaleTime()
                     .domain(d3.extent(Result, function(d) { return d.LocalTime; }))
                     .range([ 0, width ]);
-                  svg.append("g")
+                  //  svg.append("g") // исключен при модификации масштабирования
+                  const xAxis = svg.append("g")
                     .attr("transform", `translate(0, ${height})`)
-                    .call(d3.axisBottom(x).ticks());
+                    //  .call(d3.axisBottom(x).ticks()); // исключен при модификации масштабирования
+                    .call(d3.axisBottom(x));
 
                     // Add Y axis
-                  const y = d3.scaleLinear()
+                  const y = d3.scaleLinear() 
                     .domain([0, d3.max(Result, function(d) { return +d.value; })])
                     .range([ height, 0 ]);
-                  svg.append("g")
+                  // svg.append("g") // исключен при модификации масштабирования
+                  const yAxis = svg.append("g")  
                     .call(d3.axisLeft(y));
 
-                    // color palette
+                  //Добавлено при модификации для масштабирования
+                        // Добавьте clipPath: все, что находится за пределами этой области, не будет отображаться.
+                      const clip = svg.append("defs").append("svg:clipPath")
+                          .attr("id", "clip")
+                          .append("svg:rect")
+                          .attr("width", width )
+                          .attr("height", height )
+                          .attr("x", 0)
+                          .attr("y", 0);
+
+                      // // Add brushing
+                      const brush = d3.brushX()                 // Добавьте функцию кисти, используя функцию d3.brush.
+                          .extent( [ [0,0], [width,height] ] )  // инициализируйте область кисти: начните с 0,0 и закончите шириной, высотой: это означает, что я выбираю всю область графика
+                          .on("end", updateChart)               //Каждый раз, когда выбор кисти меняется, запускайте функцию updateChart.
+
+  // цветовая палитра
                   const color = d3.scaleOrdinal()
                     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
 
-                  // Draw the line
-                  svg.selectAll(".line")
+                      // Делаем групп в которой будем отображать линии диаграммы
+                    const line = svg.append('g')
+                      .attr("clip-path", "url(#clip)")
+
+                  // Рисование линий
+                  // svg.selectAll(".line") // исключен при модификации масштабирования
+                  line.selectAll(".line") // добавлен при модификации масштабирования
                       .data(sumstat)
                       .join("path")
                         .attr("fill", "none")
@@ -268,7 +292,62 @@ console.log(data)
                             .y(function(d) { return y(+d.value); })
                             (d[1])
                         })
-                  
+                        // debugger
+                        
+
+                  // Добавить Кисть
+                      line.append("g")
+                          .attr("class", "brush")
+                          .call(brush);
+
+                  // Функция, которая устанавливает для idleTimeOut значение nulll
+                  let idleTimeout
+                  function idled() { idleTimeout = null; }
+
+                  // Функция, которая обновляет график для заданных границ
+                  function updateChart(event,d) {
+
+                    // Каковы выбранные границы?
+                    let extent = event.selection
+                    // Если нет выбора, вернуться к исходной координате. В противном случае обновите домен оси X.
+                    if(!extent){
+                      if (!idleTimeout) return idleTimeout = setTimeout(idled, 350) //Таймер для ожидания (двойное нажатие)
+                      x.domain([ 4,8])
+                    }else{
+                      x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
+                      line.select(".brush").call(brush.move, null) // Это удалит область серой кисти, как только выделение будет сделано.
+                    }
+
+                    // Обновить положение оси
+                    xAxis.transition().duration(1000).call(d3.axisBottom(x))
+                    
+                    // Обновить положение линии
+                    line.selectAll('.line')                    
+                        .transition()
+                        .duration(1000)
+                        
+                        .attr("d", function(d){
+                          return d3.line()
+                            .x(function(d) { return x(d.LocalTime); })
+                            .y(function(d) { return y(d.value); })
+                            (d[1])
+                        })
+                        
+                  }
+// debugger
+                  // Если пользователь дважды щелкнет, повторно инициализирует диаграмму
+                  svg.on("dblclick",function(){
+                          x.domain(d3.extent(Result, function(d) { return d.LocalTime; }))
+                          xAxis.transition().call(d3.axisBottom(x))
+                          // line
+                          //   .select('.line')
+                          //   .transition()
+                          //   .attr("d", d3.line()
+                          //     .x(function(d) { return x(d.LocalTime) })
+                          //     .y(function(d) { return y(d.value) })
+                          // )
+                        });
+  
                 })
                 .catch(function (error) {
                     console.log(error);

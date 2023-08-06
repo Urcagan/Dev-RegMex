@@ -26,8 +26,7 @@ export default {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
-        .attr("transform",
-              `translate(${margin.left}, ${margin.top})`);
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
     //Read the data
     d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
@@ -125,6 +124,7 @@ export default {
               .x(function(d) { return x(d.date) })
               .y(function(d) { return y(d.value) })
             )
+            
       }
 
       // If user double click, reinitialize the chart
