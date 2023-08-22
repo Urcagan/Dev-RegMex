@@ -80,6 +80,7 @@ export default {
       line.append("path")
         .datum(data)
         .attr("class", "line")  // I add the class line to be able to modify this line later on.
+                                // Я добавляю строку класса, чтобы иметь возможность изменить эту строку позже
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)

@@ -176,7 +176,7 @@ export default {
                       Result.push(item);
                     })
                   });
-                 
+
                   const parsDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); 
                   
                   Result.forEach(element => {
@@ -196,66 +196,113 @@ export default {
     },
 
     loadPointData: function () {
+      // Пример брался  из источника https://d3-graph-gallery.com/graph/line_several_group.html
+      //                             https://d3-graph-gallery.com/graph/line_brushZoom.html
 
-
-      const width = 1680 - this.margin.left - this.margin.right,
-            height = 400 - this.margin.top - this.margin.bottom;
+      const margin = {top: 70, right: 30, bottom: 40, left: 80};
+      const width = 1800 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
       // append the svg object to the body of the page
       const svg = d3.select("#my_dataviz")
         .append("svg")
-          .attr("width", width + this.margin.left + this.margin.right)
-          .attr("height", height + this.margin.top + this.margin.bottom)
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
         .append("g")
-          .attr("transform", `translate(${this.margin.left},${this.margin.top})`);
+          .attr("transform", `translate(${margin.left},${margin.top})`);
 
-             axios.get('/api/load')
+          // Функция в переменной для преобразоания строки с датой и временем  в формат даты и времеи
+                  const parsDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); 
+
+
+          axios.get('/api/load')
 
                 .then((response) => {
                   const data = response.data;
-// console.log(data)
-                  const Result = [];
+                  
+                  const Result = []; // Массив для хранения последовательности данных
 
                   data.forEach(element => {
                     element.forEach(item => {
+                        item.LocalTime = parsDate(item.LocalTime) // Преобразование Даты и времени
                       Result.push(item);
                     })
                   });
                   
-
-                  const parsDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); 
-                  
-                  Result.forEach(element => {
-                    element.LocalTime = parsDate(element.LocalTime)
-                    // console.log(element.LocalTime)
-                  })
-                //   console.log('Result')
-                //  console.log(Result)
-                  // function(Result){
-                  //   return { name: Result.name , LocalTime: d3.timeParse("%Y-%m-%d")(Result.LocalTime:), value : Result.value }
-                  // }
-
+                  // Result.forEach(element => {
+                  //   element.LocalTime = parsDate(element.LocalTime)
+                  // })
+                    // Выполняем агрегация данных по графе name, необходимо для вывода на график
                   const sumstat = d3.group(Result, d => d.name);
-                  // console.log(sumstat);
 
+                    // Добавление оси Х
                   const x = d3.scaleTime()
                     .domain(d3.extent(Result, function(d) { return d.LocalTime; }))
                     .range([ 0, width ]);
-                  //  svg.append("g") // исключен при модификации масштабирования
                   const xAxis = svg.append("g")
                     .attr("transform", `translate(0, ${height})`)
-                    //  .call(d3.axisBottom(x).ticks()); // исключен при модификации масштабирования
-                    .call(d3.axisBottom(x));
+                    .style("font-size", "12px")
+                    .attr("stroke-width", 1.5)
+                    .call(d3.axisBottom(x)
+                      // .ticks(d3.timeMonth.every(1))
+                      // .tickFormat(d3.timeFormat("%d %m %Y"))
+                      );
+                  //   .call(g => g.select(".domain").remove())
+                  //   .selectAll(".tick line")
+                  //   .style("stroke-opacity", 0)
+                  // svg.selectAll(".tick text")
+                  //   .attr("fill", "#777");
 
-                    // Add Y axis
+                    // Добавление оси У
                   const y = d3.scaleLinear() 
-                    .domain([0, d3.max(Result, function(d) { return +d.value; })])
-                    .range([ height, 0 ]);
-                  // svg.append("g") // исключен при модификации масштабирования
-                  const yAxis = svg.append("g")  
-                    .call(d3.axisLeft(y));
+                    .domain([0, d3.max(Result, function(d) { return d.value; })])
+                    // .domain([0, 0.2])
 
-                  //Добавлено при модификации для масштабирования
+                    .range([ height, 0 ]);
+                  const yAxis = svg.append("g")
+                    .attr("stroke-width", 1.5)  
+                    .call(d3.axisLeft(y)
+                      .ticks()
+                    );
+
+                  // Функция рисования решотки по Х
+                    const DrawXGrid = function () {
+                        linexGrid.selectAll("line")
+                        .data(x.ticks().slice(0))
+                        .join("line")
+                          .transition()
+                          .duration(1000)
+                          .attr("x1", d => x(d))
+                          .attr("x2", d => x(d))
+                          .attr("y1", 0)
+                          .attr("y2", height)
+                          .attr("stroke", '#9a9a9a')
+                          .attr("stroke-width", .5);
+                      };
+                      // Функция рисования решотки по У
+                    const DrawYGrid = function () {
+                      lineYGrid.selectAll("yGrid")
+                      .data(y.ticks().slice(0))
+                      .join("line")
+                        .attr("x1", 0)
+                        .attr("x2", width)
+                        .attr("y1", d => y(d))
+                        .attr("y2", d => y(d))
+                        .attr("stroke", "#9a9a9a")
+                        .attr("stroke-width", .5)
+                    };
+
+                    // Добавление вертикальных линий решотки гафика
+                    const linexGrid = svg.append('g')
+                       .attr("class", "xGrid" );  
+
+                       DrawXGrid();
+                    
+                    const lineYGrid = svg.append('g')
+                      .attr("class", "yGrid");
+
+                      DrawYGrid();
+
                         // Добавьте clipPath: все, что находится за пределами этой области, не будет отображаться.
                       const clip = svg.append("defs").append("svg:clipPath")
                           .attr("id", "clip")
@@ -270,30 +317,28 @@ export default {
                           .extent( [ [0,0], [width,height] ] )  // инициализируйте область кисти: начните с 0,0 и закончите шириной, высотой: это означает, что я выбираю всю область графика
                           .on("end", updateChart)               //Каждый раз, когда выбор кисти меняется, запускайте функцию updateChart.
 
-  // цветовая палитра
+                // цветовая палитра
                   const color = d3.scaleOrdinal()
                     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
 
                       // Делаем групп в которой будем отображать линии диаграммы
                     const line = svg.append('g')
                       .attr("clip-path", "url(#clip)")
-
+            // debugger 
                   // Рисование линий
-                  // svg.selectAll(".line") // исключен при модификации масштабирования
                   line.selectAll(".line") // добавлен при модификации масштабирования
                       .data(sumstat)
                       .join("path")
+                        .attr("class", "line")  // Я добавляю строку класса, чтобы иметь возможность изменить эту строку позже
                         .attr("fill", "none")
                         .attr("stroke", function(d){ return color(d[0]) })
                         .attr("stroke-width", 1.5)
                         .attr("d", function(d){
                           return d3.line()
                             .x(function(d) { return x(d.LocalTime); })
-                            .y(function(d) { return y(+d.value); })
+                            .y(function(d) { return y(d.value); })
                             (d[1])
-                        })
-                        // debugger
-                        
+                        })                        
 
                   // Добавить Кисть
                       line.append("g")
@@ -315,6 +360,9 @@ export default {
                       x.domain([ 4,8])
                     }else{
                       x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
+                      linexGrid.selectAll("line").remove() 
+                      DrawXGrid();
+
                       line.select(".brush").call(brush.move, null) // Это удалит область серой кисти, как только выделение будет сделано.
                     }
 
@@ -325,38 +373,63 @@ export default {
                     line.selectAll('.line')                    
                         .transition()
                         .duration(1000)
-                        
                         .attr("d", function(d){
                           return d3.line()
                             .x(function(d) { return x(d.LocalTime); })
                             .y(function(d) { return y(d.value); })
                             (d[1])
                         })
-                        
                   }
-// debugger
+
                   // Если пользователь дважды щелкнет, повторно инициализирует диаграмму
                   svg.on("dblclick",function(){
-                          x.domain(d3.extent(Result, function(d) { return d.LocalTime; }))
-                          xAxis.transition().call(d3.axisBottom(x))
-                          // line
-                          //   .select('.line')
-                          //   .transition()
-                          //   .attr("d", d3.line()
-                          //     .x(function(d) { return x(d.LocalTime) })
-                          //     .y(function(d) { return y(d.value) })
-                          // )
-                        });
+                    x.domain(d3.extent(Result, function(d) { return d.LocalTime; }))
+                    xAxis.transition().call(d3.axisBottom(x))
+                    line
+                      .selectAll('.line')
+                      .transition()
+                      .attr("d", function(d){
+                          return d3.line()
+                          .x(function(d) { return x(d.LocalTime); })
+                          .y(function(d) { return y(d.value); })
+                          (d[1])
+                        })
+                    linexGrid.selectAll("line").remove() 
+                    DrawXGrid();                              
+                  });
+                    
+                        // // Добавляет подпись оси У
+                    svg.append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 0 - margin.left)
+                    .attr("x", 0 - (height / 2))
+                    .attr("dy", "2em")
+                    .style("text-anchor", "middle")
+                    .style("font-size", "14px")
+                    .style("fill", "#777")
+                    .style("font-family", "sans-serif")
+                    .text("Подпись оси У");
+
+                    // // Добвляет надпись названия графика Add the chart title
+                    svg.append("text")
+                    .attr("class", "chart-title")
+                    .attr("x", margin.left - 50)
+                    .attr("y", margin.top  - 100 )
+                    .style("font-size", "18px")
+                    .style("font-weight", "bold")
+                    .style("font-family", "sans-serif")
+                    .text("Надпись названия графика");
+                 
   
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
                 .finally(() => (this.loaded = true))
+
+                
         },
-
-
-  },
+ },
 
 };
 
