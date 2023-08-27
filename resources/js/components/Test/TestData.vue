@@ -92,7 +92,6 @@ export default {
           // console.log(sumstat);
 
 
-    // this.PlotChart_2()
 
     this.loadPointData()
 
@@ -101,66 +100,6 @@ export default {
 
 
   methods: {
-
-    PlotChart_2(){
-        
-      // set the dimensions and margins of the graph
-      // const margin = {top: 10, right: 30, bottom: 30, left: 60},
-      const width = 460 - this.margin.left - this.margin.right,
-            height = 400 - this.margin.top - this.margin.bottom;
-
-      // append the svg object to the body of the page
-      const svg = d3.select("#my_dataviz")
-        .append("svg")
-          .attr("width", width + this.margin.left + this.margin.right)
-          .attr("height", height + this.margin.top + this.margin.bottom)
-        .append("g")
-          .attr("transform", `translate(${this.margin.left},${this.margin.top})`);
-
-        //Read the data
-      // d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv")
-        // .then( function(OneCat) {
-          // console.log(this.OneCat);
-          // group the data: I want to draw one line per group
-          
-          
-          const sumstat = d3.group(this.OneCat, d => d.name); // nest function allows to group the calculation per level of a factor
-    // console.log(sumstat)
-            // Add X axis --> it is a date format
-          const x = d3.scaleLinear()
-            .domain(d3.extent(this.OneCat, function(d) { return d.year; }))
-            .range([ 0, width ]);
-          svg.append("g")
-            .attr("transform", `translate(0, ${height})`)
-            .call(d3.axisBottom(x).ticks(5));
-
-            // Add Y axis
-          const y = d3.scaleLinear()
-            .domain([0, d3.max(this.OneCat, function(d) { return +d.n; })])
-            .range([ height, 0 ]);
-          svg.append("g")
-            .call(d3.axisLeft(y));
-
-            // color palette
-          const color = d3.scaleOrdinal()
-            .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
-          // Draw the line
-          svg.selectAll(".line")
-              .data(sumstat)
-              .join("path")
-                .attr("fill", "none")
-                .attr("stroke", function(d){ return color(d[0]) })
-                .attr("stroke-width", 1.5)
-                .attr("d", function(d){
-                  return d3.line()
-                    .x(function(d) { return x(d.year); })
-                    .y(function(d) { return y(+d.n); })
-                    (d[1])
-                })
-
-        // })
-    },
 
     convertData: function () {
 
@@ -192,7 +131,6 @@ export default {
                   const DateMark = d3.extent(Result, function(d) { return d.LocalTime; });
                   console.log(DateMark);
                 })
-
     },
 
     loadPointData: function () {
@@ -256,8 +194,6 @@ export default {
                     // Добавление оси У
                   const y = d3.scaleLinear() 
                     .domain([0, d3.max(Result, function(d) { return d.value; })])
-                    // .domain([0, 0.2])
-
                     .range([ height, 0 ]);
                   const yAxis = svg.append("g")
                     .attr("stroke-width", 1.5)  
@@ -295,18 +231,17 @@ export default {
                     // Добавление вертикальных линий решотки гафика
                     const linexGrid = svg.append('g')
                        .attr("class", "xGrid" );  
-
                        DrawXGrid();
                     
                     const lineYGrid = svg.append('g')
                       .attr("class", "yGrid");
-
                       DrawYGrid();
 
                         // Добавьте clipPath: все, что находится за пределами этой области, не будет отображаться.
-                      const clip = svg.append("defs").append("svg:clipPath")
+                      const clip = svg.append("defs").append("clipPath")
                           .attr("id", "clip")
-                          .append("svg:rect")
+                          .append("rect")
+                          .attr("id", "clip2")
                           .attr("width", width )
                           .attr("height", height )
                           .attr("x", 0)
@@ -315,11 +250,43 @@ export default {
                       // // Add brushing
                       const brush = d3.brushX()                 // Добавьте функцию кисти, используя функцию d3.brush.
                           .extent( [ [0,0], [width,height] ] )  // инициализируйте область кисти: начните с 0,0 и закончите шириной, высотой: это означает, что я выбираю всю область графика
-                          .on("end", updateChart)               //Каждый раз, когда выбор кисти меняется, запускайте функцию updateChart.
-
+                          .on("end", updateChart)     
                 // цветовая палитра
                   const color = d3.scaleOrdinal()
                     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+
+                   // create a listening rectangle
+
+                  const listeningRect = svg.append("rect")
+                    .attr("id", "Tooltips")
+                    .attr("width", width)
+                    .attr("height", height);
+
+                  // create the mouse move function
+
+                  listeningRect.on("mousemove", function (event) {
+                    const [xCoord, yCoord] = d3.pointer(event, this);   //Возвращает двухэлементный массив чисел [x, y] представляющие координаты указанного событие относительно указанного цель.
+                    console.log("xAxis: " + xCoord + "  yAxis: " + yCoord) 
+                    
+                    // const bisectDate = d3.bisector(d => d.date).left;
+                    // const x0 = x.invert(xCoord);
+                    // const i = bisectDate(data, x0, 1);
+                    // const d0 = data[i - 1];
+                    // const d1 = data[i];
+                    // const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+                    // const xPos = x(d.date);
+                    // const yPos = y(d.population);
+
+                    
+                  // Update the circle position
+
+                  // circle.attr("cx", xPos)
+                  //   .attr("cy", yPos);
+
+                  //   console.log(xPos)
+                    
+                  });
+
 
                       // Делаем групп в которой будем отображать линии диаграммы
                     const line = svg.append('g')
@@ -397,6 +364,9 @@ export default {
                     linexGrid.selectAll("line").remove() 
                     DrawXGrid();                              
                   });
+
+                 
+                  
                     
                         // // Добавляет подпись оси У
                     svg.append("text")
@@ -444,5 +414,23 @@ export default {
          text-align: center;
         margin: 20px;
     }
+
+    rect {
+      pointer-events: all;
+      fill-opacity: 0;
+      stroke-opacity: 0;
+      z-index: 1;
+    }
+
+    .tooltip {
+    position: absolute;
+    padding: 10px;
+    background-color: steelblue;
+    color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    display: none;
+    opacity: .75;
+  }
 
 </style>

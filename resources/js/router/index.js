@@ -58,6 +58,12 @@ const routes = [
     },
 
     {
+        path: "/brush",
+        name: 'brush',
+        component: ()=>import('../components/Test/brush.vue'),
+    },
+
+    {
         path: "/testdata",
         name: 'TestData',
         component: ()=>import('../components/Test/TestData.vue'),
