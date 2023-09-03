@@ -201,6 +201,162 @@ export default {
                       .ticks()
                     );
 
+                     // Добавьте clipPath: все, что находится за пределами этой области, не будет отображаться.
+                  const clip = svg.append("defs").append("svg:clipPath") 
+                    .attr("id", "clip")
+                    .append("svg:rect")
+                    .attr("width", width )
+                    .attr("height", height )
+                    .attr("x", 0)
+                    .attr("y", 0);
+
+                    // цветовая палитра
+                  const color = d3.scaleOrdinal()
+                    .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+
+                     // // Add brushing
+                  const brush = d3.brushX()                 // Добавьте функцию кисти, используя функцию d3.brush.
+                    .extent( [ [0,0], [width,height] ] )  // инициализируйте область кисти: начните с 0,0 и закончите шириной, высотой: это означает, что я выбираю всю область графика
+                    .on("end", updateChart)     
+  
+                    // Делаем групп в которой будем отображать линии диаграммы
+                  const line = svg.append('g')
+                    .attr("clip-path", "url(#clip)")
+
+                        // Рисование линий
+                  line
+                    .selectAll(".line") // добавлен при модификации масштабирования
+                    .data(sumstat)
+                    .join("path")
+                      .attr("class", "line")  // Я добавляю строку класса, чтобы иметь возможность изменить эту строку позже
+                      .attr("fill", "none")
+                      .attr("stroke", function(d){ return color(d[0]) })
+                      .attr("stroke-width", 1.5)
+                      .attr("d", function(d){
+                        return d3.line()
+                          .x(function(d) { return x(d.LocalTime); })
+                          .y(function(d) { return y(d.value); })
+                          (d[1])
+                      })                        
+
+                  // Добавить Кисть
+                      line.append("g")
+                          .attr("class", "brush")
+                          .call(brush);
+
+                      // Функция, которая устанавливает для idleTimeOut значение nulll
+                  let idleTimeout
+                  function idled() { idleTimeout = null; }
+
+                      // Функция, которая обновляет график для заданных границ
+                  function updateChart(event,d) {
+
+                    // Каковы выбранные границы?
+                    let extent = event.selection
+                    // Если нет выбора, вернуться к исходной координате. В противном случае обновите домен оси X.
+                    if(!extent){
+                      if (!idleTimeout) return idleTimeout = setTimeout(idled, 350) //Таймер для ожидания (двойное нажатие)
+                      x.domain([ 4,8])
+                    }else{
+                      x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
+                      linexGrid.selectAll("line").remove() 
+                      DrawXGrid();
+
+                      line.select(".brush").call(brush.move, null) // Это удалит область серой кисти, как только выделение будет сделано.
+                    }
+
+                    // Обновить положение оси
+                    xAxis.transition().duration(1000).call(d3.axisBottom(x))
+                    
+                    // Обновить положение линии
+                    line.selectAll('.line')                    
+                        .transition()
+                        .duration(1000)
+                        .attr("d", function(d){
+                          return d3.line()
+                            .x(function(d) { return x(d.LocalTime); })
+                            .y(function(d) { return y(d.value); })
+                            (d[1])
+                        })
+                  }
+
+                        // Если пользователь дважды щелкнет, повторно инициализирует диаграмму
+                  svg.on("dblclick",function(){
+                    x.domain(d3.extent(Result, function(d) { return d.LocalTime; }))
+                    xAxis.transition().call(d3.axisBottom(x))
+                    line
+                      .selectAll('.line')
+                      .transition()
+                      .attr("d", function(d){
+                          return d3.line()
+                          .x(function(d) { return x(d.LocalTime); })
+                          .y(function(d) { return y(d.value); })
+                          (d[1])
+                        })
+                    linexGrid.selectAll("line").remove() 
+                    DrawXGrid();                              
+                  });
+
+
+                  // фокус по линии
+
+                    // Create the circle that travels along the curve of chart
+                  const focus = svg
+                    .append('g')
+                    .append('circle')
+                      .style("fill", "none")
+                      .attr("stroke", "black")
+                      .attr('r', 8.5)
+                      .style("opacity", 0)
+
+                    // Create the text that travels along the curve of chart
+                  var focusText = svg
+                    .append('g')
+                    .append('text')
+                      .style("opacity", 0)
+                      .attr("text-anchor", "left")
+                      .attr("alignment-baseline", "middle")
+
+
+                      // Create a rect on top of the svg area: this rectangle recovers mouse position
+  svg
+    .append('rect')
+    .style("fill", "none")
+    .style("pointer-events", "all")
+    .attr('width', width)
+    .attr('height', height)
+    .on('mouseover', mouseover);
+    // .on('mousemove', mousemove)
+    // .on('mouseout', mouseout);
+
+    // What happens when the mouse move -> show the annotations at the right positions.
+  function mouseover() {
+    focus.style("opacity", 1)
+    focusText.style("opacity",1)
+  }
+
+  function mousemove() {
+    // recover coordinate we need
+    var x0 = x.invert(d3.mouse(this)[0]);
+    var i = bisect(data, x0, 1);
+    selectedData = data[i]
+    focus
+      .attr("cx", x(selectedData.x))
+      .attr("cy", y(selectedData.y))
+    focusText
+      .html("x:" + selectedData.x + "  -  " + "y:" + selectedData.y)
+      .attr("x", x(selectedData.x)+15)
+      .attr("y", y(selectedData.y))
+    }
+  function mouseout() {
+    focus.style("opacity", 0)
+    focusText.style("opacity", 0)
+  }
+
+})
+
+
+
                   // Функция рисования решотки по Х
                     const DrawXGrid = function () {
                         linexGrid.selectAll("line")
@@ -237,36 +393,19 @@ export default {
                       .attr("class", "yGrid");
                       DrawYGrid();
 
-                        // Добавьте clipPath: все, что находится за пределами этой области, не будет отображаться.
-                      const clip = svg.append("defs").append("clipPath")
-                          .attr("id", "clip")
-                          .append("rect")
-                          .attr("id", "clip2")
-                          .attr("width", width )
-                          .attr("height", height )
-                          .attr("x", 0)
-                          .attr("y", 0);
-
-                      // // Add brushing
-                      const brush = d3.brushX()                 // Добавьте функцию кисти, используя функцию d3.brush.
-                          .extent( [ [0,0], [width,height] ] )  // инициализируйте область кисти: начните с 0,0 и закончите шириной, высотой: это означает, что я выбираю всю область графика
-                          .on("end", updateChart)     
-                // цветовая палитра
-                  const color = d3.scaleOrdinal()
-                    .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
+                       
                    // create a listening rectangle
 
-                  const listeningRect = svg.append("rect")
-                    .attr("id", "Tooltips")
-                    .attr("width", width)
-                    .attr("height", height);
+                  // const listeningRect = svg.append("rect")
+                  //   .attr("id", "Tooltips")
+                  //   .attr("width", width)
+                  //   .attr("height", height);
 
                   // create the mouse move function
 
-                  listeningRect.on("mousemove", function (event) {
-                    const [xCoord, yCoord] = d3.pointer(event, this);   //Возвращает двухэлементный массив чисел [x, y] представляющие координаты указанного событие относительно указанного цель.
-                    console.log("xAxis: " + xCoord + "  yAxis: " + yCoord) 
+                  // listeningRect.on("mousemove", function (event) {
+                  //   const [xCoord, yCoord] = d3.pointer(event, this);   //Возвращает двухэлементный массив чисел [x, y] представляющие координаты указанного событие относительно указанного цель.
+                  //   console.log("xAxis: " + xCoord + "  yAxis: " + yCoord) 
                     
                     // const bisectDate = d3.bisector(d => d.date).left;
                     // const x0 = x.invert(xCoord);
@@ -276,7 +415,6 @@ export default {
                     // const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
                     // const xPos = x(d.date);
                     // const yPos = y(d.population);
-
                     
                   // Update the circle position
 
@@ -285,88 +423,9 @@ export default {
 
                   //   console.log(xPos)
                     
-                  });
-
-
-                      // Делаем групп в которой будем отображать линии диаграммы
-                    const line = svg.append('g')
-                      .attr("clip-path", "url(#clip)")
-            // debugger 
-                  // Рисование линий
-                  line.selectAll(".line") // добавлен при модификации масштабирования
-                      .data(sumstat)
-                      .join("path")
-                        .attr("class", "line")  // Я добавляю строку класса, чтобы иметь возможность изменить эту строку позже
-                        .attr("fill", "none")
-                        .attr("stroke", function(d){ return color(d[0]) })
-                        .attr("stroke-width", 1.5)
-                        .attr("d", function(d){
-                          return d3.line()
-                            .x(function(d) { return x(d.LocalTime); })
-                            .y(function(d) { return y(d.value); })
-                            (d[1])
-                        })                        
-
-                  // Добавить Кисть
-                      line.append("g")
-                          .attr("class", "brush")
-                          .call(brush);
-
-                  // Функция, которая устанавливает для idleTimeOut значение nulll
-                  let idleTimeout
-                  function idled() { idleTimeout = null; }
-
-                  // Функция, которая обновляет график для заданных границ
-                  function updateChart(event,d) {
-
-                    // Каковы выбранные границы?
-                    let extent = event.selection
-                    // Если нет выбора, вернуться к исходной координате. В противном случае обновите домен оси X.
-                    if(!extent){
-                      if (!idleTimeout) return idleTimeout = setTimeout(idled, 350) //Таймер для ожидания (двойное нажатие)
-                      x.domain([ 4,8])
-                    }else{
-                      x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
-                      linexGrid.selectAll("line").remove() 
-                      DrawXGrid();
-
-                      line.select(".brush").call(brush.move, null) // Это удалит область серой кисти, как только выделение будет сделано.
-                    }
-
-                    // Обновить положение оси
-                    xAxis.transition().duration(1000).call(d3.axisBottom(x))
-                    
-                    // Обновить положение линии
-                    line.selectAll('.line')                    
-                        .transition()
-                        .duration(1000)
-                        .attr("d", function(d){
-                          return d3.line()
-                            .x(function(d) { return x(d.LocalTime); })
-                            .y(function(d) { return y(d.value); })
-                            (d[1])
-                        })
-                  }
-
-                  // Если пользователь дважды щелкнет, повторно инициализирует диаграмму
-                  svg.on("dblclick",function(){
-                    x.domain(d3.extent(Result, function(d) { return d.LocalTime; }))
-                    xAxis.transition().call(d3.axisBottom(x))
-                    line
-                      .selectAll('.line')
-                      .transition()
-                      .attr("d", function(d){
-                          return d3.line()
-                          .x(function(d) { return x(d.LocalTime); })
-                          .y(function(d) { return y(d.value); })
-                          (d[1])
-                        })
-                    linexGrid.selectAll("line").remove() 
-                    DrawXGrid();                              
-                  });
-
-                 
+                  // });
                   
+            // debugger                   
                     
                         // // Добавляет подпись оси У
                     svg.append("text")
@@ -415,7 +474,7 @@ export default {
         margin: 20px;
     }
 
-    rect {
+    -rect {
       pointer-events: all;
       fill-opacity: 0;
       stroke-opacity: 0;
