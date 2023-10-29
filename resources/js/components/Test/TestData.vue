@@ -11,6 +11,9 @@
 <script>
 
 import * as d3 from "d3";
+import {XscaleTime, YscaleLinear, ChartTooltip, DotsLegend, DropLine} from "../../myModules/ChartLine";
+
+// const logo = require('./ChartLine');
 export default {
 
   data(){
@@ -73,29 +76,26 @@ export default {
 
  mounted() {
 
-
-    // const fileName = "example.csv";
-    // console.log(fileName);
- 
-    // d3.csv( "//EVENT-SERVER/Data/MOCK_DATA.csv")
-    //   .then(function(d){
-    //     console.log("Load CSV file")
-    //     console.log(d);
-    //     })
-    //   .catch(function(error){
-    //     console.log(error)
-    //     })
-
-
-    // const sumstat = d3.group(this.OneCat, d => d.name); // nest function allows to group the calculation per level of a factor
-          // console.log(this.OneCat);
-          // console.log(sumstat);
-
-
-
     this.loadPointData()
 
     // this.convertData()
+
+    let dimensions = {
+    width: window.innerWidth * 0.8,
+    height: 600,
+    margin: {
+      top: 115,
+      right: 20,
+      bottom: 40,
+      left: 160,
+    },
+  };
+
+  dimensions.boundedWidth = dimensions.width - dimensions.margin.left - dimensions.margin.right;
+  dimensions.boundedHeight = dimensions.height - dimensions.margin.top - dimensions.margin.bottom;
+
+  console.log(dimensions);
+    
   },
 
 
@@ -134,12 +134,18 @@ export default {
     },
 
     loadPointData: function () {
+
+      const pageWidth = document.documentElement.scrollWidth;
+      const pageHeight = document.documentElement.scrollHeight;
+      console.log(`ширитна: ${pageWidth} высота: ${pageHeight}`);
+
       // Пример брался  из источника https://d3-graph-gallery.com/graph/line_several_group.html
       //                             https://d3-graph-gallery.com/graph/line_brushZoom.html
 
-      const margin = {top: 70, right: 30, bottom: 40, left: 80};
+      const margin = {top: 70, right: 160, bottom: 40, left: 80};
       const width = 1800 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
+            
 
       // append the svg object to the body of the page
       const svg = d3.select("#my_dataviz")
@@ -148,6 +154,13 @@ export default {
           .attr("height", height + margin.top + margin.bottom)
         .append("g")
           .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      
+      // create tooltip div
+
+      const tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "tooltip");
 
           // Функция в переменной для преобразоания строки с датой и временем  в формат даты и времеи
                   const parsDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); 
@@ -167,16 +180,13 @@ export default {
                     })
                   });
                   
-                  // Result.forEach(element => {
-                  //   element.LocalTime = parsDate(element.LocalTime)
-                  // })
+                  
                     // Выполняем агрегация данных по графе name, необходимо для вывода на график
                   const sumstat = d3.group(Result, d => d.name);
 
-                    // Добавление оси Х
-                  const x = d3.scaleTime()
-                    .domain(d3.extent(Result, function(d) { return d.LocalTime; }))
-                    .range([ 0, width ]);
+                    // Сопоставление шкалы для оси Х
+                  const x = XscaleTime(Result, "LocalTime", width)
+                  // Добавление оси Х
                   const xAxis = svg.append("g")
                     .attr("transform", `translate(0, ${height})`)
                     .style("font-size", "12px")
@@ -185,16 +195,11 @@ export default {
                       // .ticks(d3.timeMonth.every(1))
                       // .tickFormat(d3.timeFormat("%d %m %Y"))
                       );
-                  //   .call(g => g.select(".domain").remove())
-                  //   .selectAll(".tick line")
-                  //   .style("stroke-opacity", 0)
-                  // svg.selectAll(".tick text")
-                  //   .attr("fill", "#777");
-
-                    // Добавление оси У
-                  const y = d3.scaleLinear() 
-                    .domain([0, d3.max(Result, function(d) { return d.value; })])
-                    .range([ height, 0 ]);
+                
+              
+                    // Сопоставление шкалы для оси У
+                  const y = YscaleLinear(Result, "value", height);
+                  // Добавление оси У
                   const yAxis = svg.append("g")
                     .attr("stroke-width", 1.5)  
                     .call(d3.axisLeft(y)
@@ -210,18 +215,24 @@ export default {
                     .attr("x", 0)
                     .attr("y", 0);
 
+    
+
                     // цветовая палитра
                   const color = d3.scaleOrdinal()
                     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+                    // const color = d3.scaleOrdinal(d3.schemeCategory10)
 
                      // // Add brushing
                   const brush = d3.brushX()                 // Добавьте функцию кисти, используя функцию d3.brush.
                     .extent( [ [0,0], [width,height] ] )  // инициализируйте область кисти: начните с 0,0 и закончите шириной, высотой: это означает, что я выбираю всю область графика
                     .on("end", updateChart)     
+
+                   
   
                     // Делаем групп в которой будем отображать линии диаграммы
                   const line = svg.append('g')
-                    .attr("clip-path", "url(#clip)")
+                    .attr("clip-path", "url(#clip)");
+                    
 
                         // Рисование линий
                   line
@@ -238,11 +249,18 @@ export default {
                           .y(function(d) { return y(d.value); })
                           (d[1])
                       })                        
+// console.log(sumstat)
 
                   // Добавить Кисть
                       line.append("g")
                           .attr("class", "brush")
-                          .call(brush);
+                          .call(brush)
+                            // Добавляем события на действия мыши на этой области
+                          .on('mouseover', mouseover)
+                          .on('mousemove', mousemove)
+                          .on('mouseout', mouseout);
+
+                          
 
                       // Функция, которая устанавливает для idleTimeOut значение nulll
                   let idleTimeout
@@ -261,7 +279,6 @@ export default {
                       x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
                       linexGrid.selectAll("line").remove() 
                       DrawXGrid();
-
                       line.select(".brush").call(brush.move, null) // Это удалит область серой кисти, как только выделение будет сделано.
                     }
 
@@ -280,6 +297,8 @@ export default {
                         })
                   }
 
+                  
+
                         // Если пользователь дважды щелкнет, повторно инициализирует диаграмму
                   svg.on("dblclick",function(){
                     x.domain(d3.extent(Result, function(d) { return d.LocalTime; }))
@@ -297,6 +316,8 @@ export default {
                     DrawXGrid();                              
                   });
 
+                  // Вертикальная пунктирная линия указатель курсора на графике
+                    const xAxisLine = DropLine(svg, height);
 
                   // фокус по линии
 
@@ -310,51 +331,137 @@ export default {
                       .style("opacity", 0)
 
                     // Create the text that travels along the curve of chart
-                  var focusText = svg
-                    .append('g')
-                    .append('text')
-                      .style("opacity", 0)
-                      .attr("text-anchor", "left")
-                      .attr("alignment-baseline", "middle")
+                  // let focusText = svg
+                  //   .append('g')
+                  //   .append('text')
+                  //     .style("opacity", 0)
+                  //     .attr("text-anchor", "left")
+                  //     .attr("alignment-baseline", "middle")
 
 
                       // Create a rect on top of the svg area: this rectangle recovers mouse position
-  svg
-    .append('rect')
-    .style("fill", "none")
-    .style("pointer-events", "all")
-    .attr('width', width)
-    .attr('height', height)
-    .on('mouseover', mouseover);
-    // .on('mousemove', mousemove)
-    // .on('mouseout', mouseout);
+                                    // svg
+                                    //   .append('rect')
+                                    //   .style("fill", "none")
+                                    //   .style("pointer-events", "all")
+                                    //   .attr('width', width)
+                                    //   .attr('height', height)
+                                    //   .on('mouseover', mouseover)
+                                    //   // .on('mousemove', mousemove)
+                                    //   .on('mouseout', mouseout);
 
-    // What happens when the mouse move -> show the annotations at the right positions.
-  function mouseover() {
-    focus.style("opacity", 1)
-    focusText.style("opacity",1)
-  }
+                                      // What happens when the mouse move -> show the annotations at the right positions.
+                                    function mouseover() {
+                                      focus.style("opacity", 1)
+                                      // focusText.style("opacity",1)
+                                    }
 
-  function mousemove() {
-    // recover coordinate we need
-    var x0 = x.invert(d3.mouse(this)[0]);
-    var i = bisect(data, x0, 1);
-    selectedData = data[i]
-    focus
-      .attr("cx", x(selectedData.x))
-      .attr("cy", y(selectedData.y))
-    focusText
-      .html("x:" + selectedData.x + "  -  " + "y:" + selectedData.y)
-      .attr("x", x(selectedData.x)+15)
-      .attr("y", y(selectedData.y))
-    }
-  function mouseout() {
-    focus.style("opacity", 0)
-    focusText.style("opacity", 0)
-  }
+                                    // function mousemove(event) {
+                                    //   // recover coordinate we need
+                                    //   var x0 = x.invert(d3.mouse(this)[0]);
+                                    //   var i = bisect(data, x0, 1);
+                                    //   selectedData = data[i]
+                                    //   focus
+                                    //     .attr("cx", x(selectedData.x))
+                                    //     .attr("cy", y(selectedData.y))
+                                    //   focusText
+                                    //     .html("x:" + selectedData.x + "  -  " + "y:" + selectedData.y)
+                                    //     .attr("x", x(selectedData.x)+15)
+                                    //     .attr("y", y(selectedData.y))
+                                    //   }
+                                      // console.log(Result);
+                                      // console.log(data);
+                                      // const sumstat = d3.group(Result, d => d.name);
+                                      
+                                      // console.log('GroupDate')
 
-})
+                                      // const tooltip = d3.select("#my_dataviz")
+                                      //   .append("div")
+                                      //     .style("position", "absolute")
+                                      //     .style("visibility", "visible")
+                                      //     .style("background-color", "white")
+                                      //     .style("border", "solid")
+                                      //     .style("border-width", "1px")
+                                      //     .style("border-radius", "5px")
+                                      //     .style("padding", "10px")
+                                      //     .text("I'm a circle!");
+                                 
+    // ----------------------------------------
+    // Вывод леген
+  
+    let NameLegend = data[0].map((item) => item.name);
+    
+    ChartTooltip(svg, NameLegend,1600,50,18);
+    
 
+    const gToolTip = svg.append("g")
+                        .attr("class","ToolTip")                        
+                        .append("rect")
+                        .attr("width", 150 )
+                        .attr("height", 100 )
+                        .attr("x", 0)
+                        .attr("y", 0)                        
+                        .attr("rx", "10")
+                        .attr("fill", "white")
+                        .attr("fill-opacity", 0.5)
+                        .attr("stroke-width", 1)
+                        .attr("stroke", "black");
+          svg.append("text")
+                  .attr("fill", "black")
+                  .attr("x",150)
+                  .attr("y",100)
+                  .text("hdfhh");
+    // ----------------------------------------
+                                    const GroupDate =  Array.from(d3.group(Result, d => d.LocalTime), ([LocalTime, Position]) => ({LocalTime, Position}));
+
+                                    function mousemove(event) {
+                                      const [xCoord, yCoord] = d3.pointer(event, this);   //Возвращает двухэлементный массив чисел [x, y] представляющие координаты указанного событие относительно указанного цель.
+                                      console.log("xAxis: " + xCoord + "  yAxis: " + yCoord); 
+                                      const bisectDate = d3.bisector(d => d.LocalTime).left; // Функ
+                                      const x0 = x.invert(xCoord);// Обратное преобразование из координат экрана в координаты шкалы
+                                      console.log(`x0 = ${x0}`);
+                                      //console.log(bisectDate)
+                                      const i = bisectDate(GroupDate, x0, 1);
+                                      //const i = bisectDate(Result, x0, 1); // Находим индекс строки в массиве, содержащий искомое значение в переменной х0
+                                      //  console.log(`индекс искомой строки i = ${i}`)
+                                      
+                                      // console.log(data)
+                                      const arr = GroupDate[i].Position //получение данных 
+                                      console.log(arr)
+
+                                        // Вывод данных в легенду
+                                        const dToolTip = GroupDate[i].Position[0].value;
+                                        console.log(`${GroupDate[i].Position[0].name}: ${GroupDate[i].Position[0].value}`);
+                                        const y0 = y(GroupDate[i].Position[0].value);
+                                      // console.log(y0);
+
+                                      focus
+                                        .attr("cx", xCoord)
+                                        // .attr("cy", yCoord);
+                                        .attr("cy", y0);
+
+
+                                      xAxisLine
+                                        .attr("x1", xCoord)
+                                        .attr("x2", xCoord)
+                                        .style("visibility", "visible");
+                                      xAxisLine.transition()
+                                        .duration(50);
+
+                                      //  tooltip.style("top", (event.pageY)+"px").style("left",(event.pageX-120)+"px");
+                                      tooltip
+                                        .style("display", "block")
+                                        .style("left", `${xCoord + 100}px`)
+                                        .style("top", `${yCoord + 100}px`)
+                                        .html(`${GroupDate[i].Position[0].name}: ${GroupDate[i].Position[0].value}<br>
+                                          выаыаы`)
+                                    }
+
+                                    function mouseout() {
+                                      focus.style("opacity", 0)
+                                      // focusText.style("opacity", 0)
+                                      xAxisLine.style("visibility", "hidden");
+                                    }
 
 
                   // Функция рисования решотки по Х
@@ -491,5 +598,9 @@ export default {
     display: none;
     opacity: .75;
   }
+
+  /* .toolTip{
+    border: 1px solid white;
+  } */
 
 </style>
