@@ -7,16 +7,30 @@ use Illuminate\Http\Request;
 
 class TbComplexController extends Controller
 {
-    public function show(){
-        dd(('show'));
+    public function index() // Для отображения списка ресурсов
+    {
+        $complexes = TbComplex::all();
+        dd($complexes);
+
     }
-    
-    public function create()
+   
+    public function create() // Для отображения формы создания нового ресурса
     {
         TbComplex::create([
-            'Name' => 'ASD',
-            'Description' => 'Описание комплекса',
+            'Name' => 'КТУ ГПВГ',
+            'Description' => 'Глубокая переработка вакуумного газойля',
         ]);
-        dd('created');
+        dd(TbComplex::all());
+    }
+
+    public function show() // Для отображения конкретного ресурса
+    {
+        dd(('show'));
+    }
+
+    public function destroy($guid) // Для удаления конкретного ресурса из БД
+    {
+        TbComplex::destroy($guid);
+        return redirect()->route('complexes.index');
     }
 }

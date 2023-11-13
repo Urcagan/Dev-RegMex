@@ -17,9 +17,9 @@ Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
     Route::get('/table', 'Table_Controller')->name('home');
 });
 
-    Route::get('/load', [App\Http\Controllers\LoadData_Controller::class, 'loadRequest']);
+Route::get('/load', [App\Http\Controllers\LoadData_Controller::class, 'loadRequest']);
 
-    Route::get('/test', [App\Http\Controllers\Test_Controller::class, 'testRequest']);
+Route::get('/test', [App\Http\Controllers\Test_Controller::class, 'testRequest']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +27,15 @@ Route::get('/', function () {
 
 Route::get('/goods/create', [App\Http\Controllers\GoodsController::class, 'create']);
 
+
+//Роуты для работы с таблицей комплексов
+// Route::group(['namespace' => 'App\Http\Controllers'], function () {
+//     Route::get('/complex/create', 'TbComplexController')->name('create');
+// });
+
+Route::get('/complex/index', [App\Http\Controllers\TbComplexController::class, 'index']);
 Route::get('/complex/create', [App\Http\Controllers\TbComplexController::class, 'create']);
+Route::get('/complex/destroy', [App\Http\Controllers\TbComplexController::class, 'destroy']);
 
 //Route::get('/{any}', function () {
 //    return view('welcome');
@@ -42,5 +50,6 @@ Route::get('/complex/create', [App\Http\Controllers\TbComplexController::class, 
 //    return "Кэш очищен.";});
 
 Route::get('/{pathMatch}', function () {
-    return view('welcome');})
+    return view('welcome');
+})
     ->where('pathMatch', ".*");
