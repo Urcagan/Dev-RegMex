@@ -27,6 +27,11 @@ class TbComplex extends Model
         'Description',
     ];
 
+    // Следующие три строки необходимы для использовани GUID в качестве строки
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $guarded = [];        // Строка разрешающая запись данных в таблицу (Защита от записи в фреймворке Laravel)
     // Должна быть в каждой моделе в которую осуществляется запись данных.
     // Этот способ разрешает записывать все атрибуты

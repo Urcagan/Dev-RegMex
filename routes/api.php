@@ -4,6 +4,8 @@ use App\Http\Controllers\API_Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +35,17 @@ Route::group(['namespace' => 'App\Http\Controllers\WebInterface\Unit', 'prefix' 
     Route::get('/unit', 'IndexController');
     Route::get('/unitGroup/{group_id}', 'UnitsGroupController');
     Route::get('/unit/{plant_id}', 'UnitController');
+});
+
+
+// Route::get('complex', 'App\Http\Controllers\TbComplexController@index');
+// Route::post('complex', 'App\Http\Controllers\TbComplexController@store');
+Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'complex'], function () {
+    Route::get('/', 'TbComplexController@index');
+    Route::post('/', 'TbComplexController@store');
+    Route::get('/{id}', 'TbComplexController@show');
+    Route::put('/{id}', 'TbComplexController@update');
+    Route::delete('/{id}', 'TbComplexController@destroy');
 });
 
 //* роуты для содержимого приложения

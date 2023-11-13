@@ -33,7 +33,7 @@ Route::get('/goods/create', [App\Http\Controllers\GoodsController::class, 'creat
 //     Route::get('/complex/create', 'TbComplexController')->name('create');
 // });
 
-Route::get('/complex/index', [App\Http\Controllers\TbComplexController::class, 'index']);
+//Route::get('/complex/index', [App\Http\Controllers\TbComplexController::class, 'index']);
 Route::get('/complex/create', [App\Http\Controllers\TbComplexController::class, 'create']);
 Route::get('/complex/destroy', [App\Http\Controllers\TbComplexController::class, 'destroy']);
 

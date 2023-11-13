@@ -9,11 +9,38 @@ class TbComplexController extends Controller
 {
     public function index() // Для отображения списка ресурсов
     {
+        //dd('index');
         $complexes = TbComplex::all();
-        dd($complexes);
-
+        //dd($complexes);
+        return response()->json($complexes);
     }
    
+    public function store(Request $request)
+    {
+        $complex = new TbComplex;
+        $complex->Name = $request->input('Name');
+        $complex->Description = $request->input('Description');
+        $complex->save();
+
+        return response()->json($complex);
+    }
+
+    public function show($id) // Для отображения конкретного ресурса
+    {
+        $complex = TbComplex::find($id);
+        return response()->json($complex);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $complex = TbComplex::find($id);
+        $complex->Name = $request->input('Name');
+        $complex->Description = $request->input('Description');
+        $complex->save();
+
+        return response()->json($complex);
+    }
+
     public function create() // Для отображения формы создания нового ресурса
     {
         TbComplex::create([
@@ -23,14 +50,12 @@ class TbComplexController extends Controller
         dd(TbComplex::all());
     }
 
-    public function show() // Для отображения конкретного ресурса
+    public function destroy($id) // Для удаления конкретного ресурса из БД
     {
-        dd(('show'));
+        $complex = TbComplex::find($id);
+        $complex->delete();
+
+        return response()->json(['message' => 'Complex deleted']);
     }
 
-    public function destroy($guid) // Для удаления конкретного ресурса из БД
-    {
-        TbComplex::destroy($guid);
-        return redirect()->route('complexes.index');
-    }
 }
