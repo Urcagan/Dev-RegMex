@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin', \App\Http\Controllers\AdminController::class);
+Route::get('/admin', \App\Http\Controllers\Main\IndexController::class)-> name('main.index');
 
 Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
     Route::get('/table', 'Table_Controller')->name('home');
