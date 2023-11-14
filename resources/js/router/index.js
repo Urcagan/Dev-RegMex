@@ -27,13 +27,19 @@ const routes = [
         component: () => import ('../components/Monitoring/Main_Interface/plant.vue'),
         props: true
     },
-    // {
-    //     // Надо удалить маршрут
-    //     path: "/mgk",
-    //     name: 'MGKmenu',
-    //     component: () => import ('../components/MGK/index.vue'),
-    //     props: true
-    // },
+
+// Работа с БД
+    {
+        path: "/Admin",
+        name: 'MenuDB',
+        component: () => import ('../components/UI_DB/main.vue')
+    },
+    {
+        path: "/Complex",
+        name: 'ComplexDB',
+        component: () => import ('../components/UI_DB/complex.vue')
+    },
+
     {
         path: "/mgk/n1a",
         name: 'MGK.H1A',

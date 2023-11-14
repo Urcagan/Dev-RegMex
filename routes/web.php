@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/admin', \App\Http\Controllers\AdminController::class);
+
 Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
     Route::get('/table', 'Table_Controller')->name('home');
 });
@@ -41,7 +43,7 @@ Route::get('/complex/destroy', [App\Http\Controllers\TbComplexController::class,
 //    return view('welcome');
 //})->where('any','.*');
 
-//Route::get('/clear', function() {
+// Route::get('/clear', function() {
 //    Artisan::call('cache:clear');
 //    Artisan::call('config:cache');
 //    Artisan::call('view:clear');

@@ -25,6 +25,20 @@
     </div>   
 </div> 
 
+<div class="container" >
+    <div class="desktop">
+            <div class="col-md-4">
+                <div class="_card text-center">
+                    <div class="_card-body">
+                        <h5 class="_card-title">Работа с БД</h5>
+                        <!-- <p>Гидрокрекинг</p> -->
+                        <router-link :to="{name: 'MenuDB'}">Перейти</router-link>
+                    </div>
+                </div>
+            </div>
+    </div>   
+</div> 
+
 
 
 </template>
