@@ -15,9 +15,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin', \App\Http\Controllers\Main\IndexController::class)-> name('main.index');
 
+Route::group(['prefix' => 'complex', 'namespace' => 'App\Http\Controllers\Complex'], function () {
+    Route::get('/', 'ComplexController@index')->name('complex.index');
+    Route::get('/create', 'ComplexController@create')->name('complex.create');
+    Route::post('/', 'ComplexController@store')->name('complex.store');
+    Route::get('/{complex}/edit', 'ComplexController@edit')->name('complex.edit');
+    Route::get('/{complex}', 'ComplexController@show')->name('complex.show');
+    Route::patch('/{complex}', 'ComplexController@update')->name('complex.update');
+    Route::delete('/{complex}', 'ComplexController@delete')->name('complex.delete');
+});
+
+
 Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
     Route::get('/table', 'Table_Controller')->name('home');
 });
+
+
 
 Route::get('/load', [App\Http\Controllers\LoadData_Controller::class, 'loadRequest']);
 
@@ -27,7 +40,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/goods/create', [App\Http\Controllers\GoodsController::class, 'create']);
 
 
 //Роуты для работы с таблицей комплексов
@@ -36,8 +48,8 @@ Route::get('/goods/create', [App\Http\Controllers\GoodsController::class, 'creat
 // });
 
 //Route::get('/complex/index', [App\Http\Controllers\TbComplexController::class, 'index']);
-Route::get('/complex/create', [App\Http\Controllers\TbComplexController::class, 'create']);
-Route::get('/complex/destroy', [App\Http\Controllers\TbComplexController::class, 'destroy']);
+Route::get('/complexx/create', [App\Http\Controllers\TbComplexController::class, 'create']);
+Route::get('/complexx/destroy', [App\Http\Controllers\TbComplexController::class, 'destroy']);
 
 //Route::get('/{any}', function () {
 //    return view('welcome');

@@ -11,22 +11,21 @@
         <h1>Перечень комплексов</h1>
     </div>
     <div>
-       <table >
-        <thead>
-            <tr>
-                <th>Название комплекса</th>
-                <th>Описание комплекса</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="complex in complexes" :key="complex.id">
-                <td>{{ complex.Name }}</td>
-                <td>{{ complex.Description }}</td>
-            </tr>
-        </tbody>
-    </table> 
+        <table>
+            <thead>
+                <tr>
+                    <th>Название комплекса</th>
+                    <th>Описание комплекса</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="complex in complexes" :key="complex.id">
+                    <td>{{ complex.Name }}</td>
+                    <td>{{ complex.Description }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    
 </template>
 
 <script>
@@ -63,7 +62,6 @@ export default {
 </script>
 
 <style scoped>
-
 table {
     width: 90%;
     border-collapse: collapse;
@@ -92,7 +90,6 @@ table tbody tr:nth-child(2n) {
 table tbody tr:hover {
     background: #ebffe8;
 }
-
 
 .headline {
     text-align: center;

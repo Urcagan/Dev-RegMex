@@ -14,7 +14,7 @@ class TbComplexController extends Controller
         //dd($complexes);
         return response()->json($complexes);
     }
-   
+
     public function store(Request $request)
     {
         $complex = new TbComplex;
@@ -53,14 +53,13 @@ class TbComplexController extends Controller
     public function destroy($id) // Для удаления конкретного ресурса из БД
     {
         $complex = TbComplex::find($id);
-        
+
         if (!$complex) {
-            return response()->json(['error'=>'Такого комплекса нету'], 404);
+            return response()->json(['error' => 'Такого комплекса нету'], 404);
         }
 
         $complex->delete();
 
         return response()->json(['message' => 'Complex deleted']);
     }
-
 }

@@ -1,50 +1,48 @@
-import {createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
 
-
-import homePageIndex from '../components/pages/home/index.vue';
+import homePageIndex from '../components/pages/home/index.vue'
 // import indexDK_A from  '../components/DK_A/home/index.vue';
-import notFound from '../components/notFound.vue';
-
+import notFound from '../components/notFound.vue'
 
 const routes = [
-    
     // Стартовая страница
     {
-        path: "/",
+        path: '/',
         name: 'index',
-        component: () => import ('../components/index.vue')
-    }, 
+        component: () => import('../components/index.vue'),
+    },
 
     // Pages
     {
-        path: "/monitoring",
+        path: '/monitoring',
         name: 'MainPage',
-        component: () => import ('../components/Monitoring/main.vue')
-    }, 
+        component: () => import('../components/Monitoring/main.vue'),
+    },
     {
-        path: "/plant",
+        path: '/plant',
         name: 'plant',
-        component: () => import ('../components/Monitoring/Main_Interface/plant.vue'),
-        props: true
+        component: () =>
+            import('../components/Monitoring/Main_Interface/plant.vue'),
+        props: true,
     },
 
-// Работа с БД
+    // Работа с БД
     {
-        path: "/Admin",
+        path: '/Admin',
         name: 'MenuDB',
-        component: () => import ('../components/UI_DB/main.vue')
+        component: () => import('../components/UI_DB/main.vue'),
     },
     {
-        path: "/Complex",
+        path: '/Complex',
         name: 'ComplexDB',
-        component: () => import ('../components/UI_DB/complex.vue')
+        component: () => import('../components/UI_DB/complex.vue'),
     },
 
     {
-        path: "/mgk/n1a",
+        path: '/mgk/n1a',
         name: 'MGK.H1A',
-        component: () => import ('../components/Monitoring/MGK/111H1/H1.vue'),
-        props: true
+        component: () => import('../components/Monitoring/MGK/111H1/H1.vue'),
+        props: true,
     },
     // {
     //     path: "/mgk/n1b",
@@ -58,37 +56,37 @@ const routes = [
     //     component: () => import ('../components/UPV/index.vue')
     // },
     {
-        path: "/test",
+        path: '/test',
         name: 'Test',
         component: homePageIndex,
     },
 
     {
-        path: "/brush",
+        path: '/brush',
         name: 'brush',
-        component: ()=>import('../components/Test/brush.vue'),
+        component: () => import('../components/Test/brush.vue'),
     },
 
     {
-        path: "/testdata",
+        path: '/testdata',
         name: 'TestData',
-        component: ()=>import('../components/Test/TestData.vue'),
+        component: () => import('../components/Test/TestData.vue'),
     },
 
     {
-        path: "/chartD3",
+        path: '/chartD3',
         name: 'Chart',
-        component: ()=>import('../components/Test/D3.vue'),
+        component: () => import('../components/Test/D3.vue'),
     },
     {
-        path: "/D3Line",
+        path: '/D3Line',
         name: 'D3Line',
-        component: ()=>import('../components/Test/D3Line.vue'),
+        component: () => import('../components/Test/D3Line.vue'),
     },
     {
-        path: "/D3MultiLine",
+        path: '/D3MultiLine',
         name: 'D3MultiLine',
-        component: ()=>import('../components/Test/D3MultiLine.vue'),
+        component: () => import('../components/Test/D3MultiLine.vue'),
     },
 
     // 111ДК 1 А
@@ -97,7 +95,7 @@ const routes = [
         path: '/DK_A/home',
         name: 'DK_A',
         // component: indexDK_A
-        component: ()=> import('../components/DK_A/home/index.vue')
+        component: () => import('../components/DK_A/home/index.vue'),
     },
     // {
     //     path: '/DK_A/pressure',
@@ -144,32 +142,32 @@ const routes = [
     //     name: 'DK_B_table',
     //     component: ()=> import('../components/MGK/H1/B/tableDisplay.vue')
     // },
-    
+
     // Маршрут для тестирования фильтра
     {
         path: '/time',
         name: 'time',
-        component: ()=> import('../components/TimeSelect.vue')
+        component: () => import('../components/TimeSelect.vue'),
     },
 
     {
         path: '/select',
         // name: 'DK_B_table',
-        component: ()=> import('../components/MainSelect.vue')
+        component: () => import('../components/MainSelect.vue'),
     },
 
     // Маршрут для несуществующего пути
     {
-    path: '/:pathMatch(.*)*',
-        component: notFound
+        path: '/:pathMatch(.*)*',
+        component: notFound,
     },
-];
+]
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
     // routes: [
     // ]
-});
+})
 
 export default router
