@@ -39,10 +39,10 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($complexes as @complex)
+              @foreach($complexes as $complex)
               <tr>
-                <td>{{ $complex->Name }}</td>
-                <td>{{ $complex->Description }}</td>
+                <td>{{$complex->Name}}</td>
+                <td>{{$complex->Description}}</td>
               </tr>
               @endforeach
             </tbody>

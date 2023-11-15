@@ -5,47 +5,57 @@ namespace App\Http\Controllers\Complex;
 use App\Http\Controllers\Controller;
 use App\Models\TbComplex;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\HttpCache\Store;
 use App\Http\Requests\Complex\StoreRequest;
 use App\Http\Requests\Complex\UpdateRequest;
 
+use App\Models\H1A;
+
 class ComplexController extends Controller
 {
-    public function index(){ // Для отображения списка ресурсов
-        //dd('index');
+    // Для отображения списка ресурсов
+    public function index()
+    {
         $complexes = TbComplex::all();
-        //dd($complexes);
-        // dd(compact('complexes'));
+
         return view('complex.index', compact('complexes'));
     }
 
-    public function store(StoreRequest $request){
+    public function store(StoreRequest $request)
+    {
         $data = $request->validated();
         TbComplex::firstOrCreate($data);
 
         return redirect()->route('complex.index');
     }
 
-    public function show(TbComplex $complex){ // Для отображения конкретного ресурса
+    // Для отображения конкретного ресурса
+    public function show(TbComplex $complex)
+    {
         return view('complex.show', compact('complex'));
     }
 
-    public function create(){ // Для отображения формы создания нового ресурса
+    // Для отображения формы создания нового ресурса
+    public function create()
+    {
         return view('complex.create');
     }
 
-    public function edit(TbComplex $complex){
+    public function edit(TbComplex $complex)
+    {
         return view('complex.edit', compact('complex'));
     }
 
-    public function update(UpdateRequest $request, TbComplex $complex){
+    public function update(UpdateRequest $request, TbComplex $complex)
+    {
         $data = $request->validated();
         $complex->update($data);
 
         return view('complex.show', compact($complex));
     }
 
-    public function delet(TbComplex $complex){ // Для удаления конкретного ресурса из БД
+    // Для удаления конкретного ресурса из БД
+    public function delet(TbComplex $complex)
+    {
         $complex->delete();
 
         return redirect()->route('complex.index');
