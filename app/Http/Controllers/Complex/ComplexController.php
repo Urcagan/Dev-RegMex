@@ -50,11 +50,11 @@ class ComplexController extends Controller
         $data = $request->validated();
         $complex->update($data);
 
-        return view('complex.show', compact($complex));
+        return view('complex.show', compact('complex'));
     }
 
     // Для удаления конкретного ресурса из БД
-    public function delet(TbComplex $complex)
+    public function delete(TbComplex $complex)
     {
         $complex->delete();
 

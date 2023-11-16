@@ -18,6 +18,10 @@
             Тестирование получения данных
         </router-link>
     </div>
+    <div class="container">
+        <!-- <router-link class="btn btn-primary" :to="{ name: 'Adminn' }">Админ панель</router-link> -->
+
+    </div>
 
     <h2 class="headline">Стартовая страница</h2>
 
@@ -30,9 +34,7 @@
                             Мониторинг динамического обоудования
                         </h5>
                         <!-- <p>Гидрокрекинг</p> -->
-                        <router-link :to="{ name: 'MainPage' }"
-                            >Перейти</router-link
-                        >
+                        <router-link :to="{ name: 'MainPage' }">Перейти</router-link>
                     </div>
                 </div>
             </div>
