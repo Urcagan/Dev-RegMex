@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Комплекс SHOW</h1>
+                    <h1 class="m-0">Установка (SHOW)</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -27,10 +27,10 @@
                     <div class="card">
                         <div class="card-header d-flex p-3">
                             <div class="mr-3">
-                                <a href="{{ route('complex.edit', $complex->id) }}"
+                                <a href="{{ route('plant.edit', $plant->id) }}"
                                     class="btn btn-primary">Редактировать</a>
                             </div>
-                            <form action="{{ route('complex.destroy', $complex->id) }}" method="post">
+                            <form action="{{ route('plant.destroy', $plant->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <input type="submit" class="btn btn-danger" value="Удалить">
@@ -42,11 +42,15 @@
                                 <tbody>
                                     <tr>
                                         <td>Название</td>
-                                        <td>{{ $complex->Name }}</td>
+                                        <td>{{ $plant->Name }}</td>
                                     </tr>
                                     <tr>
                                         <td>Описание</td>
-                                        <td>{{ $complex->Description }}</td>
+                                        <td>{{ $plant->Description }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Комплекс</td>
+                                        <td>{{ $plant->Complex_id }}</td>
                                     </tr>
                                 </tbody>
                             </table>

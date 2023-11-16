@@ -54,7 +54,7 @@ class ComplexController extends Controller
     }
 
     // Для удаления конкретного ресурса из БД
-    public function delete(TbComplex $complex)
+    public function destroy(TbComplex $complex)
     {
         $complex->delete();
 
