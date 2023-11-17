@@ -41,4 +41,9 @@ class TbPlant extends Model
 
     public $timestamps = false;     // Отключаем в моделе автоматическую обработку полей created_at и updated_at.
                                     // Обязательно если в таблице данных полей нет.
+
+    public function complex()
+    {
+       return $this->belongsTo(TbComplex::class, 'Complex_id', 'id');
+    }
 }

@@ -45,4 +45,10 @@ class TbComplex extends Model
     // {
     //     return $this->hasMany(Plant::class, 'complex_id', 'id');
     // }
+
+    public function plants()
+    {
+        return $this->hasMany(TbPlant::class, 'Complex_id', 'id');
+    }
+
 }

@@ -41,7 +41,7 @@
                                 </thead>
                                 <tbody>
                                     {{-- @foreach ($plants as $plant) --}}
-                                    @foreach ($data as $plant)
+                                    @foreach ($plants as $plant)
                                         <tr>
                                             <td>
                                                 <a href="{{ route('plant.show', $plant->id) }}">{{ $plant->Name }}</a>

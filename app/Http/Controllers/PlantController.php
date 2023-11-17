@@ -16,25 +16,12 @@ class PlantController extends Controller
     public function index()
     {
         $plants = TbPlant::all();
-        $complexes = TbComplex::all();
-      
-        $data = [];
-        foreach ($plants as $plant) {
-            foreach ($complexes as $complex) {
-                if ($plant['Complex_id'] === $complex['id']) {
-                    $data[] = [
-                        'id' => $plant['id'],
-                        'Name' => $plant['Name'],
-                        'Complex_id' => $complex['id'],
-                        'Complex' => $complex['Name'],
-                    ];
-                }
-            }
-        }
-        dd($plant);
-        dd($data);
+        // $complexes = $plants->complex;
+
+        dd($plants);
+        
         // return view('plant.index', compact('plants'));
-        return view('plant.index', compact('data'));
+        return view('plant.index', compact('plants'));
     }
 
     /**
