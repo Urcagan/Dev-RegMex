@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Complex\ComplexController;
-use App\Http\Controllers\PlantController;
+// use App\Http\Controllers\Plant\PlantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', \App\Http\Controllers\Main\IndexController::class)-> name('main.index');
 
 
-// Маршруты для работы с таблицей комплексов
+// Маршруты для работы с таблицей комплексов (Complex)
 // Route::resource('complex', ComplexController::class);
 Route::group(['prefix' => 'complex', 'namespace' => 'App\Http\Controllers\Complex'], function () {
     Route::get('/', 'ComplexController@index')->name('complex.index');
@@ -31,8 +31,12 @@ Route::group(['prefix' => 'complex', 'namespace' => 'App\Http\Controllers\Comple
     Route::delete('/{complex}', 'ComplexController@destroy')->name('complex.destroy');
 });
 
-// Маршруты для работы с таблицей Установок
-Route::resource('plant', PlantController::class);
+// Маршруты для работы с таблицей Установок (Plant)
+Route::resource('plant', App\Http\Controllers\Plant\PlantController::class);
+
+// Маршруты для работы с таблицей агрегатов (Unit)
+Route::resource('unit', App\Http\Controllers\Unit\UnitController::class);
+
 
 Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
     Route::get('/table', 'Table_Controller')->name('home');

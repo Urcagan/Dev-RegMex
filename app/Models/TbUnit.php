@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TbPlant extends Model
+class TbUnit extends Model
 {
     // use Concerns\UsesUuid; // Трейд Используется в случае необходимости автогенерации UIID
     use HasFactory;
@@ -14,7 +14,7 @@ class TbPlant extends Model
                             // Этот параметр подключается индивидуально в каждой моделе
                             // Так же в миграции таблици необходимо добавить столбец " $table->softDeletes(); "
 
-    protected $table = 'TbPlant'; // Параметр указывающий какая таблица связана с этой моделью.
+    protected $table = 'TbUnit'; // Параметр указывающий какая таблица связана с этой моделью.
     // Параметр необязательный, но лучще принудительно указывать.
 
     /**
@@ -25,7 +25,7 @@ class TbPlant extends Model
     protected $fillable = [
         'Name',
         'Description',
-        'Complex_id'
+        'Plant_id'
     ];
 
     // Следующие три строки необходимы для использовани GUID в качестве строки
@@ -42,15 +42,8 @@ class TbPlant extends Model
     public $timestamps = false;     // Отключаем в моделе автоматическую обработку полей created_at и updated_at.
                                     // Обязательно если в таблице данных полей нет.
 
-    // Функция отношение между таблицаи Complex и Plant  
-    public function complex()
+    public function plant()
     {
-       return $this->belongsTo(TbComplex::class, 'Complex_id', 'id');
-    }
-
-    // Функция отношение между таблицаи Plant и Uit
-    public function units()
-    {
-        return $this->hasMany(TbUnits::class, 'Plant_id', 'id');
+       return $this->belongsTo(TbPlant::class, 'Plant_id', 'id');
     }
 }

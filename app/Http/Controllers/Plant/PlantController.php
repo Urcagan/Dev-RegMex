@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Plant;
 
+use App\Http\Controllers\Controller;
+use App\Models\TbComplex;
 use Illuminate\Http\Request;
 use App\Models\TbPlant;
-use App\Models\TbComplex;
+use App\Http\Requests\Plant\StoreRequest;
+use App\Http\Requests\Plant\UpdateRequest;
 
 class PlantController extends Controller
 {
@@ -15,12 +18,9 @@ class PlantController extends Controller
      */
     public function index()
     {
-        $plants = TbPlant::all();
-        // $complexes = $plants->complex;
-
-        dd($plants);
         
-        // return view('plant.index', compact('plants'));
+        $plants = TbPlant::with('complex')->get();
+
         return view('plant.index', compact('plants'));
     }
 
@@ -31,7 +31,8 @@ class PlantController extends Controller
      */
     public function create()
     {
-        //
+        $complexes = TbComplex::all();
+        return view('plant.create', compact('complexes'));
     }
 
     /**
@@ -40,9 +41,12 @@ class PlantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+        TbPlant::firstOrCreate($data);
+
+        return redirect()->route('plant.index');
     }
 
     /**
@@ -53,6 +57,8 @@ class PlantController extends Controller
      */
     public function show(TbPlant $plant)
     {
+        $plant = TbPlant::with('complex')->find($plant->id);
+        // dd($plant);
         return view('plant.show', compact('plant'));
     }
 
@@ -62,9 +68,11 @@ class PlantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TbPlant $plant)
     {
-        //
+        $complexes = TbComplex::all();
+
+        return view('plant.edit', compact('plant', 'complexes'));
     }
 
     /**
@@ -74,9 +82,12 @@ class PlantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, TbPlant $plant)
     {
-        //
+        $data = $request->validated();
+        $plant->update($data);
+
+        return view('plant.show', compact('plant'));
     }
 
     /**
@@ -85,8 +96,10 @@ class PlantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TbPlant $plant)
     {
-        //
+        $plant->delete();
+        
+        return redirect()->route('plant.index');
     }
 }

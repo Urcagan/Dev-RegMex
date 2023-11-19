@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Таблица установок (INDEX)</h1>
+                    <h1 class="m-0">Таблица агрегатов (INDEX)</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('plant.create') }}" class="btn btn-primary">Добавить</a>
+                            <a href="{{ route('unit.create') }}" class="btn btn-primary">Добавить</a>
                         </div>
 
                         <div class="card-body table-responsive p-0">
@@ -35,23 +35,22 @@
                                     <tr>
                                         <th>Название</th>
                                         <th>Описание</th>
-                                        {{-- <th>ID</th> --}}
-                                        <th>Комплекс</th>
+                                        <th>Пренадлежность к установка</th>
+                                        <th>ID</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {{-- @foreach ($plants as $plant) --}}
-                                    @foreach ($plants as $plant)
+                                    @foreach ($units as $unit)
                                         <tr>
                                             <td>
-                                                <a href="{{ route('plant.show', $plant->id) }}">{{ $plant->Name }}</a>
+                                                <a href="{{ route('unit.show', $unit->id) }}">{{ $unit->Name }}</a>
                                             </td>
-                                            <td>{{ $plant->Description }}</td>
-                                            {{-- <td>{{ $plant->id }}</td> --}}
+                                            <td>{{ $unit->Description }}</td>
                                             <td>
-                                                <a href="{{ route('complex.show', $plant->complex->id )}}">{{ $plant->complex->Name }} </a>
+                                                <a href="{{ route('plant.show', $unit->plant->id )}}">{{ $unit->plant->Name }} </a>
                                             </td>
-                                            {{-- @endforeach --}}
+                                            <td>{{ $unit->id }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Добавить комплекс</h1>
+                    <h1 class="m-0">Добавить агрегат (CREATE)</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,26 +24,33 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-sm-6">
-                    <form action="{{ route('complex.store') }}" method="post">
+                    <form action="{{ route('unit.store') }}" method="post">
                         @csrf
 
                         <div class="form-group">
-                            <label>Название комплекса</label>
-                            <input type="text" name="Name" class="form-control"
-                                placeholder="Аббревиатура комплекса *">
+                            <label>Название агрегата</label>
+                            <input type="text" name="Name" class="form-control" placeholder="Название *">
                         </div>
 
                         <div class="form-group">
                             <label>Описание</label>
-                            <textarea type="text" name="Description" class="form-control" rows="4" placeholder="Расщифровка названия ..."></textarea>
+                            <textarea type="text" name="Description" class="form-control" rows="4" placeholder="Введите описание ..."></textarea>
                         </div>
 
-                        <div class="form-group">
+                        <select name= "Plant_id" class="form-control select2 select2-hidden-accessible"
+                            style="width: 100%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
+                            <option value="">Выберите установку на которой находится агрегат</option>
+                            @foreach ($plants as $plant)
+                                <option value="{{ $plant->id }}">{{ $plant->Name }}</option>
+                            @endforeach
+                        </select>
+
+                        <div class="form-group mt-3">
                             <input type="submit" class="btn btn-primary" value="Добавить">
                         </div>
+
                     </form>
                 </div>
-
             </div>
         </div><!-- /.container-fluid -->
     </section>

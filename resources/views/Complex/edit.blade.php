@@ -23,21 +23,20 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-10">
+                <div class="col-sm-6">
                     <form action="{{ route('complex.update', $complex->id) }}" method="post">
                         @csrf
                         @method('patch')
 
                         <div class="form-group">
-                            <input type="text" name="Name" value="{{ $complex->Name }}" class="form-control"
-                                placeholder="Аббревиатура комплекса *">
+                            <label>Название комплекса</label>
+                            <input type="text" name="Name" value="{{ $complex->Name }}" class="form-control" placeholder="Аббревиатура комплекса *">
                         </div>
 
                         <div class="form-group">
-                            <input type="text" name="Description" value="{{ $complex->Description }}"
-                                class="form-control" placeholder="Расщифровка названия">
+                            <label>Описание</label>
+                            <textarea type="text" name="Description" class="form-control" rows="4" placeholder="Расщифровка названия">{{ $complex->Description }}</textarea>
                         </div>
-
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Редактировать">
                         </div>
