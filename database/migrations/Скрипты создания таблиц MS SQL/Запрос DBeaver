@@ -1,0 +1,13 @@
+SELECT Row.Tableid, Tab.Name ,Value.Value ,Unit.Abbreviation , Col.Name as Columns , Col.Description , td.Name 
+FROM TDTableValue as Value
+INNER JOIN TDTableRow as Row
+ON Value.TableRowId = Row.ObjectId  
+INNER JOIN TDTable as Tab
+ON Row.Tableid = Tab.Objectid
+INNER JOIN TDTableColumn as Col
+ON Value.TableColumnId = Col.ObjectId 
+INNER JOIN TDTableDefinition td 
+ON Col.TableDefinitionId = td.ObjectId 
+INNER  JOIN UOMUnit Unit
+ON Col.UOMId = Unit.ObjectId 
+AND Tab.Name = 'ГТ_ВНПЗ_Куб-2'
