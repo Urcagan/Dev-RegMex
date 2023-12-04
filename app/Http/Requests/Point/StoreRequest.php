@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Unit;
+namespace App\Http\Requests\Point;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,8 @@ class UpdateRequest extends FormRequest
         return [
             'Name' => 'required|string',
             'Description' => 'nullable|string',
-            'Plant_id' => 'required|string',
+            'Unit_id' => 'required|string',
+            'UOMUnit_id' => 'required|string',
         ];
     }
 
@@ -38,8 +39,11 @@ class UpdateRequest extends FormRequest
 
             'Description.string' => 'Введенные данные должны бать строкой',
 
-            'Plant_id.required' => 'Это поле необходимо заполнить',
-            'Plant_id.string' => 'Введенные данные должны бать строкой',
+            'Unit_id.required' => 'Это поле необходимо заполнить',
+            'Unit_id.string' => 'Введенные данные должны бать строкой',
+
+            'UOMUnit_id.required' => 'Это поле необходимо заполнить',
+            'UOMUnit_id.string' => 'Введенные данные должны бать строкой',
         ];
     }
 }

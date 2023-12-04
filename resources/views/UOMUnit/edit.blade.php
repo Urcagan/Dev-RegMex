@@ -24,41 +24,41 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-6">
-                    <form action="{{ route('unit.update', $unit->id) }}" method="post">
+                    <form action="{{ route('uomunit.update', $uomunit->id) }}" method="post">
                         @csrf
                         @method('patch')
 
                         <div class="form-group">
-                            <label>Название агрегата</label>
-                            <input type="text" name="Name" class="form-control" value="{{ $unit->Name }}">
+                            <label>Название параметр</label>
+                            <input type="text" name="Name" class="form-control" value="{{ $uomunit->Name }}" >
                             @error('Name')
-                                <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{$message}}</div>                                
                             @enderror
                         </div>
 
                         <div class="form-group">
-                            <label>Описание агрегата</label>
-                            <textarea type="text" name="Description" class="form-control" rows="4">{{ $unit->Description }}</textarea>
+                            <label>Описание</label>
+                            <textarea type="text" name="Description" class="form-control" rows="4" >{{ $uomunit->Description }}</textarea>
                         </div>
 
                         <div class="form-group">
-                            <label>Пренадлежность агрегата к установке</label>
-                            <select name= "Plant_id" class="form-control select2 select2-hidden-accessible"
-                                style="width: 100%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                @foreach ($plants as $plant)
-                                    <option value="{{ $plant->id }}" @if ($unit->Plant_id == $plant->id) selected @endif>
-                                        {{ $plant->Name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('Plant_id')
-                                <div class="text-danger"> {{ $message }}</div>
+                            <label>Аббревиатура</label>
+                            <input type="text" name="Abbreviation" class="form-control" value="{{ $uomunit->Abbreviation }}">
+                            @error('Abbreviation')
+                                <div class="text-danger">{{$message}}</div>                                
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label>Фактор</label>
+                            <input type="text" name="Factor" class="form-control" value="{{ $uomunit->Factor }}">
+                            @error('Factor')
+                                <div class="text-danger">{{$message}}</div>                                
+                            @enderror
+                        </div>
 
                         <div class="form-group mt-3">
-                            <input type="submit" class="btn btn-primary" value="Редактировать">
+                            <input type="submit" class="btn btn-primary" value="Сохранить">
                         </div>
 
                     </form>

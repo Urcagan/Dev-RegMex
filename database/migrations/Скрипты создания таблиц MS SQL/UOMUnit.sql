@@ -8,18 +8,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[UOMUnit](
-	[ObjectId] [uniqueidentifier] NOT NULL DEFAULT (newid()),
-	[deleted_at] [datetime] NULL,
-	[CreationDate] [datetime] NOT NULL DEFAULT (getdate()),
-	[Name] [nvarchar](100) NOT NULL,
-	[Description] [nvarchar](250) NULL,
-	[Abbreviation] [nvarchar](100) NULL,
-	[Factor] [float] NOT NULL,
- CONSTRAINT [PK_UOMUnit] PRIMARY KEY NONCLUSTERED 
-(
-	[ObjectId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+CREATE TABLE RegMex.dbo.UOMUnit (
+	id uniqueidentifier DEFAULT newid() NOT NULL,
+	Name nvarchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	Description nvarchar(250) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Abbreviation nvarchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Factor float NOT NULL,
+	deleted_at datetime NULL,
+	CONSTRAINT PK_UOMUnit PRIMARY KEY (id)
+);
 
 GO
+

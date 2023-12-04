@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'Name' => 'required|string',
-            'Description' => 'required|string',
+            'Description' => 'nullable|string',
             'Complex_id' => 'required|string',
         ];
     }

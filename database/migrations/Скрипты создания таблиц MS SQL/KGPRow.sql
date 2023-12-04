@@ -1,0 +1,33 @@
+USE [RegMex]
+GO
+
+/****** Object:  Table [dbo].[KGPRow]    Script Date: 03.12.2023 8:41:20 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[KGPRow](
+	[id] [uniqueidentifier] NOT NULL,
+	[LocalTime] [datetime] NOT NULL,
+	[Unit_id] [uniqueidentifier] NOT NULL,
+ CONSTRAINT [KGPRow_id_PK] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[KGPRow] ADD  DEFAULT (newid()) FOR [id]
+GO
+
+ALTER TABLE [dbo].[KGPRow]  WITH CHECK ADD  CONSTRAINT [KGPRow_TbUnit_id_FK] FOREIGN KEY([Unit_id])
+REFERENCES [dbo].[TbUnit] ([id])
+ON UPDATE CASCADE
+GO
+
+ALTER TABLE [dbo].[KGPRow] CHECK CONSTRAINT [KGPRow_TbUnit_id_FK]
+GO
+
+

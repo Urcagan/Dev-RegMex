@@ -30,6 +30,9 @@
                         <div class="form-group">
                             <label>Название установки</label>
                             <input type="text" name="Name" class="form-control" placeholder="Название *">
+                            @error('Name')
+                                <div class="text-danger">{{$message}}</div>                                
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -44,6 +47,9 @@
                                 <option value="{{ $complex->id }}">{{ $complex->Name }}</option>
                             @endforeach
                         </select>
+                        @error('Complex_id')
+                                <div class="text-danger"> {{$message}}</div>                                
+                        @enderror
 
                         <div class="form-group mt-3">
                             <input type="submit" class="btn btn-primary" value="Добавить">

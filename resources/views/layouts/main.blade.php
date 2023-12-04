@@ -217,6 +217,23 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('point.index')}}" class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Позиции
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('uomunit.index')}}" class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Еденици измерения
+              </p>
+            </a>
+          </li>
           
         </ul>
       </nav>

@@ -1,0 +1,243 @@
+{
+"UOMUnit": [
+	{
+		"id" : "6FBF0113-4BBA-498F-8687-22DEAC5B18AB",
+		"Name" : "Метр",
+		"Description" : null,
+		"Abbreviation" : "м",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "4F9A54CF-3DCA-4B9B-8B2F-2DC8DC101F32",
+		"Name" : "Миллиметр",
+		"Description" : null,
+		"Abbreviation" : "мм",
+		"Factor" : 0.001,
+		"deleted_at" : null
+	},
+	{
+		"id" : "1AA610DF-5E56-4F70-845D-9759748F6C03",
+		"Name" : "Метр кубический",
+		"Description" : null,
+		"Abbreviation" : "м³",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "A4BFC95C-356E-421E-A5F0-0D1F50B963E1",
+		"Name" : "Миллиметр квадратный",
+		"Description" : null,
+		"Abbreviation" : "мм²",
+		"Factor" : 1.0E-6,
+		"deleted_at" : null
+	},
+	{
+		"id" : "B5637149-1521-43F1-A56C-3A41FF5B0325",
+		"Name" : "Кельвин",
+		"Description" : null,
+		"Abbreviation" : "К",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "777FEFA2-AD08-4D1E-AC5C-85190BE7DB7A",
+		"Name" : "Градус Цельсия",
+		"Description" : null,
+		"Abbreviation" : "°C",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "E3FEB63B-626D-41B4-B59A-36E79441834B",
+		"Name" : "Градус Фаренгейта",
+		"Description" : null,
+		"Abbreviation" : "°F",
+		"Factor" : 1.8,
+		"deleted_at" : null
+	},
+	{
+		"id" : "35E8E77B-3084-4D0D-A4FE-89B81054FEFC",
+		"Name" : "Километр",
+		"Description" : null,
+		"Abbreviation" : "км",
+		"Factor" : 1000.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "F0C88CF7-6A6F-4389-8056-E2178ADC6F9F",
+		"Name" : "Литр",
+		"Description" : null,
+		"Abbreviation" : "л",
+		"Factor" : 0.001,
+		"deleted_at" : null
+	},
+	{
+		"id" : "F8B30AD2-6E78-4CBA-9DD1-D0900EE989C7",
+		"Name" : "Миллилитр",
+		"Description" : null,
+		"Abbreviation" : "мл",
+		"Factor" : 0.001,
+		"deleted_at" : null
+	},
+	{
+		"id" : "092395BC-E5F4-4883-96A1-DF08D6AA1D96",
+		"Name" : "Грамм",
+		"Description" : null,
+		"Abbreviation" : "г",
+		"Factor" : 0.001,
+		"deleted_at" : null
+	},
+	{
+		"id" : "C34C83A9-BB57-4197-975A-0DB4873C1ACD",
+		"Name" : "Килограмм",
+		"Description" : null,
+		"Abbreviation" : "кг",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "6C6D7865-F1E9-4DD1-9C95-9AD9E37C8F20",
+		"Name" : "Тонна",
+		"Description" : null,
+		"Abbreviation" : "т",
+		"Factor" : 1000.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "67300DC3-E800-4BE8-AAE3-357E14CA753B",
+		"Name" : "Миллиграмм",
+		"Description" : null,
+		"Abbreviation" : "мг",
+		"Factor" : 1.0E-6,
+		"deleted_at" : null
+	},
+	{
+		"id" : "19481ED1-9D4A-418F-8078-BB15C89ED787",
+		"Name" : "Секунда",
+		"Description" : null,
+		"Abbreviation" : "с",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "C694609F-B2E9-4D85-AB44-FBF48F37A71A",
+		"Name" : "Миллисекунда",
+		"Description" : null,
+		"Abbreviation" : "мс",
+		"Factor" : 0.001,
+		"deleted_at" : null
+	},
+	{
+		"id" : "2E754321-3881-4BFA-87E9-6482F8913B0F",
+		"Name" : "Минута",
+		"Description" : null,
+		"Abbreviation" : "мин",
+		"Factor" : 60.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "5A792493-25BD-41BA-9416-9D29C6590688",
+		"Name" : "Час",
+		"Description" : null,
+		"Abbreviation" : "ч",
+		"Factor" : 60.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "7F5B38A9-5012-4A9D-9006-D7CA83A69847",
+		"Name" : "День",
+		"Description" : null,
+		"Abbreviation" : "д",
+		"Factor" : 24.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "C7C096E8-5484-40C3-8512-ABF761C8BFCD",
+		"Name" : "Процент",
+		"Description" : null,
+		"Abbreviation" : "%",
+		"Factor" : 0.01,
+		"deleted_at" : null
+	},
+	{
+		"id" : "622F947E-AC75-476B-8D1A-5A95E614930C",
+		"Name" : "Штука",
+		"Description" : null,
+		"Abbreviation" : "шт.",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "58DDF36C-1781-494D-A520-59D2C2BC53F0",
+		"Name" : "Единица",
+		"Description" : null,
+		"Abbreviation" : "ед",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "7F9A4C54-6A27-48E5-95F6-D037E7CCB96F",
+		"Name" : "Отсутствует",
+		"Description" : null,
+		"Abbreviation" : "-",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "F221D087-1CE1-434E-8AA5-46A11E7F77A3",
+		"Name" : "Сантиметр",
+		"Description" : null,
+		"Abbreviation" : "см",
+		"Factor" : 0.01,
+		"deleted_at" : null
+	},
+	{
+		"id" : "8D52E8D4-96C2-4525-97DE-40153E8EB6C7",
+		"Name" : "Дециметр",
+		"Description" : null,
+		"Abbreviation" : "дм",
+		"Factor" : 0.1,
+		"deleted_at" : null
+	},
+	{
+		"id" : "855F9E3B-B087-4703-8E2E-74FDE86030D2",
+		"Name" : "Паскаль",
+		"Description" : null,
+		"Abbreviation" : "Па",
+		"Factor" : 98066.5,
+		"deleted_at" : null
+	},
+	{
+		"id" : "66E970D3-969F-4590-9743-2F50B525103F",
+		"Name" : "кПа",
+		"Description" : null,
+		"Abbreviation" : "кПа",
+		"Factor" : 0.001,
+		"deleted_at" : null
+	},
+	{
+		"id" : "858DD217-5067-4B29-9F77-41A91E8F66FF",
+		"Name" : "МПа",
+		"Description" : null,
+		"Abbreviation" : "МПа",
+		"Factor" : 1.0E-6,
+		"deleted_at" : null
+	},
+	{
+		"id" : "DFA6F146-EDA8-45DB-8455-FCD15AF9E3D2",
+		"Name" : "килограмм на метр кубический",
+		"Description" : null,
+		"Abbreviation" : "кг\/м3",
+		"Factor" : 1.0,
+		"deleted_at" : null
+	},
+	{
+		"id" : "282629EF-E613-4B39-A09A-487A3A2441A6",
+		"Name" : "Грамм на сантиметр кубический",
+		"Description" : null,
+		"Abbreviation" : "г\\см3",
+		"Factor" : 0.001,
+		"deleted_at" : null
+	}
+]}

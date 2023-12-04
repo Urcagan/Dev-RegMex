@@ -31,6 +31,9 @@
                             <label>Название комплекса</label>
                             <input type="text" name="Name" class="form-control"
                                 placeholder="Аббревиатура комплекса *">
+                            @error('Name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">

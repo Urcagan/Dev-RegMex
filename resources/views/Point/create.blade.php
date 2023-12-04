@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Добавить агрегат (CREATE)</h1>
+                    <h1 class="m-0">Добавить Tag Name (CREATE)</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,11 +24,11 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-sm-6">
-                    <form action="{{ route('unit.store') }}" method="post">
+                    <form action="{{ route('point.store') }}" method="post">
                         @csrf
 
                         <div class="form-group">
-                            <label>Название агрегата</label>
+                            <label>Название точки (Tag Name)</label>
                             <input type="text" name="Name" class="form-control" placeholder="Название *">
                             @error('Name')
                                 <div class="text-danger">{{$message}}</div>                                
@@ -41,13 +41,13 @@
                         </div>
 
                         <select name= "Plant_id" class="form-control select2 select2-hidden-accessible"
-                            style="width: 100%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
-                            <option value="">Выберите установку на которой находится агрегат</option>
-                            @foreach ($plants as $plant)
-                                <option value="{{ $plant->id }}">{{ $plant->Name }}</option>
+                            style="width: 30%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
+                            <option value="">Единицы измерения</option>
+                            @foreach ($uomunits as $uomunit)
+                                <option value="{{ $uomunit->id }}">{{ $uomunit->Abbreviation }}</option>
                             @endforeach
                         </select>
-                        @error('Plant_id')
+                        @error('UOMUnit_id')
                                 <div class="text-danger"> {{$message}}</div>                                
                         @enderror
 

@@ -37,6 +37,13 @@ Route::resource('plant', App\Http\Controllers\Plant\PlantController::class);
 // Маршруты для работы с таблицей агрегатов (Unit)
 Route::resource('unit', App\Http\Controllers\Unit\UnitController::class);
 
+// Маршруты для работы с таблицей Единиц измерения (UOMUnit)
+Route::resource('uomunit', App\Http\Controllers\UOMUnit\UOMUnitController::class);
+
+// Маршруты для работы с таблицей параметров Tag Name (TbPoint)
+Route::resource('point', App\Http\Controllers\Point\PointController::class);
+
+
 
 Route::group(['namespace' => 'App\Http\Controllers\MGK\H1\B'], function () {
     Route::get('/table', 'Table_Controller')->name('home');

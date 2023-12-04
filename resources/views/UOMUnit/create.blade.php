@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Добавить агрегат (CREATE)</h1>
+                    <h1 class="m-0">Добавить параметр (CREATE)</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,11 +24,11 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-sm-6">
-                    <form action="{{ route('unit.store') }}" method="post">
+                    <form action="{{ route('uomunit.store') }}" method="post">
                         @csrf
 
                         <div class="form-group">
-                            <label>Название агрегата</label>
+                            <label>Название параметр</label>
                             <input type="text" name="Name" class="form-control" placeholder="Название *">
                             @error('Name')
                                 <div class="text-danger">{{$message}}</div>                                
@@ -40,16 +40,21 @@
                             <textarea type="text" name="Description" class="form-control" rows="4" placeholder="Введите описание ..."></textarea>
                         </div>
 
-                        <select name= "Plant_id" class="form-control select2 select2-hidden-accessible"
-                            style="width: 100%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
-                            <option value="">Выберите установку на которой находится агрегат</option>
-                            @foreach ($plants as $plant)
-                                <option value="{{ $plant->id }}">{{ $plant->Name }}</option>
-                            @endforeach
-                        </select>
-                        @error('Plant_id')
-                                <div class="text-danger"> {{$message}}</div>                                
-                        @enderror
+                        <div class="form-group">
+                            <label>Аббревиатура</label>
+                            <input type="text" name="Abbreviation" class="form-control" placeholder="Название *">
+                            @error('Abbreviation')
+                                <div class="text-danger">{{$message}}</div>                                
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Фактор</label>
+                            <input type="text" name="Factor" class="form-control" placeholder="Название *">
+                            @error('Factor')
+                                <div class="text-danger">{{$message}}</div>                                
+                            @enderror
+                        </div>
 
                         <div class="form-group mt-3">
                             <input type="submit" class="btn btn-primary" value="Добавить">

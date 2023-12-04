@@ -31,6 +31,9 @@
                         <div class="form-group">
                             <label>Название установки</label>
                             <input type="text" name="Name" class="form-control" value="{{ $plant->Name }}">
+                            @error('Name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -48,6 +51,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('Complex_id')
+                                <div class="text-danger"> {{ $message }}</div>
+                            @enderror
                         </div>
 
 
