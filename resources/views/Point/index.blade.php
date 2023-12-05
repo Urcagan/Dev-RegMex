@@ -49,7 +49,7 @@
                                             </td>
                                             <td>{{ $point->Description }}</td>
                                             <td>
-                                                <a href="{{ route('plant.show', $unit->plant->id )}}">{{ $unit->plant->Name }} </a>
+                                                {{-- <a href="{{ route('plant.show', $unit->plant->id )}}">{{ $unit->plant->Name }} </a> --}}
                                             </td>
                                             <td>{{ $point->id }}</td>
                                         </tr>

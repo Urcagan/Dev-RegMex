@@ -31,7 +31,7 @@
                             <label>Название точки (Tag Name)</label>
                             <input type="text" name="Name" class="form-control" placeholder="Название *">
                             @error('Name')
-                                <div class="text-danger">{{$message}}</div>                                
+                                <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -40,16 +40,33 @@
                             <textarea type="text" name="Description" class="form-control" rows="4" placeholder="Введите описание ..."></textarea>
                         </div>
 
-                        <select name= "Plant_id" class="form-control select2 select2-hidden-accessible"
-                            style="width: 30%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
-                            <option value="">Единицы измерения</option>
-                            @foreach ($uomunits as $uomunit)
-                                <option value="{{ $uomunit->id }}">{{ $uomunit->Abbreviation }}</option>
-                            @endforeach
-                        </select>
-                        @error('UOMUnit_id')
-                                <div class="text-danger"> {{$message}}</div>                                
-                        @enderror
+                        <div class="form-group">
+                            <label>Единицы измерения</label>
+                            <select name= "UOMUnit_id" class="form-control select2 select2-hidden-accessible"
+                                style="width: 32%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                <option value="">Единицы измерения</option>
+                                @foreach ($uomunits as $uomunit)
+                                    <option value="{{ $uomunit->id }}">{{ $uomunit->Abbreviation }}</option>
+                                @endforeach
+                            </select>
+                            @error('UOMUnit_id')
+                                <div class="text-danger"> {{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Принадлежность к оборудованию</label>
+                            <select name= "Unit_id" class="form-control select2 select2-hidden-accessible"
+                                style="width: 32%;"data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                <option value="">Оборудование</option>
+                                @foreach ($units as $unit)
+                                    <option value="{{ $unit->id }}">{{ $unit->Name }}</option>
+                                @endforeach
+                            </select>
+                            @error('Unit_id')
+                                <div class="text-danger"> {{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <div class="form-group mt-3">
                             <input type="submit" class="btn btn-primary" value="Добавить">

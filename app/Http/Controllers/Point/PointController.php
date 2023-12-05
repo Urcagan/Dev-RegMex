@@ -7,6 +7,7 @@ use App\Models\TbPoint;
 use Illuminate\Http\Request;
 use App\Http\Requests\Point\StoreRequest;
 use App\Http\Requests\Point\UpdateRequest;
+use App\Models\TbUnit;
 use App\Models\UOMUnit;
 
 class PointController extends Controller
@@ -33,7 +34,8 @@ class PointController extends Controller
     public function create()
     {
         $uomunits = UOMUnit::all();
-        return view('point.create', compact('uomunits'));
+        $units = TbUnit::all();
+        return view('point.create', compact('uomunits', 'units'));
     }
 
     /**
@@ -44,10 +46,10 @@ class PointController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        // $data = $request->validated();
-        // TbUnit::firstOrCreate($data);
+        $data = $request->validated();
+        TbPoint::firstOrCreate($data);
 
-        // return redirect()->route('unit.index');
+        return redirect()->route('point.index');
     }
 
     /**

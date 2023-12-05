@@ -1,12 +1,8 @@
-USE [RegMex]
-GO
+-- RegMex.dbo.UOMUnit definition
 
-/****** Object:  Table [dbo].[UOMUnit]    Script Date: 21.11.2023 16:35:47 ******/
-SET ANSI_NULLS ON
-GO
+-- Drop table
 
-SET QUOTED_IDENTIFIER ON
-GO
+-- DROP TABLE RegMex.dbo.UOMUnit;
 
 CREATE TABLE RegMex.dbo.UOMUnit (
 	id uniqueidentifier DEFAULT newid() NOT NULL,
@@ -17,6 +13,3 @@ CREATE TABLE RegMex.dbo.UOMUnit (
 	deleted_at datetime NULL,
 	CONSTRAINT PK_UOMUnit PRIMARY KEY (id)
 );
-
-GO
-
