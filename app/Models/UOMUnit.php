@@ -49,7 +49,7 @@ class UOMUnit extends Model
     // {
     //    return $this->belongsTo(TbPlant::class, 'Plant_id', 'id');
     // }
-    public function point()
+    public function points()
     {
         return $this->hasMany(TbPoint::class, 'UOMUnit_id', 'id');
     }

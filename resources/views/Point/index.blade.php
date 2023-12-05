@@ -35,8 +35,8 @@
                                     <tr>
                                         <th>Название</th>
                                         <th>Описание</th>
-                                        {{-- <th>Еденицы</th>
-                                        <th>Установка</th> --}}
+                                        <th>Единицы</th>
+                                        <th>Оборудование</th>
                                         <th>ID</th>
                                     </tr>
                                 </thead>
@@ -49,6 +49,11 @@
                                             </td>
                                             <td>{{ $point->Description }}</td>
                                             <td>
+                                                {{ $point->uomunit->Abbreviation}}
+                                                {{-- <a href="{{ route('plant.show', $unit->plant->id )}}">{{ $unit->plant->Name }} </a> --}}
+                                            </td>
+                                            <td>
+                                                {{ $point->units->Name}}
                                                 {{-- <a href="{{ route('plant.show', $unit->plant->id )}}">{{ $unit->plant->Name }} </a> --}}
                                             </td>
                                             <td>{{ $point->id }}</td>

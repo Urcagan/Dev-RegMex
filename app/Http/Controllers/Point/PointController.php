@@ -19,10 +19,10 @@ class PointController extends Controller
      */
     public function index()
     {
-        
-        // $points = TbPoint::with('plant')->get();
-        $points = TbPoint::all();
-// dd($points);
+
+        $points = TbPoint::with('uomunit', 'units')->get();
+        // $points = TbPoint::all();
+        // dd($points);
         return view('point.index', compact('points'));
     }
 
@@ -61,8 +61,9 @@ class PointController extends Controller
     public function show(TbPoint $point)
     {
         // $unit = TbUnit::with('plant')->find($unit->id);
-        // // dd($plant);
-        // return view('unit.show', compact('unit'));
+        $point = TbPoint::with('uomunit', 'units')->find($point->id);
+        // dd($point);
+        return view('point.show', compact('point'));
     }
 
     /**
@@ -73,9 +74,10 @@ class PointController extends Controller
      */
     public function edit(TbPoint $point)
     {
-        // $plants = TbPlant::all();
+        $uomunits = UOMUnit::all();
+        $units = TbUnit::all();
 
-        // return view('unit.edit', compact('unit', 'plants'));
+        return view('point.edit', compact('point', 'uomunits', 'units'));
     }
 
     /**
@@ -87,10 +89,10 @@ class PointController extends Controller
      */
     public function update(UpdateRequest $request, TbPoint $point)
     {
-        // $data = $request->validated();
-        // $unit->update($data);
+        $data = $request->validated();
+        $point->update($data);
 
-        // return view('unit.show', compact('unit'));
+        return view('point.show', compact('point'));
     }
 
     /**
@@ -102,7 +104,7 @@ class PointController extends Controller
     public function destroy(TbPoint $point)
     {
         $point->delete();
-        
+
         return redirect()->route('point.index');
     }
 }

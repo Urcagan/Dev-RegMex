@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TbUnit extends Model
 {
     // use Concerns\UsesUuid; // Трейд Используется в случае необходимости автогенерации UIID
     use HasFactory;
 
-    //   use SoftDeletes;    // Подключаем реализацию мягкого удаления данных из таблицы
+    use SoftDeletes;    // Подключаем реализацию мягкого удаления данных из таблицы
                             // Этот параметр подключается индивидуально в каждой моделе
                             // Так же в миграции таблици необходимо добавить столбец " $table->softDeletes(); "
 
@@ -45,5 +46,11 @@ class TbUnit extends Model
     public function plant()
     {
        return $this->belongsTo(TbPlant::class, 'Plant_id', 'id');
+    }
+
+    // Функция отношение между таблицаи Point и Uit
+    public function point()
+    {
+        return $this->hasMany(TbPoint::class, 'Unit_id', 'id');
     }
 }

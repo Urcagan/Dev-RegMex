@@ -29,7 +29,9 @@
 
                         <div class="form-group">
                             <label>Название точки (Tag Name)</label>
-                            <input type="text" name="Name" class="form-control" placeholder="Название *">
+                            <input type="text" name="Name" class="form-control" placeholder="Название *"
+                            value="{{ old('Name')}}"
+                            >
                             @error('Name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
