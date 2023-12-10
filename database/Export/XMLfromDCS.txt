@@ -1,0 +1,83 @@
+Set xmlDoc = CreateObject("MSXML2.DOMDocument.6.0")
+
+    xmlDoc.async = False
+    xmlDoc.validateOnParse = False
+    xmlDoc.resolveExternals = False
+
+    Set rootElement = xmlDoc.createElement("employees")
+    xmlDoc.appendChild rootElement
+ 
+    Set employeeElement = xmlDoc.createElement("employee")
+ 
+    Set idElement = xmlDoc.createElement("id")
+    idElement.Text = 1
+    employeeElement.appendChild idElement
+
+    Set nameElement = xmlDoc.createElement("name")
+    nameElement.Text = "John Doe"
+    employeeElement.appendChild nameElement
+
+    Set salaryElement = xmlDoc.createElement("salary")
+    salaryElement.Text = 50000
+    employeeElement.appendChild salaryElement
+
+    rootElement.appendChild employeeElement
+   
+    xmlDoc.Save "c:\temp\FileFromDCS.xml"
+
+    Set xmlDoc = Nothing
+
+
+    Вариант 2
+    ----------------
+
+    Sub CreateXMLFile()
+    ' Создаем объект DOMDocument
+    Dim xmlDoc As Object
+    Set xmlDoc = CreateObject("MSXML2.DOMDocument.6.0")
+
+    ' Добавляем обработчик ошибок
+    xmlDoc.async = False
+    xmlDoc.validateOnParse = False
+    xmlDoc.resolveExternals = False
+
+    ' Создаем корневой элемент
+    Dim rootElement As Object
+    Set rootElement = xmlDoc.createElement("employees")
+    xmlDoc.appendChild rootElement
+
+    ' Добавляем данные (пример для двух сотрудников)
+    AddEmployee xmlDoc, rootElement, 1, "John Doe", 50000
+    AddEmployee xmlDoc, rootElement, 2, "Jane Smith", 60000
+
+    ' Сохраняем XML файл
+    xmlDoc.Save "C:\Path\To\Your\File.xml"
+
+    ' Очищаем объект DOMDocument
+    Set xmlDoc = Nothing
+End Sub
+
+Sub AddEmployee(xmlDoc As Object, parentElement As Object, id As Integer, name As String, salary As Double)
+    ' Создаем элемент employee
+    Dim employeeElement As Object
+    Set employeeElement = xmlDoc.createElement("employee")
+
+    ' Создаем элементы id, name, salary и добавляем их к элементу employee
+    Dim idElement As Object
+    Set idElement = xmlDoc.createElement("id")
+    idElement.Text = id
+    employeeElement.appendChild idElement
+
+    Dim nameElement As Object
+    Set nameElement = xmlDoc.createElement("name")
+    nameElement.Text = name
+    employeeElement.appendChild nameElement
+
+    Dim salaryElement As Object
+    Set salaryElement = xmlDoc.createElement("salary")
+    salaryElement.Text = salary
+    employeeElement.appendChild salaryElement
+
+    ' Добавляем элемент employee к родительскому элементу
+    parentElement.appendChild employeeElement
+End Sub

@@ -30,7 +30,12 @@
                         <div class="form-group">
                             <label>Название точки (Tag Name)</label>
                             <input type="text" name="Name" class="form-control" placeholder="Название *"
+                            maxlength="16"
                             value="{{ old('Name')}}"
+                            {{-- oninput="validateInput(this)"
+                            > --}}
+                            
+                            pattern="[0-9a-zA-Z]*" oninput="validateInput(this)"
                             >
                             @error('Name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -80,4 +85,7 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    
+
 @endsection

@@ -29,7 +29,8 @@
 
                         <div class="form-group">
                             <label>Название агрегата</label>
-                            <input type="text" name="Name" class="form-control" placeholder="Название *">
+                            <input type="text" name="Name" class="form-control" placeholder="Название *"
+                            value="{{ old('Name')}}">
                             @error('Name')
                                 <div class="text-danger">{{$message}}</div>                                
                             @enderror
@@ -37,7 +38,7 @@
 
                         <div class="form-group">
                             <label>Описание</label>
-                            <textarea type="text" name="Description" class="form-control" rows="4" placeholder="Введите описание ..."></textarea>
+                            <textarea type="text" name="Description" class="form-control" rows="4" placeholder="Введите описание ...">{{ old('Description')}}</textarea>
                         </div>
 
                         <select name= "Plant_id" class="form-control select2 select2-hidden-accessible"
