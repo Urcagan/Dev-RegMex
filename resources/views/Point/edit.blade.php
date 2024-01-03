@@ -30,7 +30,9 @@
 
                         <div class="form-group">
                             <label>Название точки (Tag Name)</label>
-                            <input type="text" name="Name" class="form-control" value="{{ $point->Name }}">
+                            <input type="text" name="Name" class="form-control" value="{{ $point->Name }}"
+                            maxlength="16"
+                            pattern="[0-9a-zA-Z]*" oninput="validateInput(this)">
                             @error('Name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

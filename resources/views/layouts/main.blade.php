@@ -279,4 +279,12 @@
 <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
 
 </body>
+
+<script>
+  function validateInput(input) {
+      // Удаляем все символы, кроме цифр и латинских букв и знака подчеркивания
+      input.value = input.value.replace(/[^0-9a-zA-Z_]/g, '');
+  }
+  </script>
+
 </html>
