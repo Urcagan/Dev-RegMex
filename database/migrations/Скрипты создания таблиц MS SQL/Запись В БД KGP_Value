@@ -1,0 +1,116 @@
+Declare @xmlData xml
+SET @xmlData = '
+<record>
+	<complex>KTU GPVG</complex>
+	<plant>MGK</plant>
+	<unit>111-H1A</unit>
+	<DateTime>2022-11-29 17:59:59.610</DateTime>
+	<points>
+		<point>
+			<name>111PI7024A</name>
+			<Value>0.1352062707073692</Value>
+		</point>
+		<point>
+			<name>111PI7026A</name>
+			<Value>1.668900489807129</Value>
+		</point>
+		<point>
+			<name>111PI7028A</name>
+			<Value>1.6844007968902588</Value>
+		</point>
+	</points>
+</record>
+'
+--select @xmlData
+
+DECLARE @hdoc int
+    
+EXEC sp_xml_preparedocument @hdoc OUTPUT, @xmlData
+/*SELECT *
+FROM OPENXML (@hdoc, '/record/points/point' , 2)
+WITH ( name VARCHAR(100) , data FLOAT )
+ */
+
+
+SELECT * 
+FROM OPENXML (@hdoc, '/record', 2)
+WITH(
+	complex VARCHAR(100),
+	plant nVARCHAR(100),
+	unit nVARCHAR(100),
+	DateTime datetime
+)
+
+/*
+SELECT * 
+FROM dbo.TbComplex
+WHERE Name = (SELECT * 
+				FROM OPENXML (@hdoc, '/record', 2)
+				WITH(
+					complex nVARCHAR(100)
+					--plant VARCHAR(100)
+					--DateTime datetime
+					)
+)
+*/
+
+
+-- Получение ID Unit 
+DECLARE @Unit_id as uniqueidentifier
+SET @Unit_id = (
+SELECT id as id_unit FROM dbo.TbUnit
+WHERE Name = (SELECT * FROM OPENXML (@hdoc, '/record', 2) WITH( unit nVARCHAR(100)))
+)
+
+--генерим id для строки в таблице KGPRow
+DECLARE  @ROWid as uniqueidentifier
+SET @ROWid = NEWID()
+
+--Получаем время из XML
+DECLARE @DateTime as datetime
+SET @DateTime = ( SELECT * FROM OPENXML (@hdoc, '/record', 2) WITH( DateTime datetime) )
+
+--Запись времени в таблицу KGPRow
+INSERT INTO KGPRow (id, LocalTime, Unit_id)
+VALUES (@ROWid, @DateTime, @Unit_id)
+
+--SELECT * FROM OPENXML (@hdoc, '/record/points/point', 2)	WITH(name nVARCHAR(100), Value FLOAT)
+
+-- Создаем временную таблицу с полученными данными из XML
+--
+CREATE TABLE #Points( name nvarchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS , Value Float )
+INSERT INTO #Points (name, Value)
+SELECT name, Value FROM OPENXML (@hdoc, '/record/points/point', 2)	WITH(name nVARCHAR(100), Value FLOAT	)
+
+-- Вставляем сформированные записи в таблицу KGP_Value
+INSERT INTO KGP_Value (Row_id, Point_id, Value)
+SELECT @ROWid as Row_id, Point.id as Point_id, P.Value
+FROM dbo.TbPoint as Point
+RIGHT JOIN #Points as P ON Point.Name = P.name
+
+DROP TABLE #Points
+
+-- SQL_Latin1_General_CP1_CI_AS
+/*
+*/
+/*
+SELECT * 
+FROM dbo.TbPoint 
+WHERE Name all (SELECT * 
+				FROM OPENXML (@hdoc, '/record/points/point', 2)
+				WITH(
+					name nVARCHAR(100)--,
+					--plant VARCHAR(100),
+					--DateTime datetime
+					)
+)
+*/
+EXEC sp_xml_removedocument @hdoc
+
+
+-- Проверка результата
+Select R.LocalTime, U.Name, P.Name, V.Value
+From KGP_Value as V 
+LEFT JOIN KGPRow as R ON V.Row_id = R.id
+LEFT JOIN TbUnit as U ON U.id = R.Unit_id
+LEFT JOIN TbPoint as P ON P.id = V.Point_id
